@@ -8,7 +8,7 @@ const theme = createTheme({
       main: '#84A500'
     },
     checkbox: {
-      '& .MuiCheckbox-root.Mui-disabled': {
+      '& .MuiCheckbox-root:disabled': {
         color: '#a50000',
       },
       disabled: {
@@ -26,7 +26,7 @@ const MyCheckbox = (props) => {
         <Checkbox
           sx={{
             color: '#a50000',
-            '& .MuiCheckbox-root.Mui-disabled': {
+            '& .MuiCheckbox-root:disabled': {
               color: '#a50000',
             }
           }}
