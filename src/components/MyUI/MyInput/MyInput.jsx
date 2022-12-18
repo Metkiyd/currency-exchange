@@ -6,13 +6,14 @@ const MyInput = (props) => {
     <div>
       <TextField
         sx={{
+          // MuiInputBase-root-MuiOutlinedInput-root
           color: '#42a500',
           borderRadius: 0,
           borderColor: '#1ea500',
         }}
         id="outlined-basic"
-        label="Имя"
         variant="outlined"
+        fullWidth
         {...props}
       />
 

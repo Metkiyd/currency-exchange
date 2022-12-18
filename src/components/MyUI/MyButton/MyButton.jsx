@@ -1,5 +1,5 @@
 import {Button, createTheme, ThemeProvider} from "@mui/material";
-// import styles from './styles.module.scss'
+// import styles from './style.css'
 
 const theme = createTheme({
   components: {

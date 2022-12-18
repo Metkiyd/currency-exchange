@@ -24,12 +24,12 @@ const MyCheckbox = (props) => {
     <ThemeProvider theme={theme}>
       <FormControlLabel control={
         <Checkbox
-          sx={{
-            color: '#a50000',
-            '& .MuiCheckbox-root:disabled': {
-              color: '#a50000',
-            }
-          }}
+          // sx={{
+          //   color: '#a50000',
+          //   '& .MuiCheckbox-root:disabled': {
+          //     color: '#a50000',
+          //   }
+          // }}
           icon={<CheckBoxOutlineBlankSharpIcon/>}
           checkedIcon={<CheckBoxSharpIcon/>}
           {...props}
