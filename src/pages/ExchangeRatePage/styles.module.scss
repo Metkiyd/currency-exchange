@@ -4,53 +4,28 @@
   height: 100vh;
 
 }
-.left_sidebar {
+
+.main_container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
 
-  width: 240px;
-  border-right: 1px solid #E0E0E0;
-
-
-  &__container {
+.header {
+  &__nav {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    width: 192px;
-
   }
 
-}
-
-.main_links {
-  flex-direction: column;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-
-}
-.main {
   &__title {
     font-family: 'TT Firs Neue';
     font-weight: 500;
     font-size: 32px;
   }
-  &__container {
-    display: flex;
-    flex-direction: column;
-  }
-  &__nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-  }
   &__search_wrapper {
     width: 420px;
-
   }
-
-
 
 }
 
@@ -59,15 +34,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &__title {
+  border-bottom: 1px solid #F3F3F3;
+  margin-top: 50px;
 
-  }
-  &__1 {
+  &__title {
     font-size: 11px;
     font-weight: 500;
     margin-bottom: 8px;
   }
-  &__2 {
+
+  &__subtitle {
     font-size: 20px;
     font-weight: 500;
     margin-top: 0;
@@ -75,112 +51,40 @@
   }
 }
 
-.logo {
-  padding-top: 16px;
-  padding-left: 10px;
-  padding-bottom: 100px;
-
-  &__text_bold {
-    font-family: 'TT Firs Neue';
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  &__text {
-    font-family: 'TT Firs Neue';
-    font-weight: 400;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-
-}
-
-.leave_button {
-    margin-bottom: 32px;
-  }
-
-
-.line {
-  border: 1px solid #F3F3F3;
-  height: 1px;
-  width: 100%;
-  margin-bottom: 24px;
-
-}
-.right_sidebar {
+.result {
   display: flex;
-  justify-content: center;
-  width: 288px;
-  border-left: 1px solid #E0E0E0;
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 224px;
-  }
-
-}
-
-.avatar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  position: relative;
-  background: #F1F1F1;
-  height: 208px;
 
-}
-.wrap {
-  position: relative;
-
-}
-.img1 {
-  position: relative;
-}
-.img2 {
-  position: absolute;
-  bottom: -6px;
-  left: -6px;
-}
-
-.text_500 {
-  font-weight: 500;
-}
-.add_wallet {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  height: 148px;
-  border: 1px dashed #ECECEC ;
-  color:  #848484;
-}
-.transactions {
-  //margin-bottom: 50px;
-
-  &__wrapper {
+  &__nums {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 16px;
     align-items: center;
-    gap: 8px;
-    height: 256px;
-    border: 1px solid #ECECEC ;
-
-  }
-  &__container {
-
-    text-align: center;
-    width: 160px;
-  }
-  &__text {
-    color:  #848484;
-
+    margin-top: 16px;
   }
 
+  &__num_title {
+    font-size: 32px;
+    font-weight: 400;
+  }
+
+  &__num_percent {
+    color: #84A500;
+    background: #84A5001A;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+  }
+
+  &__num_today {
+    color: #84A500;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: #848484;
+  }
 }
+

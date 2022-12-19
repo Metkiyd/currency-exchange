@@ -1,0 +1,57 @@
+.sidebar {
+  display: flex;
+  justify-content: center;
+  width: 240px;
+  border-right: 1px solid #E0E0E0;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 192px;
+
+  }
+
+  &__links {
+    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+  }
+
+  &__line {
+    border: 1px solid #F3F3F3;
+    height: 1px;
+    width: 100%;
+    margin-bottom: 24px;
+
+  }
+
+  &__leave_button {
+    margin-bottom: 32px;
+  }
+}
+
+
+.logo {
+  padding-top: 16px;
+  padding-left: 10px;
+  padding-bottom: 100px;
+
+  &__text_bold {
+    font-family: 'TT Firs Neue';
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  &__text {
+    font-family: 'TT Firs Neue';
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+}
+
