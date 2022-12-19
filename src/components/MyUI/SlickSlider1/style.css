@@ -1,0 +1,20 @@
+.slick-slider {
+    display: flex;
+    gap: 24px;
+
+    position: relative;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+/*.items {*/
+/*    border: 1px solid #84A500;*/
+/*}*/
+
+/*.slick-slide {*/
+/*    margin: 0 10px;*/
+/*}*/
+/*.slick-list {*/
+/*    margin: 0 -10px;*/
+/*}*/
+

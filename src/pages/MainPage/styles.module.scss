@@ -1,0 +1,119 @@
+.backgroundImage {
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.header {
+    border-bottom: 1px solid #E0E0E0;
+
+    &__nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 112px;
+        height: 80px;
+    }
+    &__logo {
+        &__text_bold {
+            font-family: 'TT Firs Neue';
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        &__text {
+            font-family: 'TT Firs Neue';
+            font-weight: 400;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+    }
+
+    &__btn_container {
+        padding: 20px 0 20px 112px;
+        border-left: 1px solid #E0E0E0;
+    }
+}
+
+
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+        font-family: 'TT Firs Neue';
+        font-weight: 500;
+        font-size: 64px;
+        margin-top: 120px;
+        z-index: 1;
+
+    }
+
+    &__elements {
+        position: relative;
+
+    }
+
+    &__star_small {
+        position: absolute;
+        bottom: 500px;
+
+    }
+    &__star_big {
+        position: absolute;
+        bottom: 550px;
+        left: 920px;
+
+    }
+    &__circle_small {
+        position: absolute;
+        width: 122px;
+        height: 122px;
+
+        bottom: 600px;
+        left: 150px;
+
+        background: rgba(132, 165, 0, 0.7);
+        filter: blur(79px);
+
+    }
+
+    &__circle_big {
+        position: absolute;
+        width: 370px;
+        height: 370px;
+
+        bottom: 110px;
+        left: 800px;
+        z-index: -1;
+
+        background: #84A500;
+        opacity: 0.7;
+        filter: blur(173px);
+
+    }
+    &__example_image {
+        position: absolute;
+        bottom: 0;
+
+    }
+    &__example_currency {
+        /*display: block;*/
+        position: absolute;
+        bottom: 60px;
+        left: 910px;
+    }
+
+
+
+}
+
+
+
+
+
+

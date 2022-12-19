@@ -1,0 +1,95 @@
+.images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.login {
+  display: flex;
+  height: 100vh;
+}
+
+.left_side {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    width: 421px;
+    display: flex;
+    flex-direction: column;
+    height: 65vh;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-family: 'TT Firs Neue';
+    font-weight: 500;
+    font-size: 36px;
+  }
+
+}
+.divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.line {
+  border: 1px solid #F3F3F3;
+  height: 1px;
+  width: 194px;
+
+}
+.password {
+  display: flex;
+  gap: 10px;
+
+}
+
+
+.form__sing_up {
+  display: flex;
+  gap: 10px;
+}
+.create_account {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.creator {
+  color: #84A500;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+.right_side {
+  display: flex;
+  background: #272727;
+  width: 50vw;
+
+
+}
+
+.logo {
+  color: white;
+  padding-left: 32px;
+
+  &__text_bold {
+    font-family: 'TT Firs Neue';
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  &__text {
+    font-family: 'TT Firs Neue';
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+}
