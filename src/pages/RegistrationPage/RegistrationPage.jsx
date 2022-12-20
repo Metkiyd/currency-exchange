@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "../RegistrationPage/styles.module.scss";
 
 import {MyButton} from "../../components/MyUI/MyButton";
@@ -9,8 +9,37 @@ import registrationImage from '../../assets/images/registration.png'
 import {ReactComponent as GoogleIcon} from '../../assets/icons/googleIcon.svg';
 import {ReactComponent as GitHubIcon} from '../../assets/icons/githubIcon.svg';
 
+const users = JSON.parse(localStorage.getItem('Users'))  || []
+console.log('===>users', users)
+
 const RegistrationPage = () => {
   const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    Name: '',
+    Email: '',
+    Password: ''
+  })
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+  
+  const handleClick = (e) => {
+
+
+    alert('Registration succesfull')
+    navigate(`/login`)
+    users.push(form)
+    localStorage.setItem("Users", JSON.stringify(users))
+  }
+
+
+
+
   return (
     <div className={styles.login}>
       <div className={styles.left_side}>
@@ -42,11 +71,25 @@ const RegistrationPage = () => {
             <div>Or</div>
             <div className={styles.line}></div>
           </div>
-          <MyInput label="Имя"/>
-          <MyInput label="E-mail"/>
+          <MyInput
+            label="Имя"
+            name="Name"
+            onChange={handleChange}
+          />
+          <MyInput
+            label="E-mail"
+            name="Email"
+            onChange={handleChange}
+          />
           <div className={styles.password}>
-            <MyInput label="Пароль"/>
-            <MyInput label="Подтвердите пароль"/>
+            <MyInput
+              label="Пароль"
+              name="Password"
+              onChange={handleChange}
+            />
+            <MyInput
+              label="Подтвердите пароль"
+            />
           </div>
 
           <MyCheckbox sx={{
@@ -56,7 +99,14 @@ const RegistrationPage = () => {
             }
 
           }} label="I accept the Terms of Service and have read Private Policy"/>
-          <MyButton size="large" variant="contained" disabled>Зарегистрироваться</MyButton>
+          <MyButton
+            size="large"
+            variant="contained"
+            // disabled
+            onClick={handleClick}
+          >
+            Зарегистрироваться
+          </MyButton>
           <div className={styles.create_account}>
           <span>
             У вас уже есть учетная запись?

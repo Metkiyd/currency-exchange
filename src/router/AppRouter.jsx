@@ -3,7 +3,6 @@ import {Route, Routes, Navigate} from "react-router-dom";
 import {MainPage} from "../pages/MainPage";
 import {LoginPage} from "../pages/LoginPage";
 import {RegistrationPage} from "../pages/RegistrationPage";
-import PrivateRoutes from "./PrivateRoutes";
 import {ExchangeRatePage} from "../pages/ExchangeRatePage";
 import {ProfilePage} from "../pages/ProfilePage";
 import Examples from "../examples";
@@ -11,63 +10,77 @@ import {CurrencyExchangePage} from "../pages/CurrencyExchangePage";
 import {WalletsPage} from "../pages/WalletsPage";
 import {TransactionPage} from "../pages/TransactionPage";
 
-// const routes = [
-//   {
-//     path: "/",
-//     element: <MainPage/>,
-//     children: [
-//       {
-//         path: "exchange-rate",
-//         element: <ExchangeRatePage />,
-//       },
-//       {
-//         path: "profile",
-//         element: <WalletsPage />
-//       },
-//       {
-//         path: "examples",
-//         element: <Examples />
-//       },
-//     ],
-//   },
-//   {
-//     path: "/login",
-//     element: <LoginPage />,
-//   },
-//   {
-//     path: "/registration",
-//     element: <RegistrationPage/>,
-//   },
-//   {
-//     path: "*",
-//     element: <Navigate to="/" replace />
-//   },
-// ];
+
+const isAuth = localStorage.getItem("authorized")
+
+
+const routes = [
+  {
+    path: "/",
+    element: <MainPage/>,
+    private: false,
+  },
+  {
+    path: "/login",
+    element: <LoginPage/>,
+    private: false,
+  },
+  {
+    path: "/registration",
+    element: <RegistrationPage/>,
+    private: false,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace/>,
+    private: false,
+  },
+  {
+    path: "exchange-rate",
+    element: <ExchangeRatePage/>,
+    private: true,
+  },
+  {
+    path: "profile",
+    element: <ProfilePage/>,
+    private: true,
+  },
+  {
+    path: "currency-exchange",
+    element: <CurrencyExchangePage/>,
+    private: true,
+  },
+  {
+    path: "wallets",
+    element: <WalletsPage/>,
+    private: true,
+  },
+  {
+    path: "transactions",
+    element: <TransactionPage/>,
+    private: true,
+  },
+  {
+    path: "examples",
+    element: <Examples/>,
+    private: true,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/exchange-rate" replace/>,
+    private: true,
+  }
+];
+
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/*<Route */}
-      {/*  element={<PublicRoutes />} */}
-      {/*>*/}
-        <Route exact path="/" element={<MainPage/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/registration" element={<RegistrationPage/>}/>
-
-        <Route path="*" element={<Navigate to="/" replace />} />
-      {/*</Route>*/}
-
-      <Route element={<PrivateRoutes/>}>
-        <Route path="/exchange-rate" element={<ExchangeRatePage/>}/>
-        <Route path="/profile" element={<ProfilePage/>}/>
-        <Route path="/currency-exchange" element={<CurrencyExchangePage/>}/>
-        <Route path="/wallets" element={<WalletsPage/>}/>
-        <Route path="/transactions" element={<TransactionPage/>}/>
-
-        <Route path="/examples" element={<Examples/>}/>
-
-        <Route path="*" element={<Navigate to="/exchange-rate" replace />} />
-      </Route>
+      {routes
+        .filter(route => isAuth ? route.private : !route.private)
+        .map(({path, element}) =>
+          <Route key={path} path={path} element={element}/>
+        )}
 
     </Routes>
   );

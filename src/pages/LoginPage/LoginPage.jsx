@@ -1,15 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "../LoginPage/styles.module.scss";
 import {MyButton} from "../../components/MyUI/MyButton";
 import {useNavigate} from "react-router-dom";
 import {MyInput} from "../../components/MyUI/MyInput";
 import {MyCheckbox} from "../../components/MyUI/MyCheckbox";
 import loginImage from '../../assets/images/login.png'
-import { ReactComponent as GoogleIcon } from '../../assets/icons/googleIcon.svg';
-import { ReactComponent as GitHubIcon } from '../../assets/icons/githubIcon.svg';
+import {ReactComponent as GoogleIcon} from '../../assets/icons/googleIcon.svg';
+import {ReactComponent as GitHubIcon} from '../../assets/icons/githubIcon.svg';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const [form, setForm] = useState({})
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleLogin = () => {
+    const loggedUser = JSON.parse(localStorage.getItem("Users"))
+    const currentUser = loggedUser.find(user => form.Email === user.Email)
+
+    if (form.Email === currentUser.Email && form.Password === currentUser.Password) {
+      localStorage.setItem("authorized", true)
+      localStorage.setItem("currentUser", JSON.stringify(currentUser))
+      navigate(`/profile`)
+    }else {
+      alert('Wrong Email or Password')
+    }
+
+
+  }
+
   return (
     <div className={styles.login}>
       <div className={styles.left_side}>
@@ -41,19 +66,33 @@ const LoginPage = () => {
             <div>Or</div>
             <div className={styles.line}></div>
           </div>
-          <MyInput label="E-mail"/>
-          <MyInput label="Пароль"/>
+          <MyInput
+            label="E-mail"
+            name="Email"
+            onChange={handleChange}
+          />
+          <MyInput
+            label="Пароль"
+            name="Password"
+            onChange={handleChange}
+          />
 
           <MyCheckbox label="Запомнить меня"/>
-          <MyButton size="large" variant="contained" disabled>Войти</MyButton>
+          <MyButton
+            size="large"
+            variant="contained"
+            onClick={handleLogin}
+            // disabled
+          >Войти
+          </MyButton>
           <div className={styles.create_account}>
           <span>
             Нет аккаунта?
           </span>
-          <span
-            className={styles.creator}
-            onClick={() => navigate(`/registration/`)}
-          >
+            <span
+              className={styles.creator}
+              onClick={() => navigate(`/registration/`)}
+            >
             Создать аккаунт
           </span>
           </div>

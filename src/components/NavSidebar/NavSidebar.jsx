@@ -7,8 +7,43 @@ import SyncAltRoundedIcon from "@mui/icons-material/SyncAltRounded";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import {NavLink} from "react-router-dom";
+
+const activeClassName = (active) => active ? styles.active : undefined
+
+const links = [
+  {
+    name: 'Курсы валют',
+    icon: <LeaderboardOutlinedIcon/>,
+    path: '/exchange-rate'
+  },
+  {
+    name: 'Мой профиль',
+    icon: <PersonOutlineOutlinedIcon/>,
+    path: '/profile'
+  },
+  {
+    name: 'Обмен валют',
+    icon: <SyncAltRoundedIcon/>,
+    path: '/currency-exchange'
+  },
+  {
+    name: 'Кошельки',
+    icon: <WorkOutlineOutlinedIcon/>,
+    path: '/wallets'
+  },
+  {
+    name: 'Транзакции',
+    icon: <PlaylistAddCheckRoundedIcon/>,
+    path: '/transactions'
+  },
+];
 
 const NavSidebar = () => {
+  const handleExit = () => {
+    localStorage.removeItem("authorized")
+  }
+
   return (
     <section className={styles.sidebar}>
       <div className={styles.sidebar__container}>
@@ -21,34 +56,31 @@ const NavSidebar = () => {
               finance
             </p>
           </div>
-          <MyButton
-            size="mediumWithIcon" variant="text"
-            startIcon={<LeaderboardOutlinedIcon/>}
-          >Курсы валют</MyButton>
-          <MyButton
-            size="mediumWithIcon" variant="text"
-            startIcon={<PersonOutlineOutlinedIcon/>}
-          >Мой профиль</MyButton>
-          <MyButton
-            size="mediumWithIcon" variant="text"
-            startIcon={<SyncAltRoundedIcon/>}
-          >Обмен валют</MyButton>
-          <MyButton
-            size="mediumWithIcon" variant="text"
-            startIcon={<WorkOutlineOutlinedIcon/>}
-          >Кошельки</MyButton>
-          <MyButton
-            size="mediumWithIcon" variant="text"
-            startIcon={<PlaylistAddCheckRoundedIcon/>}
-          >Транзакции</MyButton>
+          {links.map((link) => {
+              return (
+                <NavLink key={link.path} to={link.path} className={({isActive}) => activeClassName(isActive)}>
+                  <MyButton
+                    size="mediumWithIcon"
+                    variant="text"
+                    startIcon={link.icon}
+                  >{link.name}</MyButton>
+                </NavLink>
+              )
+            }
+          )}
+
         </div>
         <div>
           <div className={styles.sidebar__line}></div>
           <div className={styles.sidebar__leave_button}>
-            <MyButton
-              size="mediumWithIcon" variant="text"
-              startIcon={<ExitToAppRoundedIcon/>}
-            >Выход</MyButton>
+            <NavLink to={'*'}>
+              <MyButton
+                onClick={handleExit}
+                size="mediumWithIcon"
+                variant="text"
+                startIcon={<ExitToAppRoundedIcon/>}
+              >Выход</MyButton>
+            </NavLink>
           </div>
         </div>
       </div>
