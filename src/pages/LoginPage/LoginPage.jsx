@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from "../LoginPage/styles.module.scss";
 import {MyButton} from "../../components/MyUI/MyButton";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {MyInput} from "../../components/MyUI/MyInput";
 import {MyCheckbox} from "../../components/MyUI/MyCheckbox";
 import loginImage from '../../assets/images/login.png'
@@ -27,11 +27,11 @@ const LoginPage = () => {
     if (form.Email === currentUser.Email && form.Password === currentUser.Password) {
       localStorage.setItem("authorized", true)
       localStorage.setItem("currentUser", JSON.stringify(currentUser))
-      navigate(`/profile`)
-    }else {
+
+
+    } else {
       alert('Wrong Email or Password')
     }
-
 
   }
 

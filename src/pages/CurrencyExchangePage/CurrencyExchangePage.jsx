@@ -3,7 +3,7 @@ import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../CurrencyExchangePage/styles.module.scss";
 import {MyInput} from "../../components/MyUI/MyInput";
-import {MySelector} from "../../components/MyUI/MySelector";
+import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
 import {MyButton} from "../../components/MyUI/MyButton";
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 
@@ -15,12 +15,14 @@ const CurrencyExchangePage = () => {
         <div className={styles.main__nav}>
           <p className={styles.main__title}>Обмен валют</p>
         </div>
+
         <div className={styles.profile_info}>
           <p className={styles.profile_title}>Укажите кошелек, сумму и валюту для обмена</p>
 
           <div className={styles.profile_inputs}>
             <MyInput label="Отдаю" sx={{width: 164}}/>
-            <MySelector/>
+            <WalletSelector/>
+
           </div>
           <div className={styles.profile_inputs}>
             <MyInput label="Получаю" sx={{width: 164}}/>

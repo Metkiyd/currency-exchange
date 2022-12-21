@@ -1,0 +1,64 @@
+.page_layout {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+
+}
+
+.main {
+  width: 816px;
+
+  &__title {
+    font-family: 'TT Firs Neue';
+    font-weight: 500;
+    font-size: 32px;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F3F3;
+
+  }
+
+}
+
+.profile_info {
+  margin-top: 48px;
+
+}
+
+.profile_title {
+  font-size: 16px;
+  color: #848484;
+  margin-bottom: 40px;
+}
+
+.profile_inputs {
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
+
+
+}
+
+.svgIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.text_title {
+  text-align: center;
+  font-size: 14px;
+  color: #848484;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  border-bottom: 1px solid #F3F3F3;
+}

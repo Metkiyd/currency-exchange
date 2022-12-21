@@ -20,6 +20,7 @@ import {SlickSlider2} from "./components/MyUI/SlickSlider2";
 import {SlickSlider1} from "./components/MyUI/SlickSlider1";
 
 import React from 'react';
+import {MyModal} from "./components/MyUI/MyModal";
 
 const Examples = () => {
   return (
@@ -78,15 +79,16 @@ const Examples = () => {
       <SlickSlider1/>
 
       <MySearch fullWidth/>
-      <Asynchronous/>
-      <FreeSoloCreateOption/>
+      {/*<Asynchronous/>*/}
+      {/*<FreeSoloCreateOption/>*/}
 
-      <ImageAvatars/>
-      <BadgeAvatars/>
+      {/*<ImageAvatars/>*/}
+      {/*<BadgeAvatars/>*/}
 
-      <FreeSolo/>
+      {/*<FreeSolo/>*/}
 
       <SlickSlider2/>
+      <MyModal/>
     </div>
   );
 };

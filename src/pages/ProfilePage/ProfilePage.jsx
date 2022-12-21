@@ -6,13 +6,16 @@ import styles from "../ProfilePage/styles.module.scss";
 import {MyButton} from "../../components/MyUI/MyButton";
 import {MyInput} from "../../components/MyUI/MyInput";
 
-const users = JSON.parse(localStorage.getItem("Users"))
-console.log('===>users2', users)
+// const users = JSON.parse(localStorage.getItem("Users"))
+// console.log('===>users2', users)
+const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+console.log('===>currentUser', currentUser)
+// const currentUser = loggedUser.find(user => user.Email)
 
 const ProfilePage = () => {
 
 
-  const [form, setForm] = useState(users)
+  const [form, setForm] = useState(currentUser)
   
   console.log('===>form1', form)
   
@@ -23,12 +26,11 @@ const ProfilePage = () => {
     })
   }
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-  // const currentUser = loggedUser.find(user => user.Email)
-  console.log('===>currentUser', currentUser)
+
 
   const handleClick = () => {
-    localStorage.setItem("currentUser", JSON.stringify(currentUser))
+
+    localStorage.setItem("currentUser", JSON.stringify(form))
   }
 
 

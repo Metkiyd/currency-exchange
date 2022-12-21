@@ -9,6 +9,8 @@ import Examples from "../examples";
 import {CurrencyExchangePage} from "../pages/CurrencyExchangePage";
 import {WalletsPage} from "../pages/WalletsPage";
 import {TransactionPage} from "../pages/TransactionPage";
+import {SelectedWallet} from "../pages/WalletsPage/SelectedWallet";
+
 
 
 const isAuth = localStorage.getItem("authorized")
@@ -53,6 +55,18 @@ const routes = [
   {
     path: "wallets",
     element: <WalletsPage/>,
+    private: true,
+    // children: [
+    //   {
+    //     path: "/selected-wallet",
+    //     element: <SelectedWallet/>,
+    //     private: true,
+    //   },
+    // ]
+  },
+  {
+    path: "selected-wallet",
+    element: <SelectedWallet/>,
     private: true,
   },
   {

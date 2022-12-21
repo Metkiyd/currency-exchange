@@ -9,7 +9,7 @@ import {ReactComponent as EurIcon} from '../../../assets/icons/eurIcon.svg';
 import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
 import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
 
-const MySelector = (props) => {
+const WalletSelector = (props) => {
   const [wallet, setWallet] = React.useState('');
 
   const handleChange = (event) => {
@@ -18,8 +18,8 @@ const MySelector = (props) => {
 
   return (
     <FormControl>
-      <InputLabel id="demo-simple-selecfullWidtht-label">
-        Выберите валюту
+      <InputLabel id="demo-simple-selecfullWidtht-label" >
+        Выберите кошелёк
       </InputLabel>
       <Select
         sx={{
@@ -29,7 +29,7 @@ const MySelector = (props) => {
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={wallet}
-        label="Выберите валюту"
+        label="Выберите кошелёк"
         onChange={handleChange}
         {...props}
       >
@@ -54,7 +54,7 @@ const MySelector = (props) => {
   );
 };
 
-export default MySelector;
+export default WalletSelector;
 
 
 // import { makeStyles } from "@material-ui/core/styles";

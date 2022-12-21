@@ -14,14 +14,14 @@ const theme = createTheme({
 
 })
 
-const AddButton = (props) => {
+const NavButton = (props) => {
   return (
       <ThemeProvider theme={theme}>
         <Fab size="small" color="primary" aria-label="next" {...props}>
-          <AddRoundedIcon/>
+          {/*<AddRoundedIcon/>*/}
         </Fab>
       </ThemeProvider>
   );
 };
 
-export default AddButton;
+export default NavButton;

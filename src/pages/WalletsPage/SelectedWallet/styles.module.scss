@@ -1,0 +1,142 @@
+.page_layout {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+
+}
+
+.main {
+  width: 816px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: 'TT Firs Neue';
+    font-weight: 500;
+    font-size: 32px;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F3F3;
+
+  }
+
+}
+
+.id {
+  color: #848484;
+}
+
+.profile_info {
+  margin-top: 48px;
+
+}
+
+.obm1 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 500;
+
+}
+
+.obm2 {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #848484;
+
+}
+
+.profile_title {
+  font-size: 16px;
+  color: #848484;
+  margin-bottom: 40px;
+}
+
+.profile_inputs {
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
+
+
+}
+
+
+.block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 250px;
+  border-bottom: 1px solid #F3F3F3;
+}
+
+.password_inputs {
+  display: flex;
+  flex-flow: wrap;
+  gap: 40px;
+
+
+}
+
+.landing {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 544px;
+  height: 148px;
+  background-color: #F1F1F1;
+  position: relative;
+  overflow: hidden;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 224px;
+  height: 148px;
+  border: 1px solid #ECECEC;
+  padding: 24px;
+
+}
+
+.svg_flag {
+  height: 24px;
+  width: 32px;
+}
+
+.country {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+
+}
+
+.rub {
+  margin: 0;
+  font-weight: 500;
+
+}
+
+.count {
+  font-size: 20px;
+  margin: 0;
+
+}
+
+.circle_small {
+  position: absolute;
+  width: 146px;
+  height: 146px;
+
+  bottom: 70px;
+  right: 50px;
+  //background: ;
+  background-color: #84A50066;
+  filter: blur(79px);
+
+}
