@@ -1,0 +1,51 @@
+.text_500 {
+  font-weight: 500;
+}
+
+.add_wallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 148px;
+  border: 1px dashed #ECECEC;
+  color: #848484;
+}
+
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 224px;
+  height: 148px;
+  border: 1px solid #ECECEC;
+  padding: 24px;
+
+}
+
+.svg_flag {
+  height: 24px;
+  width: 32px;
+}
+
+.country {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+
+}
+
+.rub {
+  margin: 0;
+  font-weight: 500;
+
+}
+
+.count {
+  font-size: 20px;
+  margin: 0;
+
+}

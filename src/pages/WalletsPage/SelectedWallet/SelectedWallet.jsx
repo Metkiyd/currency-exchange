@@ -50,16 +50,11 @@ const SelectedWallet = () => {
               <p className={styles.rub}>
                 RUB
               </p>
-
               <RubIcon className={styles.svg_flag}/>
             </div>
-
-
             <p className={styles.count}>
               120 000, 00 ₽
             </p>
-
-
           </div>
 
 

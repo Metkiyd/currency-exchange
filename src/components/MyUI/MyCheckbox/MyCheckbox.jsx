@@ -7,14 +7,14 @@ const theme = createTheme({
     primary: {
       main: '#84A500'
     },
-    checkbox: {
-      '& .MuiCheckbox-root:disabled': {
-        color: '#a50000',
-      },
-      disabled: {
-        color: '#a50000'
-      }
-    },
+    // checkbox: {
+    //   '& .MuiCheckbox-root:disabled': {
+    //     color: '#a50000',
+    //   },
+    //   disabled: {
+    //     color: '#a50000'
+    //   }
+    // },
 
   }
 })

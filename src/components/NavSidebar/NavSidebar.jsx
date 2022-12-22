@@ -60,9 +60,12 @@ const NavSidebar = () => {
               return (
                 <NavLink key={link.path} to={link.path} className={({isActive}) => activeClassName(isActive)}>
                   <MyButton
+
                     size="mediumWithIcon"
                     variant="text"
                     startIcon={link.icon}
+                    fullWidth
+                    sx={ { justifyContent: 'start'} }
                   >{link.name}</MyButton>
                 </NavLink>
               )
@@ -75,10 +78,12 @@ const NavSidebar = () => {
           <div className={styles.sidebar__leave_button}>
             <NavLink to={'*'}>
               <MyButton
+                fullWidth
                 onClick={handleExit}
                 size="mediumWithIcon"
                 variant="text"
                 startIcon={<ExitToAppRoundedIcon/>}
+                sx={ { justifyContent: 'start'} }
               >Выход</MyButton>
             </NavLink>
           </div>

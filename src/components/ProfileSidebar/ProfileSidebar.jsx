@@ -2,7 +2,9 @@ import React from 'react';
 import styles from "../ProfileSidebar/styles.module.scss";
 import noPhoto from "../../assets/images/noPhoto.png";
 import {AddButton} from "../MyUI/MyNavButton";
-import SyncAltRoundedIcon from "@mui/icons-material/SyncAltRounded";
+
+import {LastTransactions} from "./LastTransactions";
+import {Wallets} from "../../pages/WalletsPage/Wallets";
 
 const ProfileSidebar = () => {
   return (
@@ -32,26 +34,12 @@ const ProfileSidebar = () => {
 
           <p className={styles.text_500}>Алексей Иванов</p>
         </div>
-        <div>
-          <p className={styles.text_500}>Мой баланс</p>
-          <div className={styles.add_wallet}>
-            <p>Добавьте кошелек</p>
-            <AddButton/>
 
-          </div>
-        </div>
-        <div className={styles.transactions}>
-          <p className={styles.text_500}>Последние транзакции</p>
-          <div className={styles.transactions__wrapper}>
-            <div className={styles.transactions__container}>
-              <SyncAltRoundedIcon sx={{fontSize: '32px'}}/>
-              <p className={styles.transactions__text}
-              >Вы не совершили не одной транзакции</p>
+        <Wallets/>
 
-            </div>
+        <LastTransactions/>
 
-          </div>
-        </div>
+
       </div>
 
 

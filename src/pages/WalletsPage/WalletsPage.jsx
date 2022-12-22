@@ -11,6 +11,8 @@ import {IconButton} from "@mui/material";
 import {ReactComponent as GreenWalletIcon} from '../../../src/assets/icons/greenWalletIcon.svg';
 import {ReactComponent as GreenWalletIcon2} from '../../../src/assets/icons/greenWalletIcon2.svg';
 import {NavLink} from "react-router-dom";
+import {SlickSlider1} from "../../components/MyUI/SlickSlider1";
+import {SlickSlider2} from "../../components/MyUI/SlickSlider2";
 
 const WalletsPage = () => {
 
@@ -27,15 +29,21 @@ const WalletsPage = () => {
           <p className={styles.main__title}>Кошельки</p>
         </div>
 
-        <div className={styles.block}>
-          <NavLink to={'/selected-wallet'} >
-            <WalletIcon className={styles.svgIcon} />
-          </NavLink>
+        {/*<div className={styles.block}>*/}
+        {/*  <NavLink to={'/selected-wallet'} >*/}
+        {/*    <WalletIcon className={styles.svgIcon} />*/}
+        {/*  </NavLink>*/}
 
-          <p className={styles.text_title}>
-            На данный момент у вас не <br/> создано ни одного кошелька
-          </p>
-        </div>
+        {/*  <p className={styles.text_title}>*/}
+        {/*    На данный момент у вас не <br/> создано ни одного кошелька*/}
+        {/*  </p>*/}
+        {/*</div>*/}
+
+        <SlickSlider2/>
+
+
+
+
 
         <div className={styles.profile_info}>
           <p className={styles.profile_title}>Добавление кошелька</p>

@@ -9,7 +9,7 @@ import {MyInput} from "../../components/MyUI/MyInput";
 // const users = JSON.parse(localStorage.getItem("Users"))
 // console.log('===>users2', users)
 const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-console.log('===>currentUser', currentUser)
+// console.log('===>currentUser', currentUser)
 // const currentUser = loggedUser.find(user => user.Email)
 
 const ProfilePage = () => {
@@ -17,7 +17,7 @@ const ProfilePage = () => {
 
   const [form, setForm] = useState(currentUser)
   
-  console.log('===>form1', form)
+  // console.log('===>form1', form)
   
   const handleChange = (e) => {
     setForm({
@@ -100,11 +100,11 @@ const ProfilePage = () => {
               sx={{width: 388}}
             />
             <MyInput
-              label="Повторите новый пароль"
+              label="Введите новый пароль"
               sx={{width: 388}}
             />
             <MyInput
-              label="Введите новый пароль"
+              label="Повторите новый пароль"
               sx={{width: 388}}
             />
             <MyButton

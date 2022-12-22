@@ -15,7 +15,6 @@
   &__links {
     flex-direction: column;
     display: flex;
-    align-items: flex-start;
     gap: 8px;
 
   }
@@ -35,6 +34,7 @@
 
 .active {
   background-color: #0000000a;
+  //padding: 12px 0;
 }
 
 

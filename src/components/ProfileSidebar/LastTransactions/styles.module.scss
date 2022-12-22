@@ -1,0 +1,70 @@
+.transactions {
+
+  &__title {
+    border-bottom: 1px solid #F3F3F3;
+  }
+
+  &__text_500 {
+    font-weight: 500;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    height: 256px;
+    border: 1px solid #ECECEC;
+  }
+
+  &__container {
+    text-align: center;
+    width: 160px;
+  }
+
+  &__text {
+    color: #848484;
+  }
+}
+
+.l_transactions {
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #F3F3F3;
+  }
+
+  &__s12 {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+    margin: 24px 0;
+  }
+  &__success {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #84A500;
+  }
+
+  &__pending {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #DEA000;
+  }
+
+  &__reject {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #A52800;
+  }
+
+
+}
+
+
+

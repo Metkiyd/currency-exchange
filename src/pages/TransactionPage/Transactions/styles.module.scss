@@ -1,0 +1,55 @@
+.transaction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 0;
+
+  &__column {
+    display: flex;
+    align-items: center;
+  }
+
+  &__date {
+    padding-left: 16px;
+  }
+
+}
+
+
+.s14 {
+  font-size: 14px;
+  padding-bottom: 6px;
+}
+.s12 {
+  font-size: 12px;
+  color: #848484;
+}
+.s14p {
+  font-size: 14px;
+  padding-right: 6px;
+}
+
+
+.status_margin {
+  margin: 8px;
+}
+
+.success {
+  margin-left: 20px;
+  font-size: 12px;
+  background-color: #84A5001A;
+  color: #84A500;
+}
+
+.pending {
+  font-size: 12px;
+  background-color: #DEA0001A;
+  color: #DEA000;
+}
+
+.reject {
+  margin-left: 6px;
+  font-size: 12px;
+  background-color: #A528001A;
+  color: #A52800;
+}
