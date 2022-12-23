@@ -15,7 +15,7 @@ import {MySelector} from "./components/MyUI/MySelector";
 import {PrevButton, NextButton} from "./components/MyUI/MyNavButton";
 import {Asynchronous, FreeSolo, FreeSoloCreateOption, MySearch} from "./components/MyUI/MySearch";
 import {BadgeAvatars, ImageAvatars} from "./components/MyUI/MyAvatar";
-import {SlickSlider2} from "./components/MyUI/SlickSlider2";
+import {WalletsSlider} from "./components/MyUI/Sliders/WalletsSlider";
 
 import {SlickSlider1} from "./components/MyUI/SlickSlider1";
 
@@ -87,7 +87,7 @@ const Examples = () => {
 
       {/*<FreeSolo/>*/}
 
-      <SlickSlider2/>
+      <WalletsSlider/>
       <MyModal/>
     </div>
   );

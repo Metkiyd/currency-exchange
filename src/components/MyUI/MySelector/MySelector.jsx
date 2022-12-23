@@ -9,11 +9,40 @@ import {ReactComponent as EurIcon} from '../../../assets/icons/eurIcon.svg';
 import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
 import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
 
-const MySelector = (props) => {
-  const [wallet, setWallet] = React.useState('');
+const currencies = [
+  {
+    id:1,
+    icon: <RubIcon/>,
+    value: 'RUB'
+  },
+  {
+    id:2,
+    icon: <UsdIcon/>,
+    value: 'USD'
+  },
+  {
+    id:3,
+    icon: <CnyIcon/>,
+    value: 'CNY'
+  },
+  {
+    id:4,
+    icon: <EurIcon/>,
+    value: 'EUR'
+  },
+  {
+    id:5,
+    icon: <TryIcon/>,
+    value: 'TRY'
+  },
 
-  const handleChange = (event) => {
-    setWallet(event.target.value);
+]
+
+const MySelector = (props) => {
+  const [currency, setCurrency] = React.useState('');
+
+  const handleSelect = (event) => {
+    setCurrency(event.target.value);
   };
 
   return (
@@ -28,26 +57,28 @@ const MySelector = (props) => {
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={wallet}
+        value={currency}
         label="Выберите валюту"
-        onChange={handleChange}
+        onChange={handleSelect}
         {...props}
       >
-        <MenuItem value={10}>
-          <RubIcon/>
-          RUB</MenuItem>
-        <MenuItem value={20}>
-          <UsdIcon/>
-          USD</MenuItem>
-        <MenuItem value={30}>
-          <CnyIcon/>
-          CNY</MenuItem>
-        <MenuItem value={40}>
-          <EurIcon/>
-          EUR</MenuItem>
-        <MenuItem value={50}>
-          <TryIcon/>
-          TRY</MenuItem>
+        {
+          currencies.map(
+            ({
+                icon,
+                value,
+                id
+              }) => {
+              return (
+                <MenuItem key={id} value={value}>
+                  {icon}
+                  {value}
+                </MenuItem>
+
+              )
+            }
+          )
+        }
       </Select>
     </FormControl>
 

@@ -14,14 +14,42 @@ import {ReactComponent as GreenWalletIcon} from '../../../../src/assets/icons/gr
 import {ReactComponent as GreenWalletIcon2} from '../../../../src/assets/icons/greenWalletIcon2.svg';
 import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.svg';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
+import {useNavigate} from "react-router-dom";
+// import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
+
+const wallets = JSON.parse(localStorage.getItem('wallets')) || []
+console.log('===>wallets', wallets)
 
 
 const SelectedWallet = () => {
+  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(open => !open);
+
+  const { id, balance, currency, sign, icon } = wallets;
+
+  //   : '10 000, 00',
+  //   : 'RUB',
+  //   : '₽',
+  //   : <RubIcon/>
+
+  // const handleLogin = () => {
+  //   const loggedUser = JSON.parse(localStorage.getItem("Users"))
+  //   const currentUser = loggedUser.find(user => form.Email === user.Email)
+  //
+  //   if (form.Email === currentUser.Email && form.Password === currentUser.Password) {
+  //     localStorage.setItem("authorized", true)
+  //     localStorage.setItem("currentUser", JSON.stringify(currentUser))
+  //
+  //
+  //   } else {
+  //     alert('Wrong Email or Password')
+  //   }
+  //
+  // }
 
   return (
     <div className={styles.page_layout}>
@@ -30,12 +58,18 @@ const SelectedWallet = () => {
         <div className={styles.main__nav}>
 
           <div className={styles.main__title}>
-            <KeyboardBackspaceRoundedIcon/>
+            <IconButton
+              aria-label="back"
+              onClick={() => navigate(-1)}>
+              <KeyboardBackspaceRoundedIcon/>
+            </IconButton>
+
+
             <p>
-              RUB
+              {currency}
             </p>
             <div>/</div>
-            <p className={styles.id}>#2102</p>
+            <p className={styles.id}>#{id}</p>
           </div>
           <MyButton
             variant="outlined"
@@ -50,14 +84,12 @@ const SelectedWallet = () => {
               <p className={styles.rub}>
                 RUB
               </p>
-              <RubIcon className={styles.svg_flag}/>
+              <RubIcon/>
             </div>
             <p className={styles.count}>
               120 000, 00 ₽
             </p>
           </div>
-
-
 
 
           <div className={styles.landing}>
@@ -85,10 +117,6 @@ const SelectedWallet = () => {
             <div className={styles.circle_small}></div>
 
           </div>
-
-
-
-
 
 
         </div>
@@ -136,7 +164,6 @@ const SelectedWallet = () => {
               onClose={handleClose}
             />
           </div>
-
 
 
         </div>

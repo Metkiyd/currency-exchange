@@ -4,6 +4,7 @@ import SyncAltRoundedIcon from "@mui/icons-material/SyncAltRounded";
 
 const recentTransactions = [
   {
+    id: 1,
     outcome: '123,02',
     outCur: 'USD',
     income: '10000',
@@ -11,6 +12,7 @@ const recentTransactions = [
     status: 'success'
   },
   {
+    id: 2,
     outcome: '12,02',
     outCur: 'USD',
     income: '1000',
@@ -18,6 +20,7 @@ const recentTransactions = [
     status: 'success'
   },
   {
+    id: 3,
     outcome: '123,02',
     outCur: 'USD',
     income: '10000',
@@ -25,6 +28,7 @@ const recentTransactions = [
     status: 'pending'
   },
   {
+    id: 4,
     outcome: '123,02',
     outCur: 'USD',
     income: '10000',
@@ -56,6 +60,7 @@ const LastTransactions = () => {
       <div className={styles.l_transactions}>
         {recentTransactions.map(
           ({
+             id,
              outcome,
              outCur,
              income,
@@ -63,7 +68,7 @@ const LastTransactions = () => {
              status
            }) => {
             return (
-              <div className={styles.l_transactions__item}>
+              <div key={id} className={styles.l_transactions__item}>
                 <p className={styles.l_transactions__s12}>
                   <span>-{outcome}</span>
                   <span>{outCur}</span>
