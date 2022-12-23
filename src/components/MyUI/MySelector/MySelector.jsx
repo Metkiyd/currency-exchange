@@ -3,47 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import {ReactComponent as RubIcon} from '../../../assets/icons/rubIcon.svg';
-import {ReactComponent as UsdIcon} from '../../../assets/icons/usdIcon.svg';
-import {ReactComponent as EurIcon} from '../../../assets/icons/eurIcon.svg';
-import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
-import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
-
-const currencies = [
-  {
-    id:1,
-    icon: <RubIcon/>,
-    value: 'RUB'
-  },
-  {
-    id:2,
-    icon: <UsdIcon/>,
-    value: 'USD'
-  },
-  {
-    id:3,
-    icon: <CnyIcon/>,
-    value: 'CNY'
-  },
-  {
-    id:4,
-    icon: <EurIcon/>,
-    value: 'EUR'
-  },
-  {
-    id:5,
-    icon: <TryIcon/>,
-    value: 'TRY'
-  },
-
-]
 
 const MySelector = (props) => {
-  const [currency, setCurrency] = React.useState('');
-
-  const handleSelect = (event) => {
-    setCurrency(event.target.value);
-  };
+  console.log('===>props', props)
 
   return (
     <FormControl>
@@ -57,13 +19,13 @@ const MySelector = (props) => {
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={currency}
+        value={props.changed}
         label="Выберите валюту"
-        onChange={handleSelect}
+        onChange={props.onChange}
         {...props}
       >
         {
-          currencies.map(
+          props.currencies.map(
             ({
                 icon,
                 value,

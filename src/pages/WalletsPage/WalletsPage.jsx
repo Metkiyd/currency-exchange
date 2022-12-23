@@ -13,6 +13,40 @@ import {ReactComponent as GreenWalletIcon2} from '../../../src/assets/icons/gree
 import {NavLink} from "react-router-dom";
 import {SlickSlider1} from "../../components/MyUI/SlickSlider1";
 import {WalletsSlider} from "../../components/MyUI/Sliders/WalletsSlider";
+import {ReactComponent as RubIcon} from '../../assets/icons/rubIcon.svg';
+import {ReactComponent as UsdIcon} from '../../assets/icons/usdIcon.svg';
+import {ReactComponent as EurIcon} from '../../assets/icons/eurIcon.svg';
+import {ReactComponent as CnyIcon} from '../../assets/icons/cnyIcon.svg';
+import {ReactComponent as TryIcon} from '../../assets/icons/tryIcon.svg';
+
+const currencies = [
+  {
+    id:1,
+    icon: <RubIcon/>,
+    value: 'RUB'
+  },
+  {
+    id:2,
+    icon: <UsdIcon/>,
+    value: 'USD'
+  },
+  {
+    id:3,
+    icon: <CnyIcon/>,
+    value: 'CNY'
+  },
+  {
+    id:4,
+    icon: <EurIcon/>,
+    value: 'EUR'
+  },
+  {
+    id:5,
+    icon: <TryIcon/>,
+    value: 'TRY'
+  },
+
+]
 
 
 const wallets = JSON.parse(localStorage.getItem('wallets')) || []
@@ -22,7 +56,6 @@ const WalletsPage = () => {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => setOpen(false);
 
   const [form, setForm] = useState({
@@ -38,10 +71,8 @@ const WalletsPage = () => {
     })
   }
 
-  const handleClick = (e) => {
-
+  const handleClick = () => {
     alert('popolnen successfully')
-
     wallets.push(form)
     localStorage.setItem("wallets", JSON.stringify(wallets))
   }
@@ -82,7 +113,9 @@ const WalletsPage = () => {
             <MySelector
               sx={{width: 388}}
               name="currency"
-              // onChange={handleChange}
+              currencies={currencies}
+              changed={form.currency}
+              onChange={handleChange}
             />
             <MyInput
               label="# Номер кошелька"

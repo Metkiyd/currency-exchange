@@ -14,7 +14,7 @@ import {ReactComponent as GreenWalletIcon} from '../../../../src/assets/icons/gr
 import {ReactComponent as GreenWalletIcon2} from '../../../../src/assets/icons/greenWalletIcon2.svg';
 import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.svg';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 const wallets = JSON.parse(localStorage.getItem('wallets')) || []
@@ -23,13 +23,16 @@ console.log('===>wallets', wallets)
 
 const SelectedWallet = () => {
   const navigate = useNavigate();
+  
+  const {id} = useParams()
+  console.log('===>id', id)
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(open => !open);
 
-  const { id, balance, currency, sign, icon } = wallets;
+  const { balance, currency, sign, icon } = wallets;
 
   //   : '10 000, 00',
   //   : 'RUB',
