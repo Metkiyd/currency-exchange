@@ -7,7 +7,7 @@ import SyncAltRoundedIcon from "@mui/icons-material/SyncAltRounded";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 const activeClassName = (active) => active ? styles.active : undefined
 
@@ -40,8 +40,10 @@ const links = [
 ];
 
 const NavSidebar = () => {
+  const navigate = useNavigate();
   const handleExit = () => {
     localStorage.removeItem("authorized")
+    // navigate(`/`, {replace: true})
   }
 
   return (

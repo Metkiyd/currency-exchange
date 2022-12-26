@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import React from 'react';
+import React, {useState} from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "../../../../pages/WalletsPage/Wallets/styles.module.scss";
@@ -7,10 +7,24 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import {IconButton} from "@mui/material";
 import {NavLink} from "react-router-dom";
-import {wallets} from "../WalletsSlider/WalletsSlider";
+// import {wallets} from "../WalletsSlider/WalletsSlider";
+
+// const wallets = JSON.parse(localStorage.getItem('wallets')) || []
 
 
 function SidebarSlider() {
+
+  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+// console.log('===>AllUsers', allUsers)
+
+  const authorized = JSON.parse(localStorage.getItem("authorized"))
+// console.log('===>authorized', authorized)
+
+  const loggedUser = allUsers.find(user => authorized === user.id) || null
+  // console.log('===>loggedUser', loggedUser)
+
+  const [wallets, setWallets] = useState(loggedUser.wallets)
+  // console.log('===>wallets', wallets)
 
   const [sliderRef, setSliderRef] = React.useState(null)
 

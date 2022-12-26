@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,15 +10,33 @@ import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
 import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
 
 const WalletSelector = (props) => {
-  const [wallet, setWallet] = React.useState('');
+  console.log('===>Wallets.props', props)
 
-  const handleChange = (event) => {
-    setWallet(event.target.value);
-  };
+
+
+
+
+  const [form, setForm] = useState(
+    {
+      id: '',
+      balance: '0',
+      currency: '',
+      sign: '',
+      icon: null
+    }
+  )
+  console.log('===>form', form)
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <FormControl>
-      <InputLabel id="demo-simple-selecfullWidtht-label" >
+      <InputLabel id="demo-simple-selecfullWidtht-label">
         Выберите кошелёк
       </InputLabel>
       <Select
@@ -28,26 +46,54 @@ const WalletSelector = (props) => {
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={wallet}
+        value={props.wallets}
         label="Выберите кошелёк"
         onChange={handleChange}
         {...props}
       >
-        <MenuItem value={10}>
-          <RubIcon/>
-          RUB</MenuItem>
-        <MenuItem value={20}>
-          <UsdIcon/>
-          USD</MenuItem>
-        <MenuItem value={30}>
-          <CnyIcon/>
-          CNY</MenuItem>
-        <MenuItem value={40}>
-          <EurIcon/>
-          EUR</MenuItem>
-        <MenuItem value={50}>
-          <TryIcon/>
-          TRY</MenuItem>
+        {
+          props.wallets.map(
+            ({
+               icon,
+               currency,
+               value,
+               id,
+               balance,
+             }) => {
+              return (
+                <MenuItem key={id} value={value}>
+                  <div style={{
+                    display: 'flex',
+                    gap: '8px',
+                  }}>
+                    {id}
+                    {currency}
+                    {balance}
+                  </div>
+
+
+                </MenuItem>
+
+              )
+            }
+          )
+        }
+        {/*<MenuItem value={10}>*/}
+        {/*  <RubIcon/>*/}
+        {/*  RUB</MenuItem>*/}
+        {/*<MenuItem value={20}>*/}
+        {/*  <UsdIcon/>*/}
+        {/*  USD</MenuItem>*/}
+        {/*<MenuItem value={30}>*/}
+        {/*  <CnyIcon/>*/}
+        {/*  CNY</MenuItem>*/}
+        {/*<MenuItem value={40}>*/}
+        {/*  <EurIcon/>*/}
+        {/*  EUR</MenuItem>*/}
+        {/*<MenuItem value={50}>*/}
+        {/*  <TryIcon/>*/}
+        {/*  TRY</MenuItem>*/}
+
       </Select>
     </FormControl>
 

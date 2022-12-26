@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../WalletsPage/styles.module.scss";
@@ -19,49 +19,75 @@ import {ReactComponent as EurIcon} from '../../assets/icons/eurIcon.svg';
 import {ReactComponent as CnyIcon} from '../../assets/icons/cnyIcon.svg';
 import {ReactComponent as TryIcon} from '../../assets/icons/tryIcon.svg';
 
-const currencies = [
+export const currencies = [
   {
     id:1,
+    value: 'RUB',
+    sign: '₽',
     icon: <RubIcon/>,
-    value: 'RUB'
   },
   {
     id:2,
+    sign: '$',
     icon: <UsdIcon/>,
     value: 'USD'
   },
   {
     id:3,
+    sign: '¥',
     icon: <CnyIcon/>,
     value: 'CNY'
   },
   {
     id:4,
+    sign: '€',
     icon: <EurIcon/>,
     value: 'EUR'
   },
   {
     id:5,
+    sign: '₺',
     icon: <TryIcon/>,
     value: 'TRY'
   },
 
 ]
 
+const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+// console.log('===>AllUsers', allUsers)
 
-const wallets = JSON.parse(localStorage.getItem('wallets')) || []
-// console.log('===>wallets', wallets)
+const authorized = JSON.parse(localStorage.getItem("authorized"))
+// console.log('===>authorized', authorized)
+
+// console.log('===>loggedUser.wallets', loggedUser.wallets)
 
 const WalletsPage = () => {
+
+  const loggedUser = allUsers.find(user => authorized === user.id) || null
+  console.log('===>loggedUser', loggedUser)
+
+  const [users, setUsers] = useState(allUsers)
+  // console.log('===>users', users)
+
+  const [wallets, setWallets] = useState(loggedUser.wallets)
+  console.log('===>wallets', wallets)
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [form, setForm] = useState({
-    currency: '',
-    id: '',
-  })
+  const [form, setForm] = useState(
+    {
+      id: '',
+      balance: '0',
+      currency: '',
+      sign: '',
+      icon: null
+    }
+
+
+  )
   console.log('===>form', form)
 
   const handleChange = (e) => {
@@ -72,10 +98,27 @@ const WalletsPage = () => {
   }
 
   const handleClick = () => {
-    alert('popolnen successfully')
+
     wallets.push(form)
-    localStorage.setItem("wallets", JSON.stringify(wallets))
+
+
+    setUsers(users.map(user => {
+      if (user.id === authorized) {
+        return {
+          ...user
+        }
+      }
+
+      return user
+    }))
+    alert('popolnen successfully')
+
   }
+
+
+  useEffect(() => {
+    localStorage.setItem("allUsers", JSON.stringify(users))
+  }, [users])
 
   return (
     <div className={styles.page_layout}>
@@ -181,11 +224,6 @@ export default WalletsPage;
 
 
 
-// const navigate = useNavigate();
-//
-// const {wallets} = useTypedSelector((state) => state.wallets) ?? {};
-//
-// const {FetchWallets, createWalletUser} = useActions();
 //
 // const newArrayCountry = countryIcon.filter(country => !wallets.find(wal => wal.currency === country?.currency))
 //
@@ -205,6 +243,7 @@ export default WalletsPage;
 //     setIsDisabledBtn(false);
 //   }
 // }, [numberPurse, currency]);
+
 // const addPurse = () => {
 //   const isFindWallet = wallets?.find(
 //     (wallet) => wallet.currency === currency
@@ -213,6 +252,7 @@ export default WalletsPage;
 //     setModalErrorIsOpen(true);
 //   } else {
 //     setOpenModal(true);
+
 //     const newWallet: CreateWalletType[] = [
 //       ...wallets,
 //       {

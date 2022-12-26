@@ -12,6 +12,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({})
+  console.log('===>form', form)
 
   const handleChange = (e) => {
     setForm({
@@ -21,12 +22,17 @@ const LoginPage = () => {
   }
 
   const handleLogin = () => {
-    const loggedUser = JSON.parse(localStorage.getItem("Users"))
-    const currentUser = loggedUser.find(user => form.Email === user.Email)
+    const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+    console.log('===>Users', allUsers)
+    const loggedUser = allUsers.find(user => form.Email === user.Email)
+    console.log('===>loggedUser', loggedUser)
 
-    if (form.Email === currentUser.Email && form.Password === currentUser.Password) {
-      localStorage.setItem("authorized", true)
-      localStorage.setItem("currentUser", JSON.stringify(currentUser))
+    if (form.Email === loggedUser.Email && form.Password === loggedUser.Password) {
+      localStorage.setItem("authorized", JSON.stringify(loggedUser.id))
+
+      // localStorage.setItem("loggedUser", JSON.stringify(loggedUser))
+      //для наглядности
+      // navigate(`/exchange-rate`, {replace: true})
 
 
     } else {

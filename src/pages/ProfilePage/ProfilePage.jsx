@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../ProfilePage/styles.module.scss";
@@ -6,16 +6,23 @@ import styles from "../ProfilePage/styles.module.scss";
 import {MyButton} from "../../components/MyUI/MyButton";
 import {MyInput} from "../../components/MyUI/MyInput";
 
-// const users = JSON.parse(localStorage.getItem("Users"))
-// console.log('===>users2', users)
-const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-// console.log('===>currentUser', currentUser)
-// const currentUser = loggedUser.find(user => user.Email)
+const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+// console.log('===>AllUsers', allUsers)
+
+const authorized = JSON.parse(localStorage.getItem("authorized"))
+// console.log('===>authorized', authorized)
+
 
 const ProfilePage = () => {
 
 
-  const [form, setForm] = useState(currentUser)
+  const loggedUser = allUsers.find(user => authorized === user.id) || null
+  console.log('===>loggedUser', loggedUser)
+
+  const [users, setUsers] = useState(allUsers)
+  // console.log('===>users', users)
+
+  const [form, setForm] = useState(loggedUser)
   
   // console.log('===>form1', form)
   
@@ -30,8 +37,22 @@ const ProfilePage = () => {
 
   const handleClick = () => {
 
-    localStorage.setItem("currentUser", JSON.stringify(form))
+    setUsers(users.map(user => {
+      if (user.id === authorized) {
+        return {
+          ...user,
+          ...form
+        }
+      }
+
+      return user
+    }))
+
   }
+
+  useEffect(() => {
+    localStorage.setItem("allUsers", JSON.stringify(users))
+  }, [users])
 
 
 
@@ -53,7 +74,7 @@ const ProfilePage = () => {
 
           <div className={styles.profile_inputs}>
             <MyInput
-              defaultValue={currentUser.Name}
+              defaultValue={loggedUser.Name}
   
               label="Имя"
               name="Name"
@@ -61,7 +82,7 @@ const ProfilePage = () => {
               onChange={handleChange}
             />
             <MyInput
-              defaultValue={currentUser.Email}
+              defaultValue={loggedUser.Email}
               label="E-mail"
               name="Email"
               sx={{width: 388}}
@@ -69,21 +90,21 @@ const ProfilePage = () => {
             />
             <MyInput
               label="Город"
-              defaultValue={currentUser.City}
+              defaultValue={loggedUser.City}
               sx={{width: 388}}
               name="City"
               onChange={handleChange}
             />
             <MyInput
               label="Дата рождения"
-              defaultValue={currentUser.Birthday}
+              defaultValue={loggedUser.Birthday}
               sx={{width: 388}}
               name="Birthday"
               onChange={handleChange}
             />
             <MyInput
               label="Номер телефона"
-              defaultValue={currentUser.Phone}
+              defaultValue={loggedUser.Phone}
               sx={{width: 388}}
               name="Phone"
               onChange={handleChange}

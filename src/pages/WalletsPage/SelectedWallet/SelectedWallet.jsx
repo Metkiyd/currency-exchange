@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavSidebar} from "../../../components/NavSidebar";
 import {ProfileSidebar} from "../../../components/ProfileSidebar";
 import styles from "../SelectedWallet/styles.module.scss";
@@ -14,45 +14,108 @@ import {ReactComponent as GreenWalletIcon} from '../../../../src/assets/icons/gr
 import {ReactComponent as GreenWalletIcon2} from '../../../../src/assets/icons/greenWalletIcon2.svg';
 import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.svg';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useLocation} from "react-router-dom";
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
-const wallets = JSON.parse(localStorage.getItem('wallets')) || []
-console.log('===>wallets', wallets)
 
 
 const SelectedWallet = () => {
-  const navigate = useNavigate();
-  
+
+
   const {id} = useParams()
-  console.log('===>id', id)
+  // console.log('===>id', id)
+
+
+
+  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+// console.log('===>AllUsers', allUsers)
+
+  const [users, setUsers] = useState(allUsers)
+
+  const authorized = JSON.parse(localStorage.getItem("authorized"))
+// console.log('===>authorized', authorized)
+
+  const loggedUser = allUsers.find(user => authorized === user.id) || null
+  // console.log('===>loggedUser', loggedUser)
+
+  const [wallets, setWallets] = useState(loggedUser.wallets)
+  // console.log('===>wallets', wallets)
+
+  const selectedWallet = wallets.find(wallet => id === wallet.id) || null
+  // console.log('===>selectedWallet', selectedWallet)
+
+  const navigate = useNavigate();
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(open => !open);
 
-  const { balance, currency, sign, icon } = wallets;
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
 
-  //   : '10 000, 00',
-  //   : 'RUB',
-  //   : '₽',
-  //   : <RubIcon/>
+  const [form, setForm] = useState({})
+  // console.log('===>form', form)
 
-  // const handleLogin = () => {
-  //   const loggedUser = JSON.parse(localStorage.getItem("Users"))
-  //   const currentUser = loggedUser.find(user => form.Email === user.Email)
+  const handleClick = () => {
+
+    // selectedWallet.push(form)
+
+
+    setUsers(users.map(user => {
+      if (user.id === authorized) {
+        return {
+          ...user,
+          // ...form
+        }
+      }
+
+      return user
+    }))
+    alert('popolnen successfully')
+
+  }
+
+  const handleRemove = () => {
+
+    // selectedWallet.assign(form)
+    let removed = wallets.filter(item => item.id !== selectedWallet.id);
+    // console.log('===>wallets1', removed)
+
+
+    setUsers(users.map(user => {
+      if (user.id === authorized) {
+        return {
+          ...user,
+
+          ...form
+        }
+      }
+
+      return user
+    }))
+
+    alert('udalen successfully')
+      navigate(`/wallets`, {replace: true})
+
+  }
+
+  useEffect(() => {
+    localStorage.setItem("allUsers", JSON.stringify(users))
+  }, [users])
+
+  // const removeWallet = () => {
   //
-  //   if (form.Email === currentUser.Email && form.Password === currentUser.Password) {
-  //     localStorage.setItem("authorized", true)
-  //     localStorage.setItem("currentUser", JSON.stringify(currentUser))
+  //   localStorage.setItem("wallets", JSON.stringify(removed));
   //
-  //
-  //   } else {
-  //     alert('Wrong Email or Password')
-  //   }
-  //
+  //   navigate(`/wallets`, {replace: true})
   // }
+
 
   return (
     <div className={styles.page_layout}>
@@ -69,13 +132,15 @@ const SelectedWallet = () => {
 
 
             <p>
-              {currency}
+              {selectedWallet.currency}
+
             </p>
             <div>/</div>
             <p className={styles.id}>#{id}</p>
           </div>
           <MyButton
             variant="outlined"
+            onClick={handleRemove}
           >Удалить кошелек</MyButton>
         </div>
 
@@ -85,12 +150,13 @@ const SelectedWallet = () => {
           <div className={styles.card}>
             <div className={styles.country}>
               <p className={styles.rub}>
-                RUB
+                {selectedWallet.currency}
               </p>
               <RubIcon/>
             </div>
             <p className={styles.count}>
-              120 000, 00 ₽
+              {selectedWallet.balance}
+              ₽
             </p>
           </div>
 
@@ -131,6 +197,8 @@ const SelectedWallet = () => {
             <MyInput
               label="Сумма"
               sx={{width: 388}}
+              name="balance"
+              onChange={handleChange}
             />
             <MyInput
               label="Номер карты"
@@ -150,7 +218,8 @@ const SelectedWallet = () => {
             />
 
             <MyButton
-              onClick={handleOpen}
+              // onClick={handleOpen}
+              onClick={handleClick}
               size="large"
               variant="contained"
               // disabled
@@ -182,45 +251,8 @@ export default SelectedWallet;
 
 
 
+// const [openModal, setOpenModal] = useState(false);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const {register, handleSubmit, reset, watch, formState: {errors}} = useForm<Inputs>({mode: "onChange"});
-//
-// const location = useLocation();
-//
-// const navigate = useNavigate();
-// const {updateWalletUser, removeWalletUser} = useActions();
-//
-// const [openModal, setOpenModal] = useState<boolean>(false);
-//
-// const onSubmit: SubmitHandler<Inputs> = data => (data);
-//
-// const {wallets} = useTypedSelector((state) => state.wallets);
 //
 // const currentWallet: WalletsType | undefined = wallets.find(
 //   (wallet) => `#${wallet.currency}` === location.hash
@@ -230,7 +262,7 @@ export default SelectedWallet;
 //   const newWallets =
 //     currentWallet &&
 //     wallets.filter((wallet) => wallet.currency !== currentWallet.currency);
-//   removeWalletUser(newWallets)
+
 //
 //   navigate("/purse-page", {replace: true});
 // };

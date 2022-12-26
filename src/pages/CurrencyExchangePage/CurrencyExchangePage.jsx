@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../CurrencyExchangePage/styles.module.scss";
@@ -6,8 +6,45 @@ import {MyInput} from "../../components/MyUI/MyInput";
 import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
 import {MyButton} from "../../components/MyUI/MyButton";
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import {currencies} from "../WalletsPage/WalletsPage";
+
+
+
 
 const CurrencyExchangePage = () => {
+
+  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
+// console.log('===>AllUsers', allUsers)
+
+  const authorized = JSON.parse(localStorage.getItem("authorized"))
+// console.log('===>authorized', authorized)
+
+  const loggedUser = allUsers.find(user => authorized === user.id) || null
+  // console.log('===>loggedUser', loggedUser)
+
+  const [wallets, setWallets] = useState(loggedUser.wallets)
+  console.log('===>wallets', wallets)
+
+
+  const [form, setForm] = useState({
+    give: '',
+    get: '0',
+    // currency: '',
+    // sign: '',
+    // icon: null
+
+  })
+  console.log('===>form', form)
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+
+
   return (
     <div className={styles.page_layout}>
       <NavSidebar/>
@@ -20,13 +57,34 @@ const CurrencyExchangePage = () => {
           <p className={styles.profile_title}>Укажите кошелек, сумму и валюту для обмена</p>
 
           <div className={styles.profile_inputs}>
-            <MyInput label="Отдаю" sx={{width: 164}}/>
-            <WalletSelector/>
+            <MyInput
+              label="Отдаю"
+              sx={{width: 164}}
+              name="give"
+              onChange={handleChange}
+            />
+
+            <WalletSelector
+              name="currency"
+              wallets={wallets}
+              changed={form.currency}
+              onChange={handleChange}
+            />
 
           </div>
           <div className={styles.profile_inputs}>
-            <MyInput label="Получаю" sx={{width: 164}}/>
-            <MySelector/>
+            <MyInput
+              label="Получаю"
+              sx={{width: 164}}
+              name="get"
+              onChange={handleChange}
+            />
+            <MySelector
+              name="currency"
+              currencies={currencies}
+              changed={form.currency}
+              onChange={handleChange}
+            />
           </div>
 
           <MyButton

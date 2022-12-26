@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
 const MySelector = (props) => {
-  console.log('===>props', props)
+  console.log('===>Currencies.props', props)
 
   return (
     <FormControl>
@@ -33,8 +33,15 @@ const MySelector = (props) => {
               }) => {
               return (
                 <MenuItem key={id} value={value}>
-                  {icon}
-                  {value}
+                  <div style={{
+                    display: 'flex',
+                    gap: '8px',
+                  }}>
+                    {icon}
+                    {value}
+                  </div>
+
+
                 </MenuItem>
 
               )
