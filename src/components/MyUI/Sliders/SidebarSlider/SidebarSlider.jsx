@@ -87,7 +87,8 @@ function SidebarSlider() {
                       <p className={styles.rub}>
                         {currency}
                       </p>
-                      {icon}
+                      <img src={icon} alt={currency}/>
+                      {/*{icon}*/}
                     </div>
                     <p className={styles.count}>
                       {balance} {sign}

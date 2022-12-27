@@ -37,24 +37,22 @@ const MySelector = (props) => {
                     display: 'flex',
                     gap: '8px',
                   }}>
-                    {icon}
+                    <img src={icon} alt={currency}/>
                     {currency}
                   </div>
-
-
                 </MenuItem>
-
               )
             }
-          )
+        )
         }
       </Select>
     </FormControl>
 
   );
-};
+}
+  ;
 
-export default MySelector;
+  export default MySelector;
 
 
 // import { makeStyles } from "@material-ui/core/styles";

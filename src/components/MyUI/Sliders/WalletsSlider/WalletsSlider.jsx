@@ -64,12 +64,12 @@ function WalletsSlider() {
 // console.log('===>authorized', authorized)
 
   const loggedUser = allUsers.find(user => authorized === user.id) || null
-  console.log('===>loggedUser', loggedUser)
+  // console.log('===>loggedUser', loggedUser)
 
   const [wallets, setWallets] = useState(loggedUser.wallets)
-  console.log('===>wallets', wallets)
+  // console.log('===>wallets', wallets)
 
-  const [sliderRef, setSliderRef] = React.useState(null)
+  const [sliderRef, setSliderRef] = useState(null)
 
   const settings = {
     infinite: true,
@@ -109,7 +109,8 @@ function WalletsSlider() {
                       <p className={styles.rub}>
                         {currency}
                       </p>
-                      {icon}
+                      <img src={icon} alt={currency}/>
+                      {/*{icon}*/}
                     </div>
                     <p className={styles.count}>
                       {balance} {sign}

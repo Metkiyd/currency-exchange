@@ -12,7 +12,6 @@ import {TransactionPage} from "../pages/TransactionPage";
 import {SelectedWallet} from "../pages/WalletsPage/SelectedWallet";
 
 
-
 const isAuth = localStorage.getItem("authorized")
 
 
@@ -95,7 +94,6 @@ const AppRouter = () => {
         .map(({path, element}) =>
           <Route key={path} path={path} element={element}/>
         )}
-
     </Routes>
   );
 };

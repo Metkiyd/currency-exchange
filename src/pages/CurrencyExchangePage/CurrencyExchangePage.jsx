@@ -23,18 +23,23 @@ const CurrencyExchangePage = () => {
   // console.log('===>loggedUser', loggedUser)
 
   const [wallets, setWallets] = useState(loggedUser.wallets)
-  console.log('===>wallets', wallets)
+  // console.log('===>wallets', wallets)
 
 
   const [form, setForm] = useState({
-    give: '',
-    get: '0',
-    // currency: '',
+    giveValue: 0,
+    getValue: 0,
+    give: 0,
+    get: 0,
+    giveWallet: "",
+    getWallet: "",
+    currency: '',
+    wallet: ""
     // sign: '',
     // icon: null
 
   })
-  console.log('===>form', form)
+  // console.log('===>form', form)
 
   const handleChange = (e) => {
     setForm({
@@ -61,13 +66,14 @@ const CurrencyExchangePage = () => {
               label="Отдаю"
               sx={{width: 164}}
               name="give"
+              type="number"
               onChange={handleChange}
             />
 
             <WalletSelector
-              name="currency"
+              name="giveWallet"
               wallets={wallets}
-              changed={form.currency}
+              changed={form.giveWallet}
               onChange={handleChange}
             />
 
@@ -77,12 +83,13 @@ const CurrencyExchangePage = () => {
               label="Получаю"
               sx={{width: 164}}
               name="get"
+              type="number"
               onChange={handleChange}
             />
-            <MySelector
-              name="currency"
-              currencies={currencies}
-              changed={form.currency}
+            <WalletSelector
+              name="getWallet"
+              wallets={wallets}
+              changed={form.getWallet}
               onChange={handleChange}
             />
           </div>

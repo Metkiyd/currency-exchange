@@ -13,42 +13,42 @@ import {ReactComponent as GreenWalletIcon2} from '../../../src/assets/icons/gree
 import {NavLink} from "react-router-dom";
 import {SlickSlider1} from "../../components/MyUI/SlickSlider1";
 import {WalletsSlider} from "../../components/MyUI/Sliders/WalletsSlider";
-import {ReactComponent as RubIcon} from '../../assets/icons/rubIcon.svg';
-import {ReactComponent as UsdIcon} from '../../assets/icons/usdIcon.svg';
-import {ReactComponent as EurIcon} from '../../assets/icons/eurIcon.svg';
-import {ReactComponent as CnyIcon} from '../../assets/icons/cnyIcon.svg';
-import {ReactComponent as TryIcon} from '../../assets/icons/tryIcon.svg';
+import RubIcon from '../../assets/icons/rubIcon.svg';
+import UsdIcon from '../../assets/icons/usdIcon.svg';
+import EurIcon from '../../assets/icons/eurIcon.svg';
+import CnyIcon from '../../assets/icons/cnyIcon.svg';
+import TryIcon from '../../assets/icons/tryIcon.svg';
 
 export const currencies = [
   {
     id:1,
     currency: 'RUB',
     sign: '₽',
-    icon: <RubIcon/>,
+    icon: RubIcon,
   },
   {
     id:2,
     currency: 'USD',
     sign: '$',
-    icon: <UsdIcon/>,
+    icon: UsdIcon,
   },
   {
     id:3,
     currency: 'CNY',
     sign: '¥',
-    icon: <CnyIcon/>,
+    icon: CnyIcon,
   },
   {
     id:4,
     currency: 'EUR',
     sign: '€',
-    icon: <EurIcon/>,
+    icon: EurIcon,
   },
   {
     id:5,
     currency: 'TRY',
     sign: '₺',
-    icon: <TryIcon/>,
+    icon: TryIcon,
   },
 
 ]
@@ -59,18 +59,17 @@ const allUsers = JSON.parse(localStorage.getItem("allUsers"))
 const authorized = JSON.parse(localStorage.getItem("authorized"))
 // console.log('===>authorized', authorized)
 
-// console.log('===>loggedUser.wallets', loggedUser.wallets)
 
 const WalletsPage = () => {
 
   const loggedUser = allUsers.find(user => authorized === user.id) || null
-  console.log('===>loggedUser', loggedUser)
+  // console.log('===>loggedUser', loggedUser)
 
   const [users, setUsers] = useState(allUsers)
   // console.log('===>users', users)
 
   const [wallets, setWallets] = useState(loggedUser.wallets)
-  console.log('===>wallets', wallets)
+  // console.log('===>wallets', wallets)
 
 
   const [open, setOpen] = React.useState(false);
@@ -78,30 +77,33 @@ const WalletsPage = () => {
   const handleClose = () => setOpen(false);
 
   const [form, setForm] = useState(
-    // ...currencies,
     {
       id: '',
-      balance: '0',
+      balance: 0,
       currency: '',
       // sign: '',
       // icon: null
     }
 
-
   )
-  console.log('===>form', form)
+  // console.log('===>form', form)
+
+  const thisCurrency = currencies.filter(currency => form.currency === currency?.currency)
+
+  // console.log('===>thisCurrency', ...thisCurrency)
 
   const handleChange = (e) => {
     setForm({
       ...form,
+      ...thisCurrency[0],
       [e.target.name]: e.target.value
+
     })
   }
 
   const handleClick = () => {
 
     wallets.push(form)
-
 
     setUsers(users.map(user => {
       if (user.id === authorized) {
@@ -112,7 +114,7 @@ const WalletsPage = () => {
 
       return user
     }))
-    alert('popolnen successfully')
+    alert('added successfully')
 
   }
 
@@ -143,9 +145,6 @@ const WalletsPage = () => {
           <WalletsSlider/>
 
         </div>
-
-
-
 
 
 
@@ -191,15 +190,8 @@ const WalletsPage = () => {
               />
 
             </div>
-
-
           </div>
-
-
-
         </div>
-
-
       </section>
       <ProfileSidebar/>
     </div>

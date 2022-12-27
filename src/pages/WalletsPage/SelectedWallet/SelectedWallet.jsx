@@ -18,14 +18,11 @@ import {useNavigate, useParams, useLocation} from "react-router-dom";
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 
-
 const SelectedWallet = () => {
-
+  const navigate = useNavigate();
 
   const {id} = useParams()
   // console.log('===>id', id)
-
-
 
   const allUsers = JSON.parse(localStorage.getItem("allUsers"))
 // console.log('===>AllUsers', allUsers)
@@ -41,15 +38,11 @@ const SelectedWallet = () => {
   const [wallets, setWallets] = useState(loggedUser.wallets)
   // console.log('===>wallets', wallets)
 
-  const selectedWallet = wallets.find(wallet => id === wallet.id) || null
+  let selectedWallet = wallets.find(wallet => id === wallet.id) || null
   // console.log('===>selectedWallet', selectedWallet)
 
-  const navigate = useNavigate();
-
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => setOpen(open => !open);
 
   const handleChange = (e) => {
@@ -64,58 +57,64 @@ const SelectedWallet = () => {
 
   const handleClick = () => {
 
-    // selectedWallet.push(form)
-
+    addSumWallet()
 
     setUsers(users.map(user => {
       if (user.id === authorized) {
         return {
           ...user,
-          // ...form
         }
       }
 
       return user
     }))
-    alert('popolnen successfully')
+    alert('fill up successfully')
 
+  }
+
+  const [balance, setBalance] = useState(selectedWallet.balance) || null;
+  // console.log("==> selected balance", balance)
+
+  const addSumWallet = () => {
+
+    setBalance(selectedWallet.balance = Number(selectedWallet.balance) + Number(form.balance))
+    // console.log('===>sum select + form', addSumWallet)
   }
 
   const handleRemove = () => {
 
-    // selectedWallet.assign(form)
-    let removed = wallets.filter(item => item.id !== selectedWallet.id);
-    // console.log('===>wallets1', removed)
+    let removedWallets =
+      wallets.filter(wallet => wallet.id !== selectedWallet.id)
+    console.log('===>removed wallets', removedWallets)
+    console.log('===>wallets', wallets)
+    setWallets(removedWallets)
 
 
     setUsers(users.map(user => {
       if (user.id === authorized) {
+
         return {
           ...user,
-
-          ...form
+          ...removedWallets
         }
       }
 
       return user
     }))
 
-    alert('udalen successfully')
-      navigate(`/wallets`, {replace: true})
+    alert('deleted successfully')
+    navigate(`/wallets`)
 
   }
+
+  // const removeWallet = () => {
+  // localStorage.setItem("wallets", JSON.stringify(removed));
+  // navigate(`/wallets`, {replace: true})
+  // }
 
   useEffect(() => {
     localStorage.setItem("allUsers", JSON.stringify(users))
   }, [users])
-
-  // const removeWallet = () => {
-  //
-  //   localStorage.setItem("wallets", JSON.stringify(removed));
-  //
-  //   navigate(`/wallets`, {replace: true})
-  // }
-
 
   return (
     <div className={styles.page_layout}>
@@ -130,10 +129,8 @@ const SelectedWallet = () => {
               <KeyboardBackspaceRoundedIcon/>
             </IconButton>
 
-
             <p>
               {selectedWallet.currency}
-
             </p>
             <div>/</div>
             <p className={styles.id}>#{id}</p>
@@ -146,17 +143,17 @@ const SelectedWallet = () => {
 
         <div className={styles.block}>
 
-
           <div className={styles.card}>
             <div className={styles.country}>
               <p className={styles.rub}>
                 {selectedWallet.currency}
               </p>
-              <RubIcon/>
+              <img src={selectedWallet.icon} alt={selectedWallet.currency}/>
+              {/*{selectedWallet.icon}*/}
+              {/*<RubIcon/>*/}
             </div>
             <p className={styles.count}>
-              {selectedWallet.balance}
-              ₽
+              {selectedWallet.balance} {selectedWallet.sign}
             </p>
           </div>
 
@@ -198,6 +195,7 @@ const SelectedWallet = () => {
               label="Сумма"
               sx={{width: 388}}
               name="balance"
+              type="Number"
               onChange={handleChange}
             />
             <MyInput
@@ -248,7 +246,6 @@ const SelectedWallet = () => {
 };
 
 export default SelectedWallet;
-
 
 
 // const [openModal, setOpenModal] = useState(false);

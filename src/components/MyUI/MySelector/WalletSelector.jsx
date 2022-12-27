@@ -3,36 +3,33 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import {ReactComponent as RubIcon} from '../../../assets/icons/rubIcon.svg';
-import {ReactComponent as UsdIcon} from '../../../assets/icons/usdIcon.svg';
-import {ReactComponent as EurIcon} from '../../../assets/icons/eurIcon.svg';
-import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
-import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
+// import {ReactComponent as RubIcon} from '../../../assets/icons/rubIcon.svg';
+// import {ReactComponent as UsdIcon} from '../../../assets/icons/usdIcon.svg';
+// import {ReactComponent as EurIcon} from '../../../assets/icons/eurIcon.svg';
+// import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
+// import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
 
 const WalletSelector = (props) => {
-  console.log('===>SidebarWallets.props', props)
+  console.log('===>Wallets.props', props)
 
-
-
-
-
-  const [form, setForm] = useState(
-    {
-      id: '',
-      balance: '0',
-      currency: '',
-      sign: '',
-      icon: null
-    }
-  )
-  console.log('===>form', form)
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    })
-  }
+  //
+  // const [form, setForm] = useState(
+  //   {
+  //     id: '',
+  //     balance: '0',
+  //     currency: '',
+  //     sign: '',
+  //     icon: null
+  //   }
+  // )
+  // console.log('===>form', form)
+  //
+  // const handleChange = (e) => {
+  //   setForm({
+  //     ...form,
+  //     [e.target.name]: e.target.value
+  //   })
+  // }
 
   return (
     <FormControl>
@@ -46,9 +43,11 @@ const WalletSelector = (props) => {
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={props.wallets}
+        // value={props.wallets}
+        value={props.changed}
         label="Выберите кошелёк"
-        onChange={handleChange}
+        // onChange={handleChange}
+        onChange={props.onChange}
         {...props}
       >
         {
@@ -56,19 +55,25 @@ const WalletSelector = (props) => {
             ({
                icon,
                currency,
+              sign,
                value,
                id,
                balance,
              }) => {
               return (
-                <MenuItem key={id} value={value}>
+                <MenuItem key={id} value={id}>
                   <div style={{
                     display: 'flex',
                     gap: '8px',
                   }}>
-                    {id}
-                    {currency}
-                    {balance}
+                    <img src={icon} alt={currency}/>
+
+                    <div>{currency}</div>
+
+                    <div>{balance}</div>
+
+                    <div>{sign}</div>
+
                   </div>
 
 
