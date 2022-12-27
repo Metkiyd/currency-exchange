@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../Wallets/styles.module.scss";
+import styles from ".//styles.module.scss";
 import {AddButton} from "../../../components/MyUI/MyNavButton";
 import {SidebarSlider} from "../../../components/MyUI/Sliders/SidebarSlider";
 

@@ -22,33 +22,33 @@ import {ReactComponent as TryIcon} from '../../assets/icons/tryIcon.svg';
 export const currencies = [
   {
     id:1,
-    value: 'RUB',
+    currency: 'RUB',
     sign: '₽',
     icon: <RubIcon/>,
   },
   {
     id:2,
+    currency: 'USD',
     sign: '$',
     icon: <UsdIcon/>,
-    value: 'USD'
   },
   {
     id:3,
+    currency: 'CNY',
     sign: '¥',
     icon: <CnyIcon/>,
-    value: 'CNY'
   },
   {
     id:4,
+    currency: 'EUR',
     sign: '€',
     icon: <EurIcon/>,
-    value: 'EUR'
   },
   {
     id:5,
+    currency: 'TRY',
     sign: '₺',
     icon: <TryIcon/>,
-    value: 'TRY'
   },
 
 ]
@@ -78,12 +78,13 @@ const WalletsPage = () => {
   const handleClose = () => setOpen(false);
 
   const [form, setForm] = useState(
+    // ...currencies,
     {
       id: '',
       balance: '0',
       currency: '',
-      sign: '',
-      icon: null
+      // sign: '',
+      // icon: null
     }
 
 

@@ -27,18 +27,18 @@ const MySelector = (props) => {
         {
           props.currencies.map(
             ({
-                icon,
-                value,
-                id
-              }) => {
+               icon,
+               currency,
+               id
+             }) => {
               return (
-                <MenuItem key={id} value={value}>
+                <MenuItem key={id} value={currency}>
                   <div style={{
                     display: 'flex',
                     gap: '8px',
                   }}>
                     {icon}
-                    {value}
+                    {currency}
                   </div>
 
 

@@ -10,7 +10,7 @@ import {ReactComponent as CnyIcon} from '../../../assets/icons/cnyIcon.svg';
 import {ReactComponent as TryIcon} from '../../../assets/icons/tryIcon.svg';
 
 const WalletSelector = (props) => {
-  console.log('===>Wallets.props', props)
+  console.log('===>SidebarWallets.props', props)
 
 
 

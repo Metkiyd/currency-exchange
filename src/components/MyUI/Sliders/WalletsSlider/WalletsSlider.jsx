@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 // import {ReactComponent as EurIcon} from '../../../../assets/icons/eurIcon.svg';
 // import {ReactComponent as CnyIcon} from '../../../../assets/icons/cnyIcon.svg';
 // import {ReactComponent as TryIcon} from '../../../../assets/icons/tryIcon.svg';
-import styles from "../../../../pages/WalletsPage/Wallets/styles.module.scss";
+import styles from "../../../../pages/WalletsPage/SidebarWallets/styles.module.scss";
 import {NavLink} from "react-router-dom";
 
 

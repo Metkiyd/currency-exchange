@@ -4,7 +4,7 @@ import noPhoto from "../../assets/images/noPhoto.png";
 import {AddButton} from "../MyUI/MyNavButton";
 
 import {LastTransactions} from "./LastTransactions";
-import {Wallets} from "../../pages/WalletsPage/Wallets";
+import {Wallets} from "../../pages/WalletsPage/SidebarWallets";
 
 const ProfileSidebar = () => {
   return (
