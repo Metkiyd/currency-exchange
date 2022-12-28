@@ -4,56 +4,12 @@ import React, {useState} from 'react';
 import {NextButton, PrevButton} from "../../MyNavButton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import {ReactComponent as RubIcon} from '../../../../assets/icons/rubIcon.svg';
-// import {ReactComponent as UsdIcon} from '../../../../assets/icons/usdIcon.svg';
-// import {ReactComponent as EurIcon} from '../../../../assets/icons/eurIcon.svg';
-// import {ReactComponent as CnyIcon} from '../../../../assets/icons/cnyIcon.svg';
-// import {ReactComponent as TryIcon} from '../../../../assets/icons/tryIcon.svg';
+
 import styles from "../../../../pages/WalletsPage/SidebarWallets/styles.module.scss";
 import {NavLink} from "react-router-dom";
 
 
 
-// const wallets = JSON.parse(localStorage.getItem('wallets')) || []
-
-// export const wallets = [
-//   {
-//     id: 1,
-//     balance: '10 000, 00',
-//     currency: 'RUB',
-//     sign: '₽',
-//     icon: <RubIcon/>
-//   },
-//   {
-//     id: 2,
-//     balance: '12 000, 00',
-//     currency: 'USD',
-//     sign: '$',
-//     icon: <UsdIcon/>
-//   },
-//   {
-//     id: 3,
-//     balance: '120 000, 00',
-//     currency: 'CNY',
-//     sign: '¥',
-//     icon: <CnyIcon/>
-//   },
-//   {
-//     id: 4,
-//     balance: '20 000, 00',
-//     currency: 'EUR',
-//     sign: '€',
-//     icon: <EurIcon/>
-//   },
-//   {
-//     id: 5,
-//     balance: '15 000, 00',
-//     currency: 'TRY',
-//     sign: '₺',
-//     icon: <TryIcon/>
-//   },
-//
-// ]
 
 function WalletsSlider() {
 
@@ -100,7 +56,6 @@ function WalletsSlider() {
                sign,
                balance,
                icon,
-
              }) => {
               return (
                 <NavLink key={id} to={`/selected-wallet/${id}`}>

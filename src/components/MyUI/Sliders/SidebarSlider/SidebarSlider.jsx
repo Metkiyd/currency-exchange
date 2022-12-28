@@ -72,6 +72,7 @@ function SidebarSlider() {
         <Slider
           ref={setSliderRef}
           {...settings}>
+
           {wallets.map(
             ({
                currency,

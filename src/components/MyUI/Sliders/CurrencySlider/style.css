@@ -1,0 +1,47 @@
+.slick-slider {
+    display: flex;
+    gap: 24px;
+}
+
+.slick-list {margin: 0 -16px;}
+.slick-slide>div {padding: 0 16px;}
+
+.card {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 224px;
+    height: 64px;
+    border: 1px solid #ECECEC;
+    padding: 16px;
+}
+
+.resCur {
+    display: flex;
+    gap: 16px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.one {
+    font-size: 12px;
+    font-weight: 500;
+}
+.two {
+    font-size: 12px;
+}
+.three {
+    font-size: 12px;
+    color: #84A500;
+}
+.four {
+    font-size: 12px;
+    font-weight: 300;
+    color: #84A500;
+}
+
+

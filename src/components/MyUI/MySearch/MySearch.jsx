@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
-import {InputAdornment} from "@mui/material";
 
 
 const MySearch = (props) => {
@@ -17,11 +16,14 @@ const MySearch = (props) => {
           id="outlined-basic"
           label="Поиск валюты"
           variant="outlined"
+
           InputProps={{
             endAdornment: (
-              <InputAdornment>
-                  <SearchIcon />
-              </InputAdornment>
+              <SearchIcon
+                sx={{
+                  color: '#8C8C8C',
+                }}
+              />
             )
           }}
           {...props}

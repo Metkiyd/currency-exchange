@@ -11,7 +11,7 @@ import {IconButton} from "@mui/material";
 import {ReactComponent as GreenWalletIcon} from '../../../src/assets/icons/greenWalletIcon.svg';
 import {ReactComponent as GreenWalletIcon2} from '../../../src/assets/icons/greenWalletIcon2.svg';
 import {NavLink} from "react-router-dom";
-import {SlickSlider1} from "../../components/MyUI/SlickSlider1";
+import {CurrencySlider} from "../../components/MyUI/Sliders/CurrencySlider";
 import {WalletsSlider} from "../../components/MyUI/Sliders/WalletsSlider";
 import RubIcon from '../../assets/icons/rubIcon.svg';
 import UsdIcon from '../../assets/icons/usdIcon.svg';

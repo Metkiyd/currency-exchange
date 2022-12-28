@@ -17,7 +17,7 @@ import {Asynchronous, FreeSolo, FreeSoloCreateOption, MySearch} from "./componen
 import {BadgeAvatars, ImageAvatars} from "./components/MyUI/MyAvatar";
 import {WalletsSlider} from "./components/MyUI/Sliders/WalletsSlider";
 
-import {SlickSlider1} from "./components/MyUI/SlickSlider1";
+import {CurrencySlider} from "./components/MyUI/Sliders/CurrencySlider";
 
 import React from 'react';
 import {MyModal} from "./components/MyUI/MyModal";
@@ -76,7 +76,7 @@ const Examples = () => {
 
 
       <MySelector/>
-      <SlickSlider1/>
+      <CurrencySlider/>
 
       <MySearch fullWidth/>
       {/*<Asynchronous/>*/}

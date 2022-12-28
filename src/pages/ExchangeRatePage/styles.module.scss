@@ -55,6 +55,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 36px;
 
   &__nums {
     display: flex;
@@ -88,3 +89,55 @@
   }
 }
 
+
+.card {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  width: 224px;
+  height: 64px;
+  border: 1px solid #ECECEC;
+  padding: 16px;
+}
+
+.resCur {
+  display: flex;
+  gap: 16px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.one {
+  font-size: 12px;
+  font-weight: 500;
+}
+.two {
+  font-size: 12px;
+}
+.three {
+  font-size: 12px;
+  color: #84A500;
+}
+.four {
+  font-size: 12px;
+  font-weight: 300;
+  color: #84A500;
+}
+
+.range {
+  display: flex;
+
+  justify-content: end;
+
+  color: #E0E0E0;
+  &__bg {
+    padding: 8px;
+    background-color: #272727;
+    border-radius: 20px;
+
+  }
+}
