@@ -25,12 +25,13 @@ const ExchangeRatePage = () => {
               id: valute.ID,
               name: valute.CharCode,
               fullName: valute.Name,
-              rate: ((valute.Value) / (valute.Nominal)).toFixed(4),
-              change: ((valute.Value) - (valute.Previous)).toFixed(4),
-              changePerc: ((valute.Value) / (valute.Previous) - 1).toFixed(4),
+              rate: +((valute.Value) / (valute.Nominal)).toFixed(4),
+              change: +((valute.Value) - (valute.Previous)).toFixed(4),
+              changePerc: +((valute.Value) / (valute.Previous) - 1).toFixed(4),
               nominal: valute.Nominal,
               price: valute.Value,
               prev: valute.Previous,
+              increase: ((valute.Value) > (valute.Previous)),
             }
             return obj;
           })
@@ -64,10 +65,7 @@ const ExchangeRatePage = () => {
             <MySearch fullWidth/>
           </div>
         </div>
-
-        <CurrencySlider
-          allValutes={allValutes}
-        />
+        <CurrencySlider allValutes={allValutes}/>
         <div className={styles.currency}>
           <div>
             <p className={styles.currency__title}>

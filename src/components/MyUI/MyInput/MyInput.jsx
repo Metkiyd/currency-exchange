@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 
 const MyInput = (props) => {
+  console.log('===>props', props)
+  
   return (
       <TextField
         sx={{

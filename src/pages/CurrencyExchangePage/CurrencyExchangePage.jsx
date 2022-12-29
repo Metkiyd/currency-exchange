@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../CurrencyExchangePage/styles.module.scss";
@@ -6,7 +6,7 @@ import {MyInput} from "../../components/MyUI/MyInput";
 import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
 import {MyButton} from "../../components/MyUI/MyButton";
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
-import {currencies} from "../WalletsPage/WalletsPage";
+import axios from "axios";
 
 
 
@@ -26,18 +26,62 @@ const CurrencyExchangePage = () => {
   // console.log('===>wallets', wallets)
 
 
+  const [rates, setRates] = useState([])
+
+  // useEffect(() => {
+  //   axios.get(`https://www.cbr-xml-daily.ru/daily_json.js`)
+  //     .then(({data}) => {
+  //       const valutes = Object.values(data.Valute)
+  //       const tranformed = valutes.map(
+  //         (valute) => {
+  //           const obj = {
+  //             id: valute.ID,
+  //             currency: valute.CharCode,
+  //             rate: ((valute.Value) / (valute.Nominal)).toFixed(4),
+  //
+  //             // change: ((valute.Value) - (valute.Previous)).toFixed(4),
+  //             // changePerc: ((valute.Value) / (valute.Previous) - 1).toFixed(4),
+  //             // nominal: valute.Nominal,
+  //             // price: valute.Value,
+  //             // prev: valute.Previous,
+  //             // increase: ((valute.Value) > (valute.Previous)),
+  //           }
+  //           return obj;
+  //         })
+  //       setRates(tranformed)
+  //     })
+  // },[])
+  // console.log('===>ratesState', rates)
+  //
+
+
+  const [amount1, setAmount1] = useState(0) //give
+  console.log('===>amount1', amount1)
+  const [amount2, setAmount2] = useState(0) //get
+  console.log('===>amount2', amount2)
+
+  const [currency1, setCurrency1] = useState() //giveWallet
+  const [currency2, setCurrency2] = useState() // getWallet
+
+  function handleAmount1Change(e) {
+    setAmount2(form.give
+      // * rates[currency2] / rates[currency1]
+    );
+
+    setAmount1(form.give)
+  }
+
   const [form, setForm] = useState({
-    giveValue: 0,
-    getValue: 0,
+    // giveValue: 0,
+    // getValue: 0,
     give: 0,
     get: 0,
     giveWallet: "",
     getWallet: "",
-    currency: '',
-    wallet: ""
+    // currency: '',
+    // wallet: ""
     // sign: '',
     // icon: null
-
   })
   // console.log('===>form', form)
 
@@ -49,7 +93,6 @@ const CurrencyExchangePage = () => {
   }
 
 
-
   return (
     <div className={styles.page_layout}>
       <NavSidebar/>
@@ -57,26 +100,30 @@ const CurrencyExchangePage = () => {
         <div className={styles.main__nav}>
           <p className={styles.main__title}>Обмен валют</p>
         </div>
-
         <div className={styles.profile_info}>
           <p className={styles.profile_title}>Укажите кошелек, сумму и валюту для обмена</p>
-
           <div className={styles.profile_inputs}>
             <MyInput
               label="Отдаю"
               sx={{width: 164}}
               name="give"
               type="number"
-              onChange={handleChange}
-            />
 
+              amount1={amount1}
+
+              // onAmountChange={handleAmount1Change}
+              onAmountChange={setAmount1}
+
+
+              // changed={form.give}
+              // onChange={handleChange}
+            />
             <WalletSelector
               name="giveWallet"
               wallets={wallets}
               changed={form.giveWallet}
               onChange={handleChange}
             />
-
           </div>
           <div className={styles.profile_inputs}>
             <MyInput
@@ -84,6 +131,8 @@ const CurrencyExchangePage = () => {
               sx={{width: 164}}
               name="get"
               type="number"
+
+              changed={form.get}
               onChange={handleChange}
             />
             <WalletSelector
@@ -93,16 +142,13 @@ const CurrencyExchangePage = () => {
               onChange={handleChange}
             />
           </div>
-
           <MyButton
             size="largeWithIcon"
             variant="contained"
             endIcon={<CachedRoundedIcon/>}
           >Обменять
           </MyButton>
-
         </div>
-
       </section>
       <ProfileSidebar/>
     </div>
@@ -133,9 +179,10 @@ export default CurrencyExchangePage;
 
 // const [give, setGive] = useState<CurrencyType>();
 // const [get, setGet] = useState<CurrencyType>();
-// const [openModal, setOpenModal] = useState<boolean>(false);
+
 // const [giveValue, setGiveValue] = useState<number>();
 // const [getValue, setGetValue] = useState<number>();
+
 // const [isDisabled, setIsDisabled] = useState<boolean>(true);
 // const [isDisabledSelect, setIsDisabledSelect] = useState<boolean>(true)
 // const {FetchExchangeRates} = useActions();
@@ -161,6 +208,7 @@ export default CurrencyExchangePage;
 //   } else {
 //   }
 // }, [get, give]);
+
 // const addTransaction = () => {
 //   const refreshWalletSum = wallets.map((item) => {
 //     if (item.currency === give) {
