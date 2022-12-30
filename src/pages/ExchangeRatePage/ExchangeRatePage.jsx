@@ -7,52 +7,26 @@ import {MyChart} from "../../components/MyUI/MyChart";
 import {ReactComponent as PositiveArrowIcon} from '../../assets/icons/positiveArrowIcon.svg';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
-import {fetchCurrencies, fetchValutes} from "../../api/api";
+import {fetchCurrencies, fetchNews, fetchValutes} from "../../api/api";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllValutes } from "../../redux/actions/action";
+
 
 const ExchangeRatePage = () => {
-
-  const [allValutes, setAllValutes] = useState([])
+  const dispatch = useDispatch();
+  const fetchValutes = () => dispatch(getAllValutes());
 
   useEffect(() => {
-    axios.get(`https://www.cbr-xml-daily.ru/daily_json.js`)
-      .then(({data}) => {
-        const valutes = Object.values(data.Valute)
-        const tranformed = valutes.map(
-          (valute) => {
-            const obj = {
-              id: valute.ID,
-              name: valute.CharCode,
-              fullName: valute.Name,
-              rate: +((valute.Value) / (valute.Nominal)).toFixed(4),
-              change: +((valute.Value) - (valute.Previous)).toFixed(4),
-              changePerc: +((valute.Value) / (valute.Previous) - 1).toFixed(4),
-              nominal: valute.Nominal,
-              price: valute.Value,
-              prev: valute.Previous,
-              increase: ((valute.Value) > (valute.Previous)),
-            }
-            return obj;
-          })
-        setAllValutes(tranformed)
-      })
-    // fetchCurrencies()
-    // fetchValutes()
-    // setAllValutes(fetchValutes())
-    // console.log('===>valutesState', valutes)
-    // getValutes()
+
+    fetchValutes();
+
   },[])
 
-  // const getValutes = async () => {
-  //   const response = await fetchValutes();
-  //   return response
-  //   console.log('===>response', response)
-  // }
 
-  // setValutes(fetchCurrencies())
-  // fetchCurrencies()
-  console.log('===>valutesState2', allValutes)
+  const allValutes = useSelector((state) => state.allValutes.allValutes);
+  console.log('===>News', allValutes)
 
 
   return (

@@ -36,10 +36,10 @@ const SelectedWallet = () => {
   // console.log('===>loggedUser', loggedUser)
 
   const [wallets, setWallets] = useState(loggedUser.wallets)
-  // console.log('===>wallets', wallets)
+  console.log('===>wallets', wallets)
 
-  let selectedWallet = wallets.find(wallet => id === wallet.id) || null
-  // console.log('===>selectedWallet', selectedWallet)
+  let selectedWallet = wallets.find(wallet => id === wallet.number) || null
+  console.log('===>selectedWallet', selectedWallet)
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -149,8 +149,6 @@ const SelectedWallet = () => {
                 {selectedWallet.currency}
               </p>
               <img src={selectedWallet.icon} alt={selectedWallet.currency}/>
-              {/*{selectedWallet.icon}*/}
-              {/*<RubIcon/>*/}
             </div>
             <p className={styles.count}>
               {selectedWallet.balance} {selectedWallet.sign}

@@ -79,14 +79,16 @@ const WalletsPage = () => {
   const [form, setForm] = useState(
     {
       id: '',
+      number: '',
       balance: 0,
       currency: '',
+      valuteId: '',
       // sign: '',
       // icon: null
     }
 
   )
-  // console.log('===>form', form)
+  console.log('===>form', form)
 
   const thisCurrency = currencies.filter(currency => form.currency === currency?.currency)
 
@@ -102,6 +104,7 @@ const WalletsPage = () => {
   }
 
   const handleClick = () => {
+    form.id = Date.now()
 
     wallets.push(form)
 
@@ -163,7 +166,7 @@ const WalletsPage = () => {
             <MyInput
               label="# Номер кошелька"
               sx={{width: 388}}
-              name="id"
+              name="number"
               onChange={handleChange}
 
             />

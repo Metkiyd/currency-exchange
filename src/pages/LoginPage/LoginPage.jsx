@@ -24,6 +24,7 @@ const LoginPage = () => {
   const handleLogin = () => {
     const allUsers = JSON.parse(localStorage.getItem("allUsers"))
     console.log('===>Users', allUsers)
+
     const loggedUser = allUsers.find(user => form.Email === user.Email)
     console.log('===>loggedUser', loggedUser)
 

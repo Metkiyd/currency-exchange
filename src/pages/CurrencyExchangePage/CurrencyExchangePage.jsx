@@ -2,13 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {NavSidebar} from "../../components/NavSidebar";
 import {ProfileSidebar} from "../../components/ProfileSidebar";
 import styles from "../CurrencyExchangePage/styles.module.scss";
-import {MyInput} from "../../components/MyUI/MyInput";
+// import {MyInput} from "../../components/MyUI/MyInput";
 import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
 import {MyButton} from "../../components/MyUI/MyButton";
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import axios from "axios";
-
-
 
 
 const CurrencyExchangePage = () => {
@@ -28,68 +26,55 @@ const CurrencyExchangePage = () => {
 
   const [rates, setRates] = useState([])
 
-  // useEffect(() => {
-  //   axios.get(`https://www.cbr-xml-daily.ru/daily_json.js`)
-  //     .then(({data}) => {
-  //       const valutes = Object.values(data.Valute)
-  //       const tranformed = valutes.map(
-  //         (valute) => {
-  //           const obj = {
-  //             id: valute.ID,
-  //             currency: valute.CharCode,
-  //             rate: ((valute.Value) / (valute.Nominal)).toFixed(4),
-  //
-  //             // change: ((valute.Value) - (valute.Previous)).toFixed(4),
-  //             // changePerc: ((valute.Value) / (valute.Previous) - 1).toFixed(4),
-  //             // nominal: valute.Nominal,
-  //             // price: valute.Value,
-  //             // prev: valute.Previous,
-  //             // increase: ((valute.Value) > (valute.Previous)),
-  //           }
-  //           return obj;
-  //         })
-  //       setRates(tranformed)
-  //     })
-  // },[])
-  // console.log('===>ratesState', rates)
-  //
+  useEffect(() => {
+    axios.get(`https://www.cbr-xml-daily.ru/latest.js`)
+      .then(( {data} ) => {
+      const ratesData = data.rates;
+      console.log('===>ratesData', ratesData)
+        setRates( {
+          ...rates,
+          ...ratesData,
+        RUB:1
+        })
+        // setRates(ceu => [{RUB:1}, ...ceu])
+      })
+  }, [])
+
+  console.log('===>ratesState', rates)
 
 
-  const [amount1, setAmount1] = useState(0) //give
+  const [amount1, setAmount1] = useState('') //give
   console.log('===>amount1', amount1)
-  const [amount2, setAmount2] = useState(0) //get
+  const [amount2, setAmount2] = useState('') //get
   console.log('===>amount2', amount2)
 
-  const [currency1, setCurrency1] = useState() //giveWallet
-  const [currency2, setCurrency2] = useState() // getWallet
+  const [currency1, setCurrency1] = useState('') //giveWallet
+  console.log('===>currency1', currency1)
+  const [currency2, setCurrency2] = useState('') // getWallet
+  console.log('===>currency2', currency2)
 
-  function handleAmount1Change(e) {
-    setAmount2(form.give
-      // * rates[currency2] / rates[currency1]
-    );
-
-    setAmount1(form.give)
+  function format(number) {
+    return number.toFixed(4)
   }
 
-  const [form, setForm] = useState({
-    // giveValue: 0,
-    // getValue: 0,
-    give: 0,
-    get: 0,
-    giveWallet: "",
-    getWallet: "",
-    // currency: '',
-    // wallet: ""
-    // sign: '',
-    // icon: null
-  })
-  // console.log('===>form', form)
+  function handleAmount1Change(amount1) {
+    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
+    setAmount1(amount1)
+  }
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    })
+  function handleCurrency1Change(currency1) {
+    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
+    setCurrency1(currency1)
+  }
+
+  function handleAmount2Change(amount2) {
+    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
+    setAmount2(amount2)
+  }
+
+  function handleCurrency2Change(currency2) {
+    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
+    setCurrency2(currency2)
   }
 
 
@@ -103,43 +88,27 @@ const CurrencyExchangePage = () => {
         <div className={styles.profile_info}>
           <p className={styles.profile_title}>Укажите кошелек, сумму и валюту для обмена</p>
           <div className={styles.profile_inputs}>
-            <MyInput
-              label="Отдаю"
-              sx={{width: 164}}
-              name="give"
-              type="number"
-
-              amount1={amount1}
-
-              // onAmountChange={handleAmount1Change}
-              onAmountChange={setAmount1}
-
-
-              // changed={form.give}
-              // onChange={handleChange}
-            />
             <WalletSelector
-              name="giveWallet"
+              labelname={"Отдаю"}
+              // name="giveWallet"
               wallets={wallets}
-              changed={form.giveWallet}
-              onChange={handleChange}
+              amount={amount1}
+              currency={currency1}
+              // changed={form.giveWallet}
+              onAmountChange={handleAmount1Change}
+              onCurrencyChange={handleCurrency1Change}
             />
           </div>
           <div className={styles.profile_inputs}>
-            <MyInput
-              label="Получаю"
-              sx={{width: 164}}
-              name="get"
-              type="number"
-
-              changed={form.get}
-              onChange={handleChange}
-            />
             <WalletSelector
-              name="getWallet"
+              labelname={"Получаю"}
+              // name="getWallet"
               wallets={wallets}
-              changed={form.getWallet}
-              onChange={handleChange}
+              amount={amount2}
+              currency={currency2}
+              // changed={form.getWallet}
+              onAmountChange={handleAmount2Change}
+              onCurrencyChange={handleCurrency2Change}
             />
           </div>
           <MyButton
@@ -157,24 +126,26 @@ const CurrencyExchangePage = () => {
 
 export default CurrencyExchangePage;
 
+// const [form, setForm] = useState({
+//   // giveValue: 0,
+//   // getValue: 0,
+//   give: 0,
+//   get: 0,
+//   giveWallet: "",
+//   getWallet: "",
+//   // currency: '',
+//   // wallet: ""
+//   // sign: '',
+//   // icon: null
+// })
+// console.log('===>form', form)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// const handleChange = (e) => {
+//   setForm({
+//     ...form,
+//     [e.target.name]: e.target.value
+//   })
+// }
 
 
 // const [give, setGive] = useState<CurrencyType>();

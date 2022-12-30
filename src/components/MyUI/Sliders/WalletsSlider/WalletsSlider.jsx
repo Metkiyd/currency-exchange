@@ -9,8 +9,6 @@ import styles from "../../../../pages/WalletsPage/SidebarWallets/styles.module.s
 import {NavLink} from "react-router-dom";
 
 
-
-
 function WalletsSlider() {
 
   const allUsers = JSON.parse(localStorage.getItem("allUsers"))
@@ -52,20 +50,19 @@ function WalletsSlider() {
           {wallets.map(
             ({
                currency,
-               id,
+               number,
                sign,
                balance,
                icon,
              }) => {
               return (
-                <NavLink key={id} to={`/selected-wallet/${id}`}>
+                <NavLink key={number} to={`/selected-wallet/${number}`}>
                   <div className={styles.card}>
                     <div className={styles.country}>
                       <p className={styles.rub}>
                         {currency}
                       </p>
                       <img src={icon} alt={currency}/>
-                      {/*{icon}*/}
                     </div>
                     <p className={styles.count}>
                       {balance} {sign}

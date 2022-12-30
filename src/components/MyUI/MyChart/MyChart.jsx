@@ -72,10 +72,6 @@ export default class MyChart extends PureComponent {
             <XAxis
               dataKey="date"
               axisLine={false}
-              // ticks={xAxis}
-              // tickLine={false}
-              // domain={[0, auto]}
-              // tickSize={2}
             />
             <YAxis
               type="number" domain={[82, 85]}
