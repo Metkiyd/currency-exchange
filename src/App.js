@@ -5,5 +5,4 @@ function App() {
     <AppRouter/>
   );
 }
-
 export default App;
