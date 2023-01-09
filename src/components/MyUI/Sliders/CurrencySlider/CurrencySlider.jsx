@@ -115,7 +115,7 @@ function CurrencySlider(props) {
             )}
         </Slider>
       </div>
-     </div>
+    </div>
   );
 }
 
