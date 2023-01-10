@@ -29,8 +29,8 @@ const RegistrationPage = () => {
   const [form, setForm] = useState({
     id: '',
     Name: '',
-    Email: '',
-    Password: '',
+    email: '',
+    password: '',
     MatchPassword: '',
     wallets: []
   })
@@ -42,18 +42,18 @@ const RegistrationPage = () => {
   }, [form.Name])
 
   useEffect(() => {
-    const result = EMAIL_REGEX.test(form.Email);
+    const result = EMAIL_REGEX.test(form.email);
     setValidEmail(result);
 
-  }, [form.Email])
+  }, [form.email])
 
   useEffect(() => {
-    const result = PWD_REGEX.test(form.Password);
+    const result = PWD_REGEX.test(form.password);
     setValidPwd(result);
-    const match = form.Password === form.MatchPassword;
+    const match = form.password === form.MatchPassword;
     setValidMatch(match);
 
-  }, [form.Password, form.MatchPassword])
+  }, [form.password, form.MatchPassword])
 
 
 
@@ -116,24 +116,24 @@ const RegistrationPage = () => {
 
             <MyInput
               error={!(!form.Name || validName)}
-              helperText={!form.Name || validName ? '' : "Min 4 symbols. Must include only letters"}
+              helperText={!form.Name || validName ? '' : "Min 4 symbols. Must include only english letters"}
               label="Имя"
               name="Name"
               onChange={handleChange}
             />
             <MyInput
-              error={!(!form.Email || validEmail)}
-              helperText={!form.Email || validEmail ? '' : "May include letters, numbers. Must include characters . and @"}
+              error={!(!form.email || validEmail)}
+              helperText={!form.email || validEmail ? '' : "May include letters, numbers. Must include characters . and @"}
               label="E-mail"
-              name="Email"
+              name="email"
               onChange={handleChange}
             />
             <div className={styles.password}>
               <MyInput
-                error={!(!form.Password || validPwd)}
-                helperText={!form.Password || validPwd ? '' : "Min 8 symbols. Must include uppercase, lowercase letters and numbers"}
+                error={!(!form.password || validPwd)}
+                helperText={!form.password || validPwd ? '' : "Min 8 symbols. Must include uppercase, lowercase letters and numbers"}
                 label="Пароль"
-                name="Password"
+                name="password"
                 onChange={handleChange}
               />
               <MyInput

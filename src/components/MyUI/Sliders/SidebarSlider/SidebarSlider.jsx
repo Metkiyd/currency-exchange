@@ -26,7 +26,7 @@ function SidebarSlider() {
   const [wallets, setWallets] = useState(loggedUser.wallets)
   // console.log('===>wallets', wallets)
 
-  const [sliderRef, setSliderRef] = React.useState(null)
+  const [sliderRef, setSliderRef] = useState(null)
 
   const settings = {
     infinite: true,
@@ -76,31 +76,28 @@ function SidebarSlider() {
           {wallets.map(
             ({
                currency,
+               number,
                sign,
                balance,
                icon,
-               id,
              }) => {
               return (
-                <NavLink key={id} to={`/selected-wallet/${id}`}>
+                <NavLink key={number} to={`/wallets/${number}`}>
                   <div className={styles.card}>
                     <div className={styles.country}>
                       <p className={styles.rub}>
                         {currency}
                       </p>
                       <img src={icon} alt={currency}/>
-                      {/*{icon}*/}
                     </div>
                     <p className={styles.count}>
                       {balance} {sign}
                     </p>
                   </div>
                 </NavLink>
-
               )
             }
-          )
-          }
+          )}
         </Slider>
 
 

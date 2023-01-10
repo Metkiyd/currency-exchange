@@ -64,7 +64,7 @@ const routes = [
     // ]
   },
   {
-    path: "selected-wallet/:id",
+    path: "wallets/:id",
     element: <SelectedWallet/>,
     private: true,
   },

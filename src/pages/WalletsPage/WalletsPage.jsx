@@ -18,7 +18,7 @@ import UsdIcon from '../../assets/icons/usdIcon.svg';
 import EurIcon from '../../assets/icons/eurIcon.svg';
 import CnyIcon from '../../assets/icons/cnyIcon.svg';
 import TryIcon from '../../assets/icons/tryIcon.svg';
-import axios from "../../api/axios";
+import axios from "../../api/axiosBack";
 
 export const currencies = [
   {
@@ -62,11 +62,7 @@ const authorized = JSON.parse(localStorage.getItem("authorized"))
 
 
 const WalletsPage = () => {
-  React.useEffect(() => {
-    axios.get('/posts');
-    }, []
 
-  );
 
   const loggedUser = allUsers.find(user => authorized === user.id) || null
   // console.log('===>loggedUser', loggedUser)

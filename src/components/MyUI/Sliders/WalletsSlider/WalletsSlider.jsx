@@ -56,7 +56,7 @@ function WalletsSlider() {
                icon,
              }) => {
               return (
-                <NavLink key={number} to={`/selected-wallet/${number}`}>
+                <NavLink key={number} to={`/wallets/${number}`}>
                   <div className={styles.card}>
                     <div className={styles.country}>
                       <p className={styles.rub}>

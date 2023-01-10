@@ -15,6 +15,7 @@ import {ReactComponent as GreenWalletIcon2} from '../../../../src/assets/icons/g
 import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.svg';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import {useNavigate, useParams, useLocation} from "react-router-dom";
+import axiosBack from "../../../api/axiosBack";
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 
@@ -22,7 +23,21 @@ const SelectedWallet = () => {
   const navigate = useNavigate();
 
   const {id} = useParams()
-  // console.log('===>id', id)
+  console.log('===>id', id)
+
+  const [data, setData] = useState()
+  console.log('===>data', data)
+
+  useEffect(() => {
+    axiosBack.get(`/posts/${id}`)
+      .then((response) => {
+        setData(response.data)
+      }).catch((err) => {
+        console.warn(err);
+        alert('cant get post')
+    })
+
+  }, [])
 
   const allUsers = JSON.parse(localStorage.getItem("allUsers"))
 // console.log('===>AllUsers', allUsers)

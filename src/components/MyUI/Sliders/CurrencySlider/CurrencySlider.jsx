@@ -10,7 +10,7 @@ import {ReactComponent as NegativeArrowIcon} from '../../../../assets/icons/nega
 
 function CurrencySlider(props) {
 
-  console.log('===>props', props.allValutes)
+  // console.log('===>props', props.allValutes)
 
   function NextArrow(props) {
     const {onClick} = props;

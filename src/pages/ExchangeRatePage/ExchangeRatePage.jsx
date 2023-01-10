@@ -12,21 +12,32 @@ import axios from "axios";
 import {NavLink} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllValutes } from "../../redux/actions/action";
+import { getAllPosts } from "../../redux/actions/postsAction";
+import {getUser} from "../../redux/actions/authAction";
 
 
 const ExchangeRatePage = () => {
   const dispatch = useDispatch();
   const fetchValutes = () => dispatch(getAllValutes());
+  const fetchPosts = () => dispatch(getAllPosts());
+  // const getFetchUser = () => dispatch(getUser());
+
 
   useEffect(() => {
 
+
     fetchValutes();
+    fetchPosts();
+    // getFetchUser()
 
   },[])
 
 
   const allValutes = useSelector((state) => state.allValutes.allValutes);
   console.log('===>News', allValutes)
+
+  const allPosts = useSelector((state) => state.allPosts.posts);
+  console.log('=>Posts', allPosts)
 
 
   return (
@@ -75,7 +86,20 @@ const ExchangeRatePage = () => {
 
         </div>
 
-        <MyChart/>
+        {/*<MyChart/>*/}
+        {allPosts.map(
+          ({
+            title,
+            text,
+            _id
+           }) => {
+          return (
+            <div key={_id}>
+              <h1>{title}</h1>
+              <p>{text}</p>
+            </div>
+          )})
+        }
 
       </section>
       <ProfileSidebar/>
