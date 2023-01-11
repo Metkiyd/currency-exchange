@@ -1,6 +1,12 @@
-import axios from "axios";
+import axios from 'axios'
 
 const instance = axios.create({
   baseURL: 'http://localhost:4444',
-});
-export default instance;
+})
+
+instance.interceptors.request.use((config) => {
+  config.headers.Authorization = localStorage.getItem('authorized')
+  return config
+})
+
+export default instance

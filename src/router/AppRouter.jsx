@@ -1,101 +1,96 @@
-import React from 'react';
-import {Route, Routes, Navigate} from "react-router-dom";
-import {MainPage} from "../pages/MainPage";
-import {LoginPage} from "../pages/LoginPage";
-import {RegistrationPage} from "../pages/RegistrationPage";
-import {ExchangeRatePage} from "../pages/ExchangeRatePage";
-import {ProfilePage} from "../pages/ProfilePage";
-import Examples from "../examples";
-import {CurrencyExchangePage} from "../pages/CurrencyExchangePage";
-import {WalletsPage} from "../pages/WalletsPage";
-import {TransactionPage} from "../pages/TransactionPage";
-import {SelectedWallet} from "../pages/WalletsPage/SelectedWallet";
+import React from 'react'
+import { Route, Routes, Navigate } from 'react-router-dom'
+import { MainPage } from '../pages/MainPage'
+import { LoginPage } from '../pages/LoginPage'
+import { RegistrationPage } from '../pages/RegistrationPage'
+import { ExchangeRatePage } from '../pages/ExchangeRatePage'
+import { ProfilePage } from '../pages/ProfilePage'
+import Examples from '../examples'
+import { CurrencyExchangePage } from '../pages/CurrencyExchangePage'
+import { WalletsPage } from '../pages/WalletsPage'
+import { TransactionPage } from '../pages/TransactionPage'
+import { SelectedWallet } from '../pages/WalletsPage/SelectedWallet'
+import { useSelector } from 'react-redux'
+import { selectIsAuth } from '../redux/actions/authAction'
 
-
-const isAuth = localStorage.getItem("authorized")
-
+// const isAuth = localStorage.getItem("authorized")
 
 const routes = [
   {
-    path: "/",
-    element: <MainPage/>,
+    path: '/',
+    element: <MainPage />,
     private: false,
   },
   {
-    path: "/login",
-    element: <LoginPage/>,
+    path: '/login',
+    element: <LoginPage />,
     private: false,
   },
   {
-    path: "/registration",
-    element: <RegistrationPage/>,
+    path: '/registration',
+    element: <RegistrationPage />,
     private: false,
   },
   {
-    path: "*",
-    element: <Navigate to="/" replace/>,
+    path: '*',
+    element: <Navigate to='/' replace />,
     private: false,
   },
   {
-    path: "exchange-rate",
-    element: <ExchangeRatePage/>,
+    path: 'exchange-rate',
+    element: <ExchangeRatePage />,
     private: true,
   },
   {
-    path: "profile",
-    element: <ProfilePage/>,
+    path: 'profile',
+    element: <ProfilePage />,
     private: true,
   },
   {
-    path: "currency-exchange",
-    element: <CurrencyExchangePage/>,
+    path: 'currency-exchange',
+    element: <CurrencyExchangePage />,
     private: true,
   },
   {
-    path: "wallets",
-    element: <WalletsPage/>,
-    private: true,
-    // children: [
-    //   {
-    //     path: "/selected-wallet",
-    //     element: <SelectedWallet/>,
-    //     private: true,
-    //   },
-    // ]
-  },
-  {
-    path: "wallets/:id",
-    element: <SelectedWallet/>,
+    path: 'wallets',
+    element: <WalletsPage />,
     private: true,
   },
   {
-    path: "transactions",
-    element: <TransactionPage/>,
+    path: 'wallets/:id',
+    element: <SelectedWallet />,
     private: true,
   },
   {
-    path: "examples",
-    element: <Examples/>,
+    path: 'transactions',
+    element: <TransactionPage />,
     private: true,
   },
   {
-    path: "*",
-    element: <Navigate to="/exchange-rate" replace/>,
+    path: 'examples',
+    element: <Examples />,
     private: true,
-  }
-];
-
+  },
+  {
+    path: '*',
+    element: <Navigate to='/exchange-rate' replace />,
+    private: true,
+  },
+]
 
 const AppRouter = () => {
+  const isAuth = useSelector(selectIsAuth)
+  // console.log('=>isAuth', isAuth)
+
   return (
     <Routes>
       {routes
-        .filter(route => isAuth ? route.private : !route.private)
-        .map(({path, element}) =>
-          <Route key={path} path={path} element={element}/>
-        )}
+        .filter((route) => (isAuth ? route.private : !route.private))
+        .map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
     </Routes>
-  );
-};
+  )
+}
 
-export default AppRouter;
+export default AppRouter
