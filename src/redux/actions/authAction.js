@@ -8,11 +8,16 @@ export const setUser = (user) => ({ type: SET_USER, user })
 
 export const getUser = (value) => {
   return async (dispatch) => {
-    const { data } = await axiosBack.post('/auth/login', value)
-    //zdes post rabotaet iz za arg value
-    // console.log('>user-action', data)
-    dispatch(setUser(data))
-    return data
+    try {
+      const { data } = await axiosBack.post('/auth/login', value)
+      //zdes post rabotaet iz za arg value
+      // console.log('>user-action', data)
+      dispatch(setUser(data))
+      return data
+    } catch (e) {
+      alert(e.response.data.message)
+    }
+
   }
 }
 

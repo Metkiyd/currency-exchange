@@ -1,27 +1,28 @@
+import React, {useState, useEffect} from 'react';
 import Slider from "react-slick";
-import './style.css'
-import React, {useState} from 'react';
+
 import {NextButton, PrevButton} from "../../MyNavButton";
+
+import {NavLink} from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllPosts } from '../../../../redux/actions/postsAction'
+
+import './style.css'
+import styles from "../../../../pages/WalletsPage/SidebarWallets/styles.module.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import styles from "../../../../pages/WalletsPage/SidebarWallets/styles.module.scss";
-import {NavLink} from "react-router-dom";
-
 
 function WalletsSlider() {
+  const dispatch = useDispatch()
+  const fetchPosts = () => dispatch(getAllPosts());
 
-  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
-// console.log('===>AllUsers', allUsers)
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
-  const authorized = JSON.parse(localStorage.getItem("authorized"))
-// console.log('===>authorized', authorized)
-
-  const loggedUser = allUsers.find(user => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
-
-  const [wallets, setWallets] = useState(loggedUser.wallets)
-  // console.log('===>wallets', wallets)
+  const wallets = useSelector((state) => state.allPosts.posts);
+  // console.log('=>wallets-DB', wallets)
 
   const [sliderRef, setSliderRef] = useState(null)
 
@@ -42,11 +43,9 @@ function WalletsSlider() {
       <div style={{
         width: '712px',
       }}>
-
         <Slider
           ref={setSliderRef}
           {...settings}>
-
           {wallets.map(
             ({
                currency,

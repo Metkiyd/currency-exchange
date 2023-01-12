@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, Navigate } from 'react-router-dom'
+import { getAuthUser, selectIsAuth } from '../redux/actions/authAction'
+
 import { MainPage } from '../pages/MainPage'
 import { LoginPage } from '../pages/LoginPage'
 import { RegistrationPage } from '../pages/RegistrationPage'
 import { ExchangeRatePage } from '../pages/ExchangeRatePage'
 import { ProfilePage } from '../pages/ProfilePage'
-import Examples from '../examples'
 import { CurrencyExchangePage } from '../pages/CurrencyExchangePage'
 import { WalletsPage } from '../pages/WalletsPage'
 import { TransactionPage } from '../pages/TransactionPage'
 import { SelectedWallet } from '../pages/WalletsPage/SelectedWallet'
-import { useSelector } from 'react-redux'
-import { selectIsAuth } from '../redux/actions/authAction'
+import Examples from '../examples'
 
 // const isAuth = localStorage.getItem("authorized")
 
@@ -46,6 +48,7 @@ const routes = [
     element: <ProfilePage />,
     private: true,
   },
+
   {
     path: 'currency-exchange',
     element: <CurrencyExchangePage />,
@@ -66,6 +69,7 @@ const routes = [
     element: <TransactionPage />,
     private: true,
   },
+
   {
     path: 'examples',
     element: <Examples />,
@@ -79,8 +83,14 @@ const routes = [
 ]
 
 const AppRouter = () => {
+  const dispatch = useDispatch()
+
   const isAuth = useSelector(selectIsAuth)
-  // console.log('=>isAuth', isAuth)
+  console.log('=>isAuth', isAuth)
+
+  useEffect(() => {
+    dispatch(getAuthUser())
+  }, [isAuth])
 
   return (
     <Routes>

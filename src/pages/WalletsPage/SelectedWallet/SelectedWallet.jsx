@@ -16,6 +16,8 @@ import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.sv
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import {useNavigate, useParams, useLocation} from "react-router-dom";
 import axiosBack from "../../../api/axiosBack";
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllPosts, getDeleteWallet } from '../../../redux/actions/postsAction'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 
@@ -23,99 +25,80 @@ const SelectedWallet = () => {
   const navigate = useNavigate();
 
   const {id} = useParams()
-  console.log('===>id', id)
+  // console.log('===>id', id)
 
-  const [data, setData] = useState()
-  console.log('===>data', data)
+  const dispatch = useDispatch()
+  const fetchPosts = () => dispatch(getAllPosts());
 
   useEffect(() => {
-    axiosBack.get(`/posts/${id}`)
-      .then((response) => {
-        setData(response.data)
-      }).catch((err) => {
-        console.warn(err);
-        alert('cant get post')
-    })
-
+    fetchPosts();
   }, [])
 
-  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
-// console.log('===>AllUsers', allUsers)
+  const wallets = useSelector((state) => state.allPosts.posts);
+  // console.log('=>wallets-DB', wallets)
 
-  const [users, setUsers] = useState(allUsers)
+  // const [data, setData] = useState()
+  // console.log('===>data', data)
 
-  const authorized = JSON.parse(localStorage.getItem("authorized"))
-// console.log('===>authorized', authorized)
+  // useEffect(() => {
+  //   axiosBack.get(`/posts/${id}`)
+  //     .then((response) => {
+  //       setData(response.data)
+  //     }).catch((err) => {
+  //       console.warn(err);
+  //       alert('cant get post')
+  //   })
+  //
+  // }, [])
 
-  const loggedUser = allUsers.find(user => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
-
-  const [wallets, setWallets] = useState(loggedUser.wallets)
-  console.log('===>wallets', wallets)
-
-  let selectedWallet = wallets.find(wallet => id === wallet.number) || null
+  let selectedWallet = wallets.find(wallet => id == wallet.number) || null
   console.log('===>selectedWallet', selectedWallet)
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(open => !open);
 
+  const [form, setForm] = useState({})
+  // console.log('===>form', form)
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value
     })
-  }
-
-  const [form, setForm] = useState({})
-  // console.log('===>form', form)
-
-  const handleClick = () => {
-
-    addSumWallet()
-
-    setUsers(users.map(user => {
-      if (user.id === authorized) {
-        return {
-          ...user,
-        }
-      }
-
-      return user
-    }))
-    alert('fill up successfully')
 
   }
 
   const [balance, setBalance] = useState(selectedWallet.balance) || null;
-  // console.log("==> selected balance", balance)
 
+  console.log("==> selected balance", balance)
   const addSumWallet = () => {
 
     setBalance(selectedWallet.balance = Number(selectedWallet.balance) + Number(form.balance))
     // console.log('===>sum select + form', addSumWallet)
   }
 
+  const handleClick = async () => {
+
+    await addSumWallet()
+    await console.log('=>form', form)
+    await console.log('=>balance', balance)
+
+    const { data } = await axiosBack.patch(`/posts/${selectedWallet._id}`, balance)
+    await console.log('=>dispatch-handleFillUp', data)
+
+    alert('fill up successfully')
+
+  }
+
   const handleRemove = () => {
+    console.log('=>id-hand-remove', selectedWallet._id)
+    dispatch(getDeleteWallet(selectedWallet._id))
 
-    let removedWallets =
-      wallets.filter(wallet => wallet.id !== selectedWallet.id)
-    console.log('===>removed wallets', removedWallets)
-    console.log('===>wallets', wallets)
-    setWallets(removedWallets)
+    // let removedWallets =
+    //   wallets.filter(wallet => wallet.id !== selectedWallet.id)
+    // console.log('===>removed wallets', removedWallets)
+    // console.log('===>wallets', wallets)
 
-
-    setUsers(users.map(user => {
-      if (user.id === authorized) {
-
-        return {
-          ...user,
-          ...removedWallets
-        }
-      }
-
-      return user
-    }))
 
     alert('deleted successfully')
     navigate(`/wallets`)
@@ -126,10 +109,6 @@ const SelectedWallet = () => {
   // localStorage.setItem("wallets", JSON.stringify(removed));
   // navigate(`/wallets`, {replace: true})
   // }
-
-  useEffect(() => {
-    localStorage.setItem("allUsers", JSON.stringify(users))
-  }, [users])
 
   return (
     <div className={styles.page_layout}>

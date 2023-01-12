@@ -7,22 +7,20 @@ import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
 import {MyButton} from "../../components/MyUI/MyButton";
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllPosts } from '../../redux/actions/postsAction'
 
 
 const CurrencyExchangePage = () => {
+  const dispatch = useDispatch()
+  const fetchPosts = () => dispatch(getAllPosts());
 
-  const allUsers = JSON.parse(localStorage.getItem("allUsers"))
-// console.log('===>AllUsers', allUsers)
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
-  const authorized = JSON.parse(localStorage.getItem("authorized"))
-// console.log('===>authorized', authorized)
-
-  const loggedUser = allUsers.find(user => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
-
-  const [wallets, setWallets] = useState(loggedUser.wallets)
-  // console.log('===>wallets', wallets)
-
+  const wallets = useSelector((state) => state.allPosts.posts);
+  console.log('=>wallets-DB', wallets)
 
   const [rates, setRates] = useState([])
 

@@ -1,7 +1,0 @@
-node_modules
-*/**/node_modules
-*.spec.ts
-*.html
-dist
-webpack.config.js
-setupTests.ts

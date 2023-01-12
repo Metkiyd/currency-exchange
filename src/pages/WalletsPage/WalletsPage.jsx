@@ -1,93 +1,85 @@
 import React, { useState, useEffect } from 'react'
+
+import { NavLink } from 'react-router-dom'
+import { IconButton } from '@mui/material'
+
 import { NavSidebar } from '../../components/NavSidebar'
 import { ProfileSidebar } from '../../components/ProfileSidebar'
-import styles from '../WalletsPage/styles.module.scss'
 import { MyInput } from '../../components/MyUI/MyInput'
 import { MySelector } from '../../components/MyUI/MySelector'
 import { MyButton } from '../../components/MyUI/MyButton'
-import { ReactComponent as WalletIcon } from '../../assets/icons/walletIcon.svg'
 import { MyModal } from '../../components/MyUI/MyModal'
-import { IconButton } from '@mui/material'
-import { ReactComponent as GreenWalletIcon } from '../../../src/assets/icons/greenWalletIcon.svg'
-import { ReactComponent as GreenWalletIcon2 } from '../../../src/assets/icons/greenWalletIcon2.svg'
-import { NavLink } from 'react-router-dom'
 import { CurrencySlider } from '../../components/MyUI/Sliders/CurrencySlider'
 import { WalletsSlider } from '../../components/MyUI/Sliders/WalletsSlider'
+
+import styles from '../WalletsPage/styles.module.scss'
+
+import { ReactComponent as WalletIcon } from '../../assets/icons/walletIcon.svg'
+import { ReactComponent as GreenWalletIcon } from '../../../src/assets/icons/greenWalletIcon.svg'
+import { ReactComponent as GreenWalletIcon2 } from '../../../src/assets/icons/greenWalletIcon2.svg'
 import RubIcon from '../../assets/icons/rubIcon.svg'
 import UsdIcon from '../../assets/icons/usdIcon.svg'
 import EurIcon from '../../assets/icons/eurIcon.svg'
 import CnyIcon from '../../assets/icons/cnyIcon.svg'
 import TryIcon from '../../assets/icons/tryIcon.svg'
 import axios from '../../api/axiosBack'
+import { getNewUser } from '../../redux/actions/authAction'
+import { useDispatch, useSelector } from 'react-redux'
+import axiosBack from '../../api/axiosBack'
+import { getAllPosts } from '../../redux/actions/postsAction'
 
 export const currencies = [
   {
-    id: 1,
     currency: 'RUB',
     sign: '₽',
     icon: RubIcon,
   },
   {
-    id: 2,
     currency: 'USD',
     sign: '$',
     icon: UsdIcon,
   },
   {
-    id: 3,
     currency: 'CNY',
     sign: '¥',
     icon: CnyIcon,
   },
   {
-    id: 4,
     currency: 'EUR',
     sign: '€',
     icon: EurIcon,
   },
   {
-    id: 5,
     currency: 'TRY',
     sign: '₺',
     icon: TryIcon,
   },
 ]
 
-const allUsers = JSON.parse(localStorage.getItem('allUsers'))
-// console.log('===>AllUsers', allUsers)
-
-const authorized = JSON.parse(localStorage.getItem('authorized'))
-// console.log('===>authorized', authorized)
-
 const WalletsPage = () => {
-  const loggedUser = allUsers.find((user) => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
+  const dispatch = useDispatch()
+  const fetchPosts = () => dispatch(getAllPosts())
 
-  const [users, setUsers] = useState(allUsers)
-  // console.log('===>users', users)
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
-  // const [wallets, setWallets] = useState(loggedUser.wallets)
-  // console.log('===>wallets', wallets)
+  const wallets = useSelector((state) => state.allPosts.posts)
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const [form, setForm] = useState({
-    id: '',
     number: '',
     balance: 0,
     currency: '',
-    valuteId: '',
-    // sign: '',
-    // icon: null
+    // valuteId: '',
   })
-  console.log('===>form', form)
+  // console.log('===>form', form)
 
   const thisCurrency = currencies.filter(
-    (currency) => form.currency === currency?.currency,
-  )
-
+    (currency) => form.currency === currency?.currency)
   // console.log('===>thisCurrency', ...thisCurrency)
 
   const handleChange = (e) => {
@@ -97,29 +89,15 @@ const WalletsPage = () => {
       [e.target.name]: e.target.value,
     })
   }
+  const handleClick = async () => {
+    const { data } = await axiosBack.post('/posts', form)
+    console.log('=>dispatch-handleCreate', data)
 
-  const handleClick = () => {
-    form.id = Date.now()
-
-    // wallets.push(form)
-
-    setUsers(
-      users.map((user) => {
-        if (user.id === authorized) {
-          return {
-            ...user,
-          }
-        }
-
-        return user
-      }),
-    )
     alert('added successfully')
-  }
 
-  useEffect(() => {
-    localStorage.setItem('allUsers', JSON.stringify(users))
-  }, [users])
+    fetchPosts()
+
+  }
 
   return (
     <div className={styles.page_layout}>
@@ -129,20 +107,18 @@ const WalletsPage = () => {
           <p className={styles.main__title}>Кошельки</p>
         </div>
 
-        <div className={styles.block}>
-          <NavLink to={'/selected-wallet'}>
+        {wallets.length ? (
+          <div className={styles.block}>
+            <WalletsSlider />
+          </div>
+        ) : (
+          <div className={styles.block}>
             <WalletIcon className={styles.svgIcon} />
-          </NavLink>
-
-          <p className={styles.text_title}>
-            На данный момент у вас не <br /> создано ни одного кошелька
-          </p>
-        </div>
-
-        {/*<div className={styles.block}>*/}
-        {/*  <WalletsSlider/>*/}
-        {/*</div>*/}
-
+            <p className={styles.text_title}>
+              На данный момент у вас не <br /> создано ни одного кошелька
+            </p>
+          </div>
+        )}
         <div className={styles.profile_info}>
           <p className={styles.profile_title}>Добавление кошелька</p>
 

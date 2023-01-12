@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Slider from 'react-slick'
 
 import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -11,23 +11,21 @@ import styles from '../../../../pages/WalletsPage/SidebarWallets/styles.module.s
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import { IconButton } from '@mui/material'
+import { getAllPosts } from '../../../../redux/actions/postsAction'
 // import {wallets} from "../WalletsSlider/WalletsSlider";
 
-// const wallets = JSON.parse(localStorage.getItem('wallets')) || []
-
 function SidebarSlider() {
-  const User = useSelector((state) => state.user.user)
-  console.log('=>User-State', User)
 
-  const wallets = User.wallets
-  console.log('===>wallets', wallets)
+  const dispatch = useDispatch()
+  const fetchPosts = () => dispatch(getAllPosts());
 
-  const allUsers = JSON.parse(localStorage.getItem('allUsers'))
-  // console.log('===>AllUsers', allUsers)
-  const authorized = JSON.parse(localStorage.getItem('authorized'))
-  // console.log('===>authorized', authorized)
-  const loggedUser = allUsers.find((user) => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
+  useEffect(() => {
+    fetchPosts();
+  }, [])
+
+  const wallets = useSelector((state) => state.allPosts.posts);
+  // console.log('=>wallets-DB', wallets)
+
 
   const [sliderRef, setSliderRef] = useState(null)
 
