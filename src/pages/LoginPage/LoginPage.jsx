@@ -6,7 +6,11 @@ import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
 
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, selectIsAuth } from '../../redux/actions/authAction'
+import {
+  getAuthUser,
+  getUser,
+  selectIsAuth,
+} from '../../redux/actions/authAction'
 
 import styles from '../LoginPage/styles.module.scss'
 
@@ -32,8 +36,9 @@ const LoginPage = () => {
     // console.log('=>disp-handleLogin', user)
 
     if (user.token) {
-      localStorage.setItem('authorized', JSON.stringify(user.token))
+      localStorage.setItem('authorized', user.token)
     }
+    await dispatch(getAuthUser())
 
     // const allUsers = JSON.parse(localStorage.getItem("allUsers"))
     // console.log('===>Users', allUsers)

@@ -5,11 +5,13 @@ import thunk from 'redux-thunk'
 import allValutesReducer from './reducers/reducer'
 import allPostsReducer from './reducers/postsReducer'
 import userReducer from './reducers/authReducer'
+import transactionsReducer from './reducers/transactionsReducer'
 
 const rootReducer = combineReducers({
   allValutes: allValutesReducer,
   allPosts: allPostsReducer,
   user: userReducer,
+  transactions: transactionsReducer,
 })
 
 const store = createStore(

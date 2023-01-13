@@ -1,7 +1,13 @@
-import React from 'react';
-import styles from "../Transactions/styles.module.scss";
-import {NavButton} from "../../../components/MyUI/MyNavButton";
-import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { NavButton } from '../../../components/MyUI/MyNavButton'
+
+import { getTransactions } from '../../../redux/actions/transactionsAction'
+
+import styles from '../Transactions/styles.module.scss'
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
+import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
 
 const recentTransactions = [
   {
@@ -10,8 +16,7 @@ const recentTransactions = [
     income: '10000',
     inCur: 'RUB',
     status: 'success',
-    text: 'Успешно'
-
+    text: 'Успешно',
   },
   {
     outcome: '12,02',
@@ -27,7 +32,7 @@ const recentTransactions = [
     income: '10000',
     inCur: 'RUB',
     status: 'pending',
-    text: 'В обработке'
+    text: 'В обработке',
   },
   {
     outcome: '123,02',
@@ -35,214 +40,97 @@ const recentTransactions = [
     income: '10000',
     inCur: 'RUB',
     status: 'reject',
-    text: 'Отклонено'
+    text: 'Отклонено',
   },
-
-
 ]
 
 const Transactions = () => {
+  const dispatch = useDispatch()
+  const fetchTransactions = () => dispatch(getTransactions())
+
+  useEffect(() => {
+    fetchTransactions()
+  }, [])
+
+  const transactions = useSelector((state) => state.transactions.transactions)
+  console.log('=>transactions', transactions)
+
   return (
     <div>
-      {recentTransactions.map(
-        ({
-           outcome,
-           outCur,
-           income,
-           inCur,
-           text,
-           status
-         }) => {
+      {transactions.length ? (
+        transactions.map(({ send, from, received, to, createdAt }) => {
           return (
             <div className={styles.transaction}>
-
               <div className={styles.transaction__column}>
                 <NavButton disabled>
-                  <CachedRoundedIcon/>
+                  <CachedRoundedIcon />
                 </NavButton>
-
                 <div className={styles.transaction__date}>
-                  <div className={styles.s14}>{outCur} to {inCur}</div>
-                  <div className={styles.s12}>04:00</div>
+                  <div className={styles.s14}>
+                    {from} to {to}
+                  </div>
+                  <div className={styles.s12}>{createdAt}</div>
                 </div>
               </div>
-
-
               <div className={styles.transaction__column}>
-                <div className={styles.s14p}>-{outcome}</div>
-                <div className={styles.s12}>{outCur}</div>
+                <div className={styles.s14p}>-{send}</div>
+                <div className={styles.s12}>{from}</div>
               </div>
-
               <div className={styles.transaction__column}>
-                <div className={styles.s14p}>+{income}</div>
-                <div className={styles.s12}>{inCur}</div>
+                <div className={styles.s14p}>+{received}</div>
+                <div className={styles.s12}>{to}</div>
               </div>
-
-              <div className={styles[status]}>
-                <p className={styles.status_margin}>{text}</p>
-
+              <div
+              // className={styles[status]}
+              >
+                <p className={styles.status_margin}>Success</p>
               </div>
             </div>
           )
-        }
-      )
-      }
+        })
+      ) : (
+        <div className={styles.transaction__wrapper}>
+          <div className={styles.transaction__container}>
+            <SyncAltRoundedIcon sx={{ fontSize: '32px' }} />
+            <p className={styles.transaction__text}>
+              Вы не совершили не одной транзакции
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/*{recentTransactions.map(*/}
+      {/*  ({ outcome, outCur, income, inCur, text, status }) => {*/}
+      {/*    return (*/}
+      {/*      <div className={styles.transaction}>*/}
+      {/*        <div className={styles.transaction__column}>*/}
+      {/*          <NavButton disabled>*/}
+      {/*            <CachedRoundedIcon />*/}
+      {/*          </NavButton>*/}
+      {/*          <div className={styles.transaction__date}>*/}
+      {/*            <div className={styles.s14}>*/}
+      {/*              {outCur} to {inCur}*/}
+      {/*            </div>*/}
+      {/*            <div className={styles.s12}>04:00</div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        <div className={styles.transaction__column}>*/}
+      {/*          <div className={styles.s14p}>-{outcome}</div>*/}
+      {/*          <div className={styles.s12}>{outCur}</div>*/}
+      {/*        </div>*/}
+      {/*        <div className={styles.transaction__column}>*/}
+      {/*          <div className={styles.s14p}>+{income}</div>*/}
+      {/*          <div className={styles.s12}>{inCur}</div>*/}
+      {/*        </div>*/}
+      {/*        <div className={styles[status]}>*/}
+      {/*          <p className={styles.status_margin}>{text}</p>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    )*/}
+      {/*  },*/}
+      {/*)}*/}
     </div>
   )
+}
 
-
-  {/*<div className={styles.transa}>*/
-  }
-  {/*  */
-  }
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <NavButton disabled>*/
-  }
-  {/*      <CachedRoundedIcon/>*/
-  }
-  {/*    </NavButton>*/
-  }
-  {/*    <div className={styles.pleft}>*/
-  }
-  {/*      <div className={styles.s14}>USD to RUB</div>*/
-  }
-  {/*      <div className={styles.s12}>04:00</div>*/
-  }
-  {/*    </div>*/
-  }
-  {/*  </div>*/
-  }
-
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>-123</div>*/
-  }
-  {/*    <div className={styles.s12}>USD</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>+10000</div>*/
-  }
-  {/*    <div className={styles.s12}>RUB</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.color}>*/
-  }
-  {/*    <p className={styles.marg}>В обработке</p>*/
-  }
-
-  {/*  </div>*/
-  }
-  {/*</div>*/
-  }
-
-
-  {/*<div className={styles.transa}>*/
-  }
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <NavButton disabled>*/
-  }
-  {/*      <CachedRoundedIcon/>*/
-  }
-  {/*    </NavButton>*/
-  }
-  {/*    <div className={styles.pleft}>*/
-  }
-  {/*      <div className={styles.s14}>USD to RUB</div>*/
-  }
-  {/*      <div className={styles.s12}>04:00</div>*/
-  }
-  {/*    </div>*/
-  }
-  {/*  </div>*/
-  }
-
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>-123</div>*/
-  }
-  {/*    <div className={styles.s12}>USD</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>+10000</div>*/
-  }
-  {/*    <div className={styles.s12}>RUB</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.color2}>*/
-  }
-  {/*    <p className={styles.marg}>Успешно</p>*/
-  }
-
-  {/*  </div>*/
-  }
-  {/*</div>*/
-  }
-  {/*<div className={styles.transa}>*/
-  }
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <NavButton disabled>*/
-  }
-  {/*      <CachedRoundedIcon/>*/
-  }
-  {/*    </NavButton>*/
-  }
-  {/*    <div className={styles.pleft}>*/
-  }
-  {/*      <div className={styles.s14}>USD to RUB</div>*/
-  }
-  {/*      <div className={styles.s12}>04:00</div>*/
-  }
-  {/*    </div>*/
-  }
-  {/*  </div>*/
-  }
-
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>-123</div>*/
-  }
-  {/*    <div className={styles.s12}>USD</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.transa2}>*/
-  }
-  {/*    <div className={styles.s14p}>+10000</div>*/
-  }
-  {/*    <div className={styles.s12}>RUB</div>*/
-  }
-  {/*  </div>*/
-  }
-
-  {/*  <div className={styles.color3}>*/
-  }
-  {/*    <p className={styles.marg}>Отклонено</p>*/
-  }
-
-  {/*  </div>*/
-  }
-  {/*</div>*/
-  }
-
-};
-
-export default Transactions;
+export default Transactions

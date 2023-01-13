@@ -13,6 +13,25 @@
     padding-left: 16px;
   }
 
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    height: 256px;
+    border: 1px solid #ECECEC;
+  }
+
+  &__container {
+    text-align: center;
+    width: 160px;
+  }
+
+  &__text {
+    color: #848484;
+  }
+
 }
 
 

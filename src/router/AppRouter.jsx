@@ -15,12 +15,17 @@ import { TransactionPage } from '../pages/TransactionPage'
 import { SelectedWallet } from '../pages/WalletsPage/SelectedWallet'
 import Examples from '../examples'
 
-// const isAuth = localStorage.getItem("authorized")
+// const isAuth = localStorage.getItem('authorized')
 
 const routes = [
   {
     path: '/',
     element: <MainPage />,
+    private: false,
+  },
+  {
+    path: '*',
+    element: <Navigate to='/' replace />,
     private: false,
   },
   {
@@ -34,21 +39,26 @@ const routes = [
     private: false,
   },
   {
+    path: '/',
+    element: <Navigate to='/exchange-rate' replace />,
+    private: true,
+  },
+  {
     path: '*',
-    element: <Navigate to='/' replace />,
-    private: false,
+    element: <Navigate to='/exchange-rate' replace />,
+    private: true,
   },
   {
     path: 'exchange-rate',
     element: <ExchangeRatePage />,
     private: true,
   },
+
   {
     path: 'profile',
     element: <ProfilePage />,
     private: true,
   },
-
   {
     path: 'currency-exchange',
     element: <CurrencyExchangePage />,
@@ -64,33 +74,27 @@ const routes = [
     element: <SelectedWallet />,
     private: true,
   },
+
   {
     path: 'transactions',
     element: <TransactionPage />,
     private: true,
   },
-
   {
     path: 'examples',
     element: <Examples />,
     private: true,
   },
-  {
-    path: '*',
-    element: <Navigate to='/exchange-rate' replace />,
-    private: true,
-  },
 ]
 
 const AppRouter = () => {
-  const dispatch = useDispatch()
-
+  // const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth)
-  console.log('=>isAuth', isAuth)
+  console.log('=>isAuth-router', isAuth)
 
-  useEffect(() => {
-    dispatch(getAuthUser())
-  }, [isAuth])
+  // useEffect(() => {
+  //   dispatch(getAuthUser())
+  // }, [])
 
   return (
     <Routes>

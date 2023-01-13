@@ -79,7 +79,8 @@ const WalletsPage = () => {
   // console.log('===>form', form)
 
   const thisCurrency = currencies.filter(
-    (currency) => form.currency === currency?.currency)
+    (currency) => form.currency === currency?.currency,
+  )
   // console.log('===>thisCurrency', ...thisCurrency)
 
   const handleChange = (e) => {
@@ -96,7 +97,6 @@ const WalletsPage = () => {
     alert('added successfully')
 
     fetchPosts()
-
   }
 
   return (

@@ -7,12 +7,6 @@ import { MyButton } from '../../components/MyUI/MyButton'
 import { MyInput } from '../../components/MyUI/MyInput'
 import { useSelector } from 'react-redux'
 
-const allUsers = JSON.parse(localStorage.getItem('allUsers'))
-// console.log('===>AllUsers', allUsers)
-
-const authorized = JSON.parse(localStorage.getItem('authorized'))
-// console.log('===>authorized', authorized)
-
 const ProfilePage = () => {
   const User = useSelector((state) => state.user.user)
   console.log('=>User-State', User)
@@ -20,41 +14,35 @@ const ProfilePage = () => {
   // const wallets = User.wallets
   // console.log('===>wallets', wallets)
 
-  const loggedUser = allUsers.find((user) => authorized === user.id) || null
-  // console.log('===>loggedUser', loggedUser)
-
-  const [users, setUsers] = useState(allUsers)
+  // const [users, setUsers] = useState(allUsers)
   // console.log('===>users', users)
 
-  const [form, setForm] = useState(loggedUser)
+  // const [form, setForm] = useState(loggedUser)
 
   // console.log('===>form1', form)
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    })
+    // setForm({
+    //   ...form,
+    //   [e.target.name]: e.target.value,
+    // })
   }
 
   const handleClick = () => {
-    setUsers(
-      users.map((user) => {
-        if (user.id === authorized) {
-          return {
-            ...user,
-            ...form,
-          }
-        }
-
-        return user
-      }),
-    )
+    // setUsers(
+    //   users.map((user) => {
+    //     if (user.id === authorized) {
+    //       return {
+    //         ...user,
+    //         ...form,
+    //       }
+    //     }
+    //     return user
+    //   }),
+    // )
   }
 
-  useEffect(() => {
-    localStorage.setItem('allUsers', JSON.stringify(users))
-  }, [users])
+  useEffect(() => {}, [])
 
   return (
     <div className={styles.page_layout}>

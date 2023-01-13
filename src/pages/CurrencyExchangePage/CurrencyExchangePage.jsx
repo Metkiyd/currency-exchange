@@ -1,128 +1,142 @@
-import React, {useState, useEffect} from 'react';
-import {NavSidebar} from "../../components/NavSidebar";
-import {ProfileSidebar} from "../../components/ProfileSidebar";
-import styles from "../CurrencyExchangePage/styles.module.scss";
-// import {MyInput} from "../../components/MyUI/MyInput";
-import {MySelector, WalletSelector} from "../../components/MyUI/MySelector";
-import {MyButton} from "../../components/MyUI/MyButton";
-import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPosts } from '../../redux/actions/postsAction'
+import axios from 'axios'
+import axiosBack from '../../api/axiosBack'
 
+import { NavSidebar } from '../../components/NavSidebar'
+import { ProfileSidebar } from '../../components/ProfileSidebar'
+import { WalletSelector } from '../../components/MyUI/MySelector'
+import { MyButton } from '../../components/MyUI/MyButton'
+
+import { getAllPosts } from '../../redux/actions/postsAction'
+import { getTransactions } from '../../redux/actions/transactionsAction'
+
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
+import styles from '../CurrencyExchangePage/styles.module.scss'
 
 const CurrencyExchangePage = () => {
   const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts());
+  const fetchPosts = () => dispatch(getAllPosts())
+  const fetchTransactions = () => dispatch(getTransactions())
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts()
   }, [])
 
-  const wallets = useSelector((state) => state.allPosts.posts);
+  const wallets = useSelector((state) => state.allPosts.posts)
   console.log('=>wallets-DB', wallets)
 
   const [rates, setRates] = useState([])
+  // console.log('=>ratesState', rates)
 
   useEffect(() => {
-    axios.get(`https://www.cbr-xml-daily.ru/latest.js`)
-      .then(( {data} ) => {
-      const ratesData = data.rates;
-      console.log('===>ratesData', ratesData)
-        setRates( {
-          ...rates,
-          ...ratesData,
-        RUB:1
-        })
-        // setRates(ceu => [{RUB:1}, ...ceu])
+    axios.get(`https://www.cbr-xml-daily.ru/latest.js`).then(({ data }) => {
+      const ratesData = data.rates
+      // console.log('=>ratesData', ratesData)
+      setRates({
+        ...rates,
+        ...ratesData,
+        RUB: 1,
       })
+    })
   }, [])
 
-  console.log('===>ratesState', rates)
+  const [send, setSend] = useState('') //give
+  const [received, setReceived] = useState('') //get
+  const [from, setCurrencyFrom] = useState('') //giveWallet
+  const [to, setCurrencyTo] = useState('') // getWallet
 
-
-  const [amount1, setAmount1] = useState('') //give
-  console.log('===>amount1', amount1)
-  const [amount2, setAmount2] = useState('') //get
-  console.log('===>amount2', amount2)
-
-  const [currency1, setCurrency1] = useState('') //giveWallet
-  console.log('===>currency1', currency1)
-  const [currency2, setCurrency2] = useState('') // getWallet
-  console.log('===>currency2', currency2)
+  const newTransaction = {
+    send,
+    received,
+    from,
+    to,
+  }
 
   function format(number) {
     return number.toFixed(4)
   }
 
-  function handleAmount1Change(amount1) {
-    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
-    setAmount1(amount1)
+  function handleSendChange(send) {
+    setReceived(format((send * rates[to]) / rates[from]))
+    setSend(send)
   }
 
-  function handleCurrency1Change(currency1) {
-    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
-    setCurrency1(currency1)
+  function handleFromChange(from) {
+    setReceived(format((send * rates[to]) / rates[from]))
+    setCurrencyFrom(from)
   }
 
-  function handleAmount2Change(amount2) {
-    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
-    setAmount2(amount2)
+  function handleReceivedChange(received) {
+    setSend(format((received * rates[from]) / rates[to]))
+    setReceived(received)
   }
 
-  function handleCurrency2Change(currency2) {
-    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
-    setCurrency2(currency2)
+  function handleToChange(to) {
+    setSend(format((received * rates[from]) / rates[to]))
+    setCurrencyTo(to)
   }
 
+  const handleClick = async () => {
+    const { data } = await axiosBack.post('/transactions', newTransaction)
+    console.log('=>dispatch-handleCreate', data)
+
+    alert('exchanged successfully')
+    fetchTransactions()
+    // fetchPosts()
+  }
 
   return (
     <div className={styles.page_layout}>
-      <NavSidebar/>
+      <NavSidebar />
       <section className={styles.main}>
         <div className={styles.main__nav}>
           <p className={styles.main__title}>Обмен валют</p>
         </div>
         <div className={styles.profile_info}>
-          <p className={styles.profile_title}>Укажите кошелек, сумму и валюту для обмена</p>
+          <p className={styles.profile_title}>
+            Укажите кошелек, сумму и валюту для обмена
+          </p>
           <div className={styles.profile_inputs}>
             <WalletSelector
-              labelname={"Отдаю"}
+              labelname={'Отдаю'}
               // name="giveWallet"
               wallets={wallets}
-              amount={amount1}
-              currency={currency1}
+              amount={send}
+              currency={from}
               // changed={form.giveWallet}
-              onAmountChange={handleAmount1Change}
-              onCurrencyChange={handleCurrency1Change}
+              onAmountChange={handleSendChange}
+              onCurrencyChange={handleFromChange}
             />
           </div>
           <div className={styles.profile_inputs}>
             <WalletSelector
-              labelname={"Получаю"}
+              labelname={'Получаю'}
               // name="getWallet"
               wallets={wallets}
-              amount={amount2}
-              currency={currency2}
+              amount={received}
+              currency={to}
               // changed={form.getWallet}
-              onAmountChange={handleAmount2Change}
-              onCurrencyChange={handleCurrency2Change}
+              onAmountChange={handleReceivedChange}
+              onCurrencyChange={handleToChange}
             />
           </div>
           <MyButton
-            size="largeWithIcon"
-            variant="contained"
-            endIcon={<CachedRoundedIcon/>}
-          >Обменять
+            size='largeWithIcon'
+            variant='contained'
+            endIcon={<CachedRoundedIcon />}
+            onClick={handleClick}
+          >
+            Обменять
           </MyButton>
         </div>
       </section>
-      <ProfileSidebar/>
+      <ProfileSidebar />
     </div>
-  );
-};
+  )
+}
 
-export default CurrencyExchangePage;
+export default CurrencyExchangePage
 
 // const [form, setForm] = useState({
 //   // giveValue: 0,
@@ -144,7 +158,6 @@ export default CurrencyExchangePage;
 //     [e.target.name]: e.target.value
 //   })
 // }
-
 
 // const [give, setGive] = useState<CurrencyType>();
 // const [get, setGet] = useState<CurrencyType>();

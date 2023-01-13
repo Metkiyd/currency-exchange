@@ -17,7 +17,6 @@ export const getUser = (value) => {
     } catch (e) {
       alert(e.response.data.message)
     }
-
   }
 }
 
@@ -42,11 +41,24 @@ export const getNewUser = (value) => {
 //   }
 // }
 
+// export const getAuthUser = () => {
+//   return async (dispatch) => {
+//     let auths = await fetchAuth()
+//     console.log('=>auths', auths)
+//     dispatch(setAllPosts(auths))
+//   }
+// }
+
 export const getAuthUser = () => {
   return async (dispatch) => {
-    let auths = await fetchAuth()
-    console.log('=>auths', auths)
-    dispatch(setAllPosts(auths))
+    const { data } = await axiosBack.get('/auth/me')
+    console.log('=>data', data)
+    dispatch(setUser(data))
+    return data
+
+    // let auths = await fetchAuth()
+    // console.log('=>auths', auths)
+    // dispatch(setAllPosts(auths))
   }
 }
 

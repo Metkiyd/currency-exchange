@@ -6,13 +6,13 @@ import { getAuthUser, selectIsAuth } from './redux/actions/authAction'
 import AppRouter from './router/AppRouter'
 
 function App() {
-  // const dispatch = useDispatch()
-  // const isAuth = useSelector(selectIsAuth)
-  // console.log('=>isAuth', isAuth)
+  const dispatch = useDispatch()
+  const isAuth = useSelector(selectIsAuth)
+  console.log('=>isAuth-app', isAuth)
 
-  // useEffect(() => {
-  //   dispatch(getAuthUser())
-  // }, [])
+  useEffect(() => {
+    dispatch(getAuthUser())
+  }, [])
 
   return <AppRouter />
 }
