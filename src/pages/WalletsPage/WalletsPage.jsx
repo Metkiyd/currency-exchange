@@ -91,12 +91,13 @@ const WalletsPage = () => {
     })
   }
   const handleClick = async () => {
-    const { data } = await axiosBack.post('/posts', form)
-    console.log('=>dispatch-handleCreate', data)
-
-    alert('added successfully')
-
-    fetchPosts()
+    try {
+      await axiosBack.post('/posts', form)
+      await fetchPosts()
+      await alert('added successfully')
+    } catch (e) {
+      alert(e.response.data.message)
+    }
   }
 
   return (

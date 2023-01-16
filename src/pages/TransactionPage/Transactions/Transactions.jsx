@@ -58,36 +58,40 @@ const Transactions = () => {
   return (
     <div>
       {transactions.length ? (
-        transactions.map(({ send, from, received, to, createdAt }) => {
-          return (
-            <div className={styles.transaction}>
-              <div className={styles.transaction__column}>
-                <NavButton disabled>
-                  <CachedRoundedIcon />
-                </NavButton>
-                <div className={styles.transaction__date}>
-                  <div className={styles.s14}>
-                    {from} to {to}
+        transactions
+
+          .reverse()
+
+          .map(({ send, from, received, to, createdAt }) => {
+            return (
+              <div className={styles.transaction}>
+                <div className={styles.transaction__column}>
+                  <NavButton disabled>
+                    <CachedRoundedIcon />
+                  </NavButton>
+                  <div className={styles.transaction__date}>
+                    <div className={styles.s14}>
+                      {from} to {to}
+                    </div>
+                    <div className={styles.s12}>{createdAt}</div>
                   </div>
-                  <div className={styles.s12}>{createdAt}</div>
+                </div>
+                <div className={styles.transaction__column}>
+                  <div className={styles.s14p}>-{send}</div>
+                  <div className={styles.s12}>{from}</div>
+                </div>
+                <div className={styles.transaction__column}>
+                  <div className={styles.s14p}>+{received}</div>
+                  <div className={styles.s12}>{to}</div>
+                </div>
+                <div
+                // className={styles[status]}
+                >
+                  <p className={styles.status_margin}>Success</p>
                 </div>
               </div>
-              <div className={styles.transaction__column}>
-                <div className={styles.s14p}>-{send}</div>
-                <div className={styles.s12}>{from}</div>
-              </div>
-              <div className={styles.transaction__column}>
-                <div className={styles.s14p}>+{received}</div>
-                <div className={styles.s12}>{to}</div>
-              </div>
-              <div
-              // className={styles[status]}
-              >
-                <p className={styles.status_margin}>Success</p>
-              </div>
-            </div>
-          )
-        })
+            )
+          })
       ) : (
         <div className={styles.transaction__wrapper}>
           <div className={styles.transaction__container}>

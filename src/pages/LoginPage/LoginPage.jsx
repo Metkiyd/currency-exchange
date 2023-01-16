@@ -39,23 +39,6 @@ const LoginPage = () => {
       localStorage.setItem('authorized', user.token)
     }
     await dispatch(getAuthUser())
-
-    // const allUsers = JSON.parse(localStorage.getItem("allUsers"))
-    // console.log('===>Users', allUsers)
-    //
-    // const loggedUser = allUsers.find(user => form.email === user.email)
-    // console.log('===>loggedUser', loggedUser)
-    //
-    // if (form.email === loggedUser.email && form.password === loggedUser.password) {
-    //   localStorage.setItem("authorized", JSON.stringify(loggedUser.id))
-    //
-    //   // localStorage.setItem("loggedUser", JSON.stringify(loggedUser))
-    //   //для наглядности
-    //   // navigate(`/exchange-rate`, {replace: true})
-    //
-    // } else {
-    //   alert('Wrong Email or Password')
-    // }
   }
 
   // const User = useSelector((state) => state.user.user)

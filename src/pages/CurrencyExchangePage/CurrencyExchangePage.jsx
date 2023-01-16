@@ -24,7 +24,7 @@ const CurrencyExchangePage = () => {
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
-  console.log('=>wallets-DB', wallets)
+  // console.log('=>wallets-DB', wallets)
 
   const [rates, setRates] = useState([])
   // console.log('=>ratesState', rates)
@@ -42,9 +42,13 @@ const CurrencyExchangePage = () => {
   }, [])
 
   const [send, setSend] = useState('') //give
+  // console.log('=>send', send)
   const [received, setReceived] = useState('') //get
+  // console.log('=>received', received)
   const [from, setCurrencyFrom] = useState('') //giveWallet
+  // console.log('=>from', from)
   const [to, setCurrencyTo] = useState('') // getWallet
+  // console.log('=>to', to)
 
   const newTransaction = {
     send,
@@ -76,14 +80,31 @@ const CurrencyExchangePage = () => {
     setSend(format((received * rates[from]) / rates[to]))
     setCurrencyTo(to)
   }
+  // console.log('=>getWallet', wallets.getWallet)
+  // console.log('=>giveWallet', wallets.giveWallet)
+
+  let sendFromWallet = wallets.find((wallet) => from == wallet.currency) || null
+  // console.log('=>sendFromWallet', sendFromWallet)
+  let sendToWallet = wallets.find((wallet) => to == wallet.currency) || null
+  // console.log('=>sendToWallet', sendToWallet)
+
+  const makeCalc = () => {
+    sendFromWallet.balance = Number(sendFromWallet.balance) - Number(send)
+    sendToWallet.balance = Number(sendToWallet.balance) + Number(received)
+  }
 
   const handleClick = async () => {
-    const { data } = await axiosBack.post('/transactions', newTransaction)
-    console.log('=>dispatch-handleCreate', data)
+    await makeCalc()
+
+    await axiosBack.patch(`/posts/${sendFromWallet._id}`, sendFromWallet)
+    await axiosBack.patch(`/posts/${sendToWallet._id}`, sendToWallet)
+
+    await axiosBack.post('/transactions', newTransaction)
+    // console.log('=>dispatch-handleCreate', data)
 
     alert('exchanged successfully')
-    fetchTransactions()
-    // fetchPosts()
+    await fetchTransactions()
+    await fetchPosts()
   }
 
   return (
@@ -100,11 +121,9 @@ const CurrencyExchangePage = () => {
           <div className={styles.profile_inputs}>
             <WalletSelector
               labelname={'Отдаю'}
-              // name="giveWallet"
-              wallets={wallets}
+              // balance={balance}
               amount={send}
               currency={from}
-              // changed={form.giveWallet}
               onAmountChange={handleSendChange}
               onCurrencyChange={handleFromChange}
             />
@@ -112,11 +131,9 @@ const CurrencyExchangePage = () => {
           <div className={styles.profile_inputs}>
             <WalletSelector
               labelname={'Получаю'}
-              // name="getWallet"
-              wallets={wallets}
+              // name='getWallet'
               amount={received}
               currency={to}
-              // changed={form.getWallet}
               onAmountChange={handleReceivedChange}
               onCurrencyChange={handleToChange}
             />

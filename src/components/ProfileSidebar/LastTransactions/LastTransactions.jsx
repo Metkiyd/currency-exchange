@@ -58,20 +58,23 @@ const LastTransactions = () => {
 
       <div className={styles.l_transactions}>
         {transactions.length ? (
-          transactions.map(({ _id, send, from, received, to, createdAt }) => {
-            return (
-              <div key={_id} className={styles.l_transactions__item}>
-                <p className={styles.l_transactions__s12}>
-                  <span>-{send}</span>
-                  <span>{from}</span>
-                  <span>/</span>
-                  <span>+{received}</span>
-                  <span>{to}</span>
-                </p>
-                {/*<div className={styles[`l_transactions__${status}`]}></div>*/}
-              </div>
-            )
-          })
+          transactions
+            .slice(-3)
+            .reverse()
+            .map(({ _id, send, from, received, to, createdAt }) => {
+              return (
+                <div key={_id} className={styles.l_transactions__item}>
+                  <p className={styles.l_transactions__s12}>
+                    <span>-{send}</span>
+                    <span>{from}</span>
+                    <span>/</span>
+                    <span>+{received}</span>
+                    <span>{to}</span>
+                  </p>
+                  {/*<div className={styles[`l_transactions__${status}`]}></div>*/}
+                </div>
+              )
+            })
         ) : (
           <div className={styles.transactions__wrapper}>
             <div className={styles.transactions__container}>

@@ -71,12 +71,12 @@ const RegistrationPage = () => {
   console.log('=>form-registerPage', form)
 
   const handleClick = async () => {
-    console.log('=>form-handleRegister', form)
+    // console.log('=>form-handleRegister', form)
     const user = await dispatch(getNewUser(form))
-    console.log('=>dispatch-handleRegister', user)
+    // console.log('=>dispatch-handleRegister', user)
 
     if (user.token) {
-      localStorage.setItem('authorized', JSON.stringify(user.token))
+      localStorage.setItem('authorized', user.token)
     }
     // form.id = Date.now()
     // allUsers.push(form)

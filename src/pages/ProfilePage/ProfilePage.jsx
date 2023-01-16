@@ -5,44 +5,30 @@ import styles from '../ProfilePage/styles.module.scss'
 
 import { MyButton } from '../../components/MyUI/MyButton'
 import { MyInput } from '../../components/MyUI/MyInput'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import axiosBack from '../../api/axiosBack'
+import { getAuthUser } from '../../redux/actions/authAction'
 
 const ProfilePage = () => {
+  const dispatch = useDispatch()
   const User = useSelector((state) => state.user.user)
-  console.log('=>User-State', User)
+  // console.log('=>User-State', User)
 
-  // const wallets = User.wallets
-  // console.log('===>wallets', wallets)
+  const [form, setForm] = useState(User)
 
-  // const [users, setUsers] = useState(allUsers)
-  // console.log('===>users', users)
-
-  // const [form, setForm] = useState(loggedUser)
-
-  // console.log('===>form1', form)
+  console.log('=>User-form', form)
 
   const handleChange = (e) => {
-    // setForm({
-    //   ...form,
-    //   [e.target.name]: e.target.value,
-    // })
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
   }
 
-  const handleClick = () => {
-    // setUsers(
-    //   users.map((user) => {
-    //     if (user.id === authorized) {
-    //       return {
-    //         ...user,
-    //         ...form,
-    //       }
-    //     }
-    //     return user
-    //   }),
-    // )
+  const handleClick = async () => {
+    await axiosBack.patch('/auth/update', form)
+    await dispatch(getAuthUser())
   }
-
-  useEffect(() => {}, [])
 
   return (
     <div className={styles.page_layout}>
@@ -65,14 +51,14 @@ const ProfilePage = () => {
 
           <div className={styles.profile_inputs}>
             <MyInput
-              // defaultValue={loggedUser.fullName}
+              defaultValue={User.fullName}
               label='Имя'
               name='fullName'
               sx={{ width: 388 }}
               onChange={handleChange}
             />
             <MyInput
-              // defaultValue={loggedUser.email}
+              defaultValue={User.email}
               label='E-mail'
               name='email'
               sx={{ width: 388 }}
@@ -80,23 +66,23 @@ const ProfilePage = () => {
             />
             <MyInput
               label='Город'
-              // defaultValue={loggedUser.City}
+              defaultValue={User.city}
               sx={{ width: 388 }}
-              name='City'
+              name='city'
               onChange={handleChange}
             />
             <MyInput
               label='Дата рождения'
-              // defaultValue={loggedUser.Birthday}
+              defaultValue={User.birthday}
               sx={{ width: 388 }}
-              name='Birthday'
+              name='birthday'
               onChange={handleChange}
             />
             <MyInput
               label='Номер телефона'
-              // defaultValue={loggedUser.Phone}
+              defaultValue={User.phone}
               sx={{ width: 388 }}
-              name='Phone'
+              name='phone'
               onChange={handleChange}
             />
           </div>

@@ -15,7 +15,3 @@ export function fetchPosts() {
 export function fetchTransactions() {
   return axiosBack.get('/transactions').then((response) => response.data)
 }
-
-export function fetchAuth() {
-  return axiosBack.get('/auth/me').then((response) => response.data)
-}

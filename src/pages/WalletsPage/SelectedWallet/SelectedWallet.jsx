@@ -1,40 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import {NavSidebar} from "../../../components/NavSidebar";
-import {ProfileSidebar} from "../../../components/ProfileSidebar";
-import styles from "../SelectedWallet/styles.module.scss";
-import {MyInput} from "../../../components/MyUI/MyInput";
-import {MySelector} from "../../../components/MyUI/MySelector";
-import {MyButton} from "../../../components/MyUI/MyButton";
-import greenWallet from "../../../assets/images/greenWallet.png"
-import landingBg from "../../../assets/images/landingBg.png"
+import React, { useEffect, useState } from 'react'
+import { NavSidebar } from '../../../components/NavSidebar'
+import { ProfileSidebar } from '../../../components/ProfileSidebar'
+import styles from '../SelectedWallet/styles.module.scss'
+import { MyInput } from '../../../components/MyUI/MyInput'
+import { MySelector } from '../../../components/MyUI/MySelector'
+import { MyButton } from '../../../components/MyUI/MyButton'
+import greenWallet from '../../../assets/images/greenWallet.png'
+import landingBg from '../../../assets/images/landingBg.png'
 
-import {MyModal} from "../../../components/MyUI/MyModal";
-import {IconButton} from "@mui/material";
-import {ReactComponent as GreenWalletIcon} from '../../../../src/assets/icons/greenWalletIcon.svg';
-import {ReactComponent as GreenWalletIcon2} from '../../../../src/assets/icons/greenWalletIcon2.svg';
-import {ReactComponent as RubIcon} from '../../../../src/assets/icons/rubIcon.svg';
-import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
-import {useNavigate, useParams, useLocation} from "react-router-dom";
-import axiosBack from "../../../api/axiosBack";
+import { MyModal } from '../../../components/MyUI/MyModal'
+import { IconButton } from '@mui/material'
+import { ReactComponent as GreenWalletIcon } from '../../../../src/assets/icons/greenWalletIcon.svg'
+import { ReactComponent as GreenWalletIcon2 } from '../../../../src/assets/icons/greenWalletIcon2.svg'
+import { ReactComponent as RubIcon } from '../../../../src/assets/icons/rubIcon.svg'
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import axiosBack from '../../../api/axiosBack'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPosts, getDeleteWallet } from '../../../redux/actions/postsAction'
+import {
+  getAllPosts,
+  getDeleteWallet,
+} from '../../../redux/actions/postsAction'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
-
 const SelectedWallet = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const {id} = useParams()
+  const { id } = useParams()
   // console.log('===>id', id)
 
   const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts());
+  const fetchPosts = () => dispatch(getAllPosts())
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts()
   }, [])
 
-  const wallets = useSelector((state) => state.allPosts.posts);
+  const wallets = useSelector((state) => state.allPosts.posts)
   // console.log('=>wallets-DB', wallets)
 
   // const [data, setData] = useState()
@@ -51,121 +53,84 @@ const SelectedWallet = () => {
   //
   // }, [])
 
-  let selectedWallet = wallets.find(wallet => id == wallet.number) || null
+  let selectedWallet = wallets.find((wallet) => id == wallet.number) || null
   console.log('===>selectedWallet', selectedWallet)
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(open => !open);
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen((open) => !open)
 
   const [form, setForm] = useState({})
   // console.log('===>form', form)
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     })
-
   }
 
-  const [balance, setBalance] = useState(selectedWallet.balance) || null;
-
-  console.log("==> selected balance", balance)
   const addSumWallet = () => {
-
-    setBalance(selectedWallet.balance = Number(selectedWallet.balance) + Number(form.balance))
-    // console.log('===>sum select + form', addSumWallet)
+    selectedWallet.balance =
+      Number(selectedWallet.balance) + Number(form.balance)
   }
 
   const handleClick = async () => {
-
     await addSumWallet()
-    await console.log('=>form', form)
-    await console.log('=>balance', balance)
 
-    const { data } = await axiosBack.patch(`/posts/${selectedWallet._id}`, balance)
-    await console.log('=>dispatch-handleFillUp', data)
+    const { data } = await axiosBack.patch(
+      `/posts/${selectedWallet._id}`,
+      selectedWallet,
+    )
 
     alert('fill up successfully')
-
+    navigate(`/wallets`)
   }
 
   const handleRemove = () => {
     console.log('=>id-hand-remove', selectedWallet._id)
     dispatch(getDeleteWallet(selectedWallet._id))
 
-    // let removedWallets =
-    //   wallets.filter(wallet => wallet.id !== selectedWallet.id)
-    // console.log('===>removed wallets', removedWallets)
-    // console.log('===>wallets', wallets)
-
-
     alert('deleted successfully')
     navigate(`/wallets`)
-
   }
-
-  // const removeWallet = () => {
-  // localStorage.setItem("wallets", JSON.stringify(removed));
-  // navigate(`/wallets`, {replace: true})
-  // }
 
   return (
     <div className={styles.page_layout}>
-      <NavSidebar/>
+      <NavSidebar />
       <section className={styles.main}>
         <div className={styles.main__nav}>
-
           <div className={styles.main__title}>
-            <IconButton
-              aria-label="back"
-              onClick={() => navigate(-1)}>
-              <KeyboardBackspaceRoundedIcon/>
+            <IconButton aria-label='back' onClick={() => navigate(-1)}>
+              <KeyboardBackspaceRoundedIcon />
             </IconButton>
 
-            <p>
-              {selectedWallet.currency}
-            </p>
+            <p>{selectedWallet.currency}</p>
             <div>/</div>
             <p className={styles.id}>#{id}</p>
           </div>
-          <MyButton
-            variant="outlined"
-            onClick={handleRemove}
-          >Удалить кошелек</MyButton>
+          <MyButton variant='outlined' onClick={handleRemove}>
+            Удалить кошелек
+          </MyButton>
         </div>
 
         <div className={styles.block}>
-
           <div className={styles.card}>
             <div className={styles.country}>
-              <p className={styles.rub}>
-                {selectedWallet.currency}
-              </p>
-              <img src={selectedWallet.icon} alt={selectedWallet.currency}/>
+              <p className={styles.rub}>{selectedWallet.currency}</p>
+              <img src={selectedWallet.icon} alt={selectedWallet.currency} />
             </div>
             <p className={styles.count}>
               {selectedWallet.balance} {selectedWallet.sign}
             </p>
           </div>
 
-
           <div className={styles.landing}>
             <div>
-              <p className={styles.obm1}>
-                Обменивай с умом
-              </p>
-              <p className={styles.obm2}>
-                До 10% кешбека с каждого обмена
-              </p>
+              <p className={styles.obm1}>Обменивай с умом</p>
+              <p className={styles.obm2}>До 10% кешбека с каждого обмена</p>
             </div>
 
-            <img
-              alt="greenWallet"
-              width="84"
-              height="98"
-              src={greenWallet}
-            />
+            <img alt='greenWallet' width='84' height='98' src={greenWallet} />
             {/*<img*/}
             {/*  alt="landingBg"*/}
             {/*  width="84"*/}
@@ -173,10 +138,7 @@ const SelectedWallet = () => {
             {/*  src={landingBg}*/}
             {/*/>*/}
             <div className={styles.circle_small}></div>
-
           </div>
-
-
         </div>
 
         <div className={styles.profile_info}>
@@ -184,61 +146,45 @@ const SelectedWallet = () => {
 
           <div className={styles.password_inputs}>
             <MyInput
-              label="Сумма"
-              sx={{width: 388}}
-              name="balance"
-              type="Number"
+              label='Сумма'
+              sx={{ width: 388 }}
+              name='balance'
+              type='Number'
               onChange={handleChange}
             />
-            <MyInput
-              label="Номер карты"
-              sx={{width: 388}}
-            />
-            <MyInput
-              label="Даты"
-              sx={{width: 388}}
-            />
-            <MyInput
-              label="CVC"
-              sx={{width: 388}}
-            />
-            <MyInput
-              label="Владелец карты"
-              sx={{width: 388}}
-            />
+            <MyInput label='Номер карты' sx={{ width: 388 }} />
+            <MyInput label='Даты' sx={{ width: 388 }} />
+            <MyInput label='CVC' sx={{ width: 388 }} />
+            <MyInput label='Владелец карты' sx={{ width: 388 }} />
 
             <MyButton
               // onClick={handleOpen}
               onClick={handleClick}
-              size="large"
-              variant="contained"
+              size='large'
+              variant='contained'
               // disabled
-            >Пополнить кошелек
+            >
+              Пополнить кошелек
             </MyButton>
             <MyModal
               // setModalOpen={setOpen} modalState={open}
 
               open={open}
               setOpen={setOpen}
-              icon={<GreenWalletIcon2/>}
-              title="Пополнение прошло успешно"
-              text="Вы успешно пополнили свой кошелек."
+              icon={<GreenWalletIcon2 />}
+              title='Пополнение прошло успешно'
+              text='Вы успешно пополнили свой кошелек.'
               onClose={handleClose}
             />
           </div>
-
-
         </div>
-
-
       </section>
-      <ProfileSidebar/>
+      <ProfileSidebar />
     </div>
-  );
-};
+  )
+}
 
-export default SelectedWallet;
-
+export default SelectedWallet
 
 // const [openModal, setOpenModal] = useState(false);
 
