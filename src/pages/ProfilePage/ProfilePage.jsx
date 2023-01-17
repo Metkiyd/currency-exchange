@@ -12,11 +12,10 @@ import { getAuthUser } from '../../redux/actions/authAction'
 const ProfilePage = () => {
   const dispatch = useDispatch()
   const User = useSelector((state) => state.user.user)
-  // console.log('=>User-State', User)
+  // console.log('=>User-profile', User)
 
   const [form, setForm] = useState(User)
-
-  console.log('=>User-form', form)
+  console.log('=>form-profile', form)
 
   const handleChange = (e) => {
     setForm({
@@ -26,7 +25,10 @@ const ProfilePage = () => {
   }
 
   const handleClick = async () => {
+    await console.log('=>form-profile-bef-click', form)
     await axiosBack.patch('/auth/update', form)
+    await console.log('=>form-profile-aft-click', form)
+
     await dispatch(getAuthUser())
   }
 

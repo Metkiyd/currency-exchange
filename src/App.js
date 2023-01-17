@@ -7,8 +7,8 @@ import AppRouter from './router/AppRouter'
 
 function App() {
   const dispatch = useDispatch()
-  const isAuth = useSelector(selectIsAuth)
-  console.log('=>isAuth-app', isAuth)
+  // const isAuth = useSelector(selectIsAuth)
+  // console.log('=>isAuth-app', isAuth)
 
   useEffect(() => {
     dispatch(getAuthUser())

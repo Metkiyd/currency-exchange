@@ -1,43 +1,46 @@
 import React, { useEffect } from 'react'
-import styles from '../LastTransactions/styles.module.scss'
-import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { getTransactions } from '../../../redux/actions/transactionsAction'
 
-const recentTransactions = [
-  {
-    id: 1,
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'success',
-  },
-  {
-    id: 2,
-    outcome: '12,02',
-    outCur: 'USD',
-    income: '1000',
-    inCur: 'RUB',
-    status: 'success',
-  },
-  {
-    id: 3,
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'pending',
-  },
-  {
-    id: 4,
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'reject',
-  },
-]
+import styles from '../LastTransactions/styles.module.scss'
+
+import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
+
+// const recentTransactions = [
+//   {
+//     id: 1,
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'success',
+//   },
+//   {
+//     id: 2,
+//     outcome: '12,02',
+//     outCur: 'USD',
+//     income: '1000',
+//     inCur: 'RUB',
+//     status: 'success',
+//   },
+//   {
+//     id: 3,
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'pending',
+//   },
+//   {
+//     id: 4,
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'reject',
+//   },
+// ]
 
 const LastTransactions = () => {
   const dispatch = useDispatch()
@@ -55,12 +58,11 @@ const LastTransactions = () => {
       <div className={styles.transactions__title}>
         <p className={styles.transactions__text_500}>Последние транзакции</p>
       </div>
-
       <div className={styles.l_transactions}>
         {transactions.length ? (
           transactions
-            .slice(-3)
             .reverse()
+            .slice(-3)
             .map(({ _id, send, from, received, to, createdAt }) => {
               return (
                 <div key={_id} className={styles.l_transactions__item}>

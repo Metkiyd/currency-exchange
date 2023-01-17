@@ -9,40 +9,40 @@ import styles from '../Transactions/styles.module.scss'
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
 import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
 
-const recentTransactions = [
-  {
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'success',
-    text: 'Успешно',
-  },
-  {
-    outcome: '12,02',
-    outCur: 'USD',
-    income: '1000',
-    inCur: 'RUB',
-    status: 'success',
-    text: 'Успешно',
-  },
-  {
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'pending',
-    text: 'В обработке',
-  },
-  {
-    outcome: '123,02',
-    outCur: 'USD',
-    income: '10000',
-    inCur: 'RUB',
-    status: 'reject',
-    text: 'Отклонено',
-  },
-]
+// const recentTransactions = [
+//   {
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'success',
+//     text: 'Успешно',
+//   },
+//   {
+//     outcome: '12,02',
+//     outCur: 'USD',
+//     income: '1000',
+//     inCur: 'RUB',
+//     status: 'success',
+//     text: 'Успешно',
+//   },
+//   {
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'pending',
+//     text: 'В обработке',
+//   },
+//   {
+//     outcome: '123,02',
+//     outCur: 'USD',
+//     income: '10000',
+//     inCur: 'RUB',
+//     status: 'reject',
+//     text: 'Отклонено',
+//   },
+// ]
 
 const Transactions = () => {
   const dispatch = useDispatch()
@@ -59,9 +59,7 @@ const Transactions = () => {
     <div>
       {transactions.length ? (
         transactions
-
           .reverse()
-
           .map(({ send, from, received, to, createdAt }) => {
             return (
               <div className={styles.transaction}>

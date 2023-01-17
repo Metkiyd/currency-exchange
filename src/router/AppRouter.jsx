@@ -90,7 +90,7 @@ const routes = [
 const AppRouter = () => {
   // const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth)
-  console.log('=>isAuth-router', isAuth)
+  // console.log('=>isAuth-router', isAuth)
 
   // useEffect(() => {
   //   dispatch(getAuthUser())

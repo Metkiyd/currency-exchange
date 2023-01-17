@@ -32,6 +32,14 @@ export const getAuthUser = () => {
   }
 }
 
+export const getUserAvatar = () => {
+  return async (dispatch) => {
+    const { data } = await axiosBack.get('/auth/me')
+    dispatch(setUser(data))
+    return data
+  }
+}
+
 export const selectIsAuth = (state) => Boolean(state.user.user)
 export const logout = () => {
   return async (dispatch) => {

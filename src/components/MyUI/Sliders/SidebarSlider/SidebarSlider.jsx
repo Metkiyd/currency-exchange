@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import styles from '../../../../pages/WalletsPage/SidebarWallets/styles.module.scss'
+import styles from '../../../ProfileSidebar/SidebarWallets/styles.module.scss'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import { IconButton } from '@mui/material'
@@ -15,17 +15,15 @@ import { getAllPosts } from '../../../../redux/actions/postsAction'
 // import {wallets} from "../WalletsSlider/WalletsSlider";
 
 function SidebarSlider() {
-
   const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts());
+  const fetchPosts = () => dispatch(getAllPosts())
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts()
   }, [])
 
-  const wallets = useSelector((state) => state.allPosts.posts);
+  const wallets = useSelector((state) => state.allPosts.posts)
   // console.log('=>wallets-DB', wallets)
-
 
   const [sliderRef, setSliderRef] = useState(null)
 
