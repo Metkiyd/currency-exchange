@@ -33,12 +33,12 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     const user = await dispatch(getUser(form))
-    // console.log('=>disp-handleLogin', user)
+    console.log('=>disp-handleLogin', user)
 
-    if (user.token) {
-      localStorage.setItem('authorized', user.token)
+    if (user.accessToken) {
+      localStorage.setItem('authorized', user.accessToken)
     }
-    await dispatch(getAuthUser())
+    // await dispatch(getAuthUser())
   }
 
   // const User = useSelector((state) => state.user.user)

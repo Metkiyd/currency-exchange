@@ -11,7 +11,7 @@ export const getUser = (value) => {
       dispatch(setUser(data))
       return data
     } catch (e) {
-      alert(e.response.data.message)
+      alert(e.response?.data?.message)
     }
   }
 }
@@ -24,11 +24,28 @@ export const getNewUser = (value) => {
   }
 }
 
+// export const getAuthUser = () => {
+//   return async (dispatch) => {
+//     try {
+//       const { data } = await axiosBack.get('/auth/me')
+//       dispatch(setUser(data))
+//       return data
+//     } catch (e) {
+//       alert(e.response?.data?.message)
+//     }
+//   }
+// }
 export const getAuthUser = () => {
   return async (dispatch) => {
-    const { data } = await axiosBack.get('/auth/me')
-    dispatch(setUser(data))
-    return data
+    try {
+      const { data } = await axiosBack.get('/auth/refresh')
+      console.log('=>data', data)
+      localStorage.setItem('authorized', data.accessToken)
+      dispatch(setUser(data))
+      return data
+    } catch (e) {
+      alert(e.response?.data?.message)
+    }
   }
 }
 
