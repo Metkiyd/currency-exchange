@@ -12,23 +12,25 @@ import { getAllPosts } from '../../redux/actions/postsAction'
 import { getTransactions } from '../../redux/actions/transactionsAction'
 
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
+import { ReactComponent as GreenWalletIcon2 } from '../../../src/assets/icons/greenWalletIcon2.svg'
 import styles from '../CurrencyExchangePage/styles.module.scss'
+import { MyModal } from '../../components/MyUI/MyModal'
 
 const CurrencyExchangePage = () => {
   const dispatch = useDispatch()
+
   const fetchPosts = () => dispatch(getAllPosts())
   const fetchTransactions = () => dispatch(getTransactions())
-
   useEffect(() => {
-    fetchPosts()
+    // fetchPosts()
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
+
   // console.log('=>wallets-DB', wallets)
-
   const [rates, setRates] = useState([])
-  // console.log('=>ratesState', rates)
 
+  // console.log('=>ratesState', rates)
   useEffect(() => {
     axios.get(`https://www.cbr-xml-daily.ru/latest.js`).then(({ data }) => {
       const ratesData = data.rates
@@ -42,6 +44,7 @@ const CurrencyExchangePage = () => {
   }, [])
 
   const [send, setSend] = useState('') //give
+
   // console.log('=>send', send)
   const [received, setReceived] = useState('') //get
   // console.log('=>received', received)
@@ -49,7 +52,6 @@ const CurrencyExchangePage = () => {
   // console.log('=>from', from)
   const [to, setCurrencyTo] = useState('') // getWallet
   // console.log('=>to', to)
-
   const newTransaction = {
     send,
     received,
@@ -80,18 +82,22 @@ const CurrencyExchangePage = () => {
     setSend(format((received * rates[from]) / rates[to]))
     setCurrencyTo(to)
   }
+
   // console.log('=>getWallet', wallets.getWallet)
   // console.log('=>giveWallet', wallets.giveWallet)
-
   let sendFromWallet = wallets.find((wallet) => from == wallet.currency) || null
+
   // console.log('=>sendFromWallet', sendFromWallet)
   let sendToWallet = wallets.find((wallet) => to == wallet.currency) || null
   // console.log('=>sendToWallet', sendToWallet)
-
   const makeCalc = () => {
     sendFromWallet.balance = Number(sendFromWallet.balance) - Number(send)
     sendToWallet.balance = Number(sendToWallet.balance) + Number(received)
   }
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const handleClick = async () => {
     await makeCalc()
@@ -101,10 +107,11 @@ const CurrencyExchangePage = () => {
 
     await axiosBack.post('/transactions', newTransaction)
     // console.log('=>dispatch-handleCreate', data)
-
-    alert('exchanged successfully')
+    //clear form
+    // alert('exchanged successfully')
     await fetchTransactions()
     await fetchPosts()
+    await handleOpen()
   }
 
   return (
@@ -146,6 +153,16 @@ const CurrencyExchangePage = () => {
           >
             Обменять
           </MyButton>
+          <MyModal
+            // setModalOpen={setOpen} modalState={open}
+
+            open={open}
+            setOpen={setOpen}
+            icon={<GreenWalletIcon2 />}
+            title='Пополнение прошло успешно'
+            text='Вы успешно пополнили свой кошелек.'
+            onClose={handleClose}
+          />
         </div>
       </section>
       <ProfileSidebar />

@@ -8,9 +8,13 @@ import { MyInput } from '../../components/MyUI/MyInput'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosBack from '../../api/axiosBack'
 import { getAuthUser } from '../../redux/actions/authAction'
+import { MyError } from '../../components/MyUI/MyError'
+import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const ProfilePage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const User = useSelector((state) => state.user.user)
   // console.log('=>User-profile', User)
 
@@ -29,7 +33,10 @@ const ProfilePage = () => {
     await axiosBack.patch('/auth/update', form)
     await console.log('=>form-profile-aft-click', form)
 
-    await dispatch(getAuthUser())
+    // await dispatch(getAuthUser())
+  }
+  const handleClickin = () => {
+    toast.error('error')
   }
 
   return (
@@ -95,9 +102,16 @@ const ProfilePage = () => {
             <MyInput label='Введите старый пароль' sx={{ width: 388 }} />
             <MyInput label='Введите новый пароль' sx={{ width: 388 }} />
             <MyInput label='Повторите новый пароль' sx={{ width: 388 }} />
-            <MyButton size='large' variant='contained' disabled>
+            <MyButton
+              onClick={handleClickin}
+              size='large'
+              variant='contained'
+              // disabled
+            >
               Изменить пароль
             </MyButton>
+            <ToastContainer limit={10} />
+            {/*<MyError />*/}
           </div>
         </div>
       </section>

@@ -23,10 +23,10 @@ import EurIcon from '../../assets/icons/eurIcon.svg'
 import CnyIcon from '../../assets/icons/cnyIcon.svg'
 import TryIcon from '../../assets/icons/tryIcon.svg'
 import axios from '../../api/axiosBack'
-import { getNewUser } from '../../redux/actions/authAction'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosBack from '../../api/axiosBack'
 import { getAllPosts } from '../../redux/actions/postsAction'
+import { toast, ToastContainer } from 'react-toastify'
 
 export const currencies = [
   {
@@ -61,7 +61,7 @@ const WalletsPage = () => {
   const fetchPosts = () => dispatch(getAllPosts())
 
   useEffect(() => {
-    fetchPosts()
+    // fetchPosts()
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
@@ -94,9 +94,13 @@ const WalletsPage = () => {
     try {
       await axiosBack.post('/posts', form)
       await fetchPosts()
-      await alert('added successfully')
+      await handleOpen()
+      //clear form
+
+      // await toast('added successfully')
+      // await alert('added successfully')
     } catch (e) {
-      alert(e.response.data.message)
+      toast.error(e.response?.data?.message)
     }
   }
 
@@ -164,6 +168,7 @@ const WalletsPage = () => {
         </div>
       </section>
       <ProfileSidebar />
+      <ToastContainer limit={10} />
     </div>
   )
 }

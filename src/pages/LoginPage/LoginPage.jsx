@@ -17,6 +17,7 @@ import styles from '../LoginPage/styles.module.scss'
 import loginImage from '../../assets/images/login.png'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/googleIcon.svg'
 import { ReactComponent as GitHubIcon } from '../../assets/icons/githubIcon.svg'
+import { ToastContainer } from 'react-toastify'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -33,11 +34,11 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     const user = await dispatch(getUser(form))
-    console.log('=>disp-handleLogin', user)
+    // console.log('=>disp-handleLogin', user)
 
-    if (user.accessToken) {
-      localStorage.setItem('authorized', user.accessToken)
-    }
+    // if (user.accessToken) {
+    //   localStorage.setItem('authorized', user.accessToken)
+    // }
     // await dispatch(getAuthUser())
   }
 
@@ -88,6 +89,7 @@ const LoginPage = () => {
           >
             Войти
           </MyButton>
+          <ToastContainer limit={10} />
           <div className={styles.create_account}>
             <span>Нет аккаунта?</span>
             <span

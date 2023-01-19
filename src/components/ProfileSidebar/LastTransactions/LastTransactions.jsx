@@ -46,12 +46,12 @@ const LastTransactions = () => {
   const dispatch = useDispatch()
   const fetchTransactions = () => dispatch(getTransactions())
 
+  const transactions = useSelector((state) => state.transactions.transactions)
+  // console.log('=>transactions', transactions)
+
   useEffect(() => {
     fetchTransactions()
   }, [])
-
-  const transactions = useSelector((state) => state.transactions.transactions)
-  // console.log('=>transactions', transactions)
 
   return (
     <div className={styles.transactions}>
@@ -61,7 +61,6 @@ const LastTransactions = () => {
       <div className={styles.l_transactions}>
         {transactions.length ? (
           transactions
-            .reverse()
             .slice(-3)
             .map(({ _id, send, from, received, to, createdAt }) => {
               return (

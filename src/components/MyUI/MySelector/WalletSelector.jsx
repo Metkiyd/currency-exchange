@@ -15,7 +15,7 @@ const WalletSelector = (props) => {
   const fetchPosts = () => dispatch(getAllPosts())
 
   useEffect(() => {
-    fetchPosts()
+    // fetchPosts()
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)

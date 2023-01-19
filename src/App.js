@@ -11,7 +11,9 @@ function App() {
   // console.log('=>isAuth-app', isAuth)
 
   useEffect(() => {
-    dispatch(getAuthUser())
+    if (localStorage.getItem('authorized')) {
+      dispatch(getAuthUser())
+    }
   }, [])
 
   return <AppRouter />

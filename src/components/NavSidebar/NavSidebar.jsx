@@ -47,7 +47,7 @@ const NavSidebar = () => {
   const handleExit = () => {
     dispatch(logout())
 
-    localStorage.removeItem('authorized')
+    // localStorage.removeItem('authorized')
     // navigate(`/`, {replace: true})
   }
 

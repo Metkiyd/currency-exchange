@@ -12,10 +12,7 @@ import registrationImage from '../../assets/images/registration.png'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/googleIcon.svg'
 import { ReactComponent as GitHubIcon } from '../../assets/icons/githubIcon.svg'
 import { useDispatch } from 'react-redux'
-import { getNewUser, getUser } from '../../redux/actions/authAction'
-
-const allUsers = JSON.parse(localStorage.getItem('allUsers')) || []
-// console.log('===>allUsers', allUsers)
+import { getNewUser } from '../../redux/actions/authAction'
 
 const USER_REGEX = /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']{2}$/
 const PWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
@@ -32,7 +29,6 @@ const RegistrationPage = () => {
   const [validMatch, setValidMatch] = useState(false)
 
   const [form, setForm] = useState({
-    // id: '',
     fullName: '',
     email: '',
     password: '',
@@ -75,14 +71,9 @@ const RegistrationPage = () => {
     const user = await dispatch(getNewUser(form))
     // console.log('=>dispatch-handleRegister', user)
 
-    if (user.token) {
-      localStorage.setItem('authorized', user.token)
-    }
-    // form.id = Date.now()
-    // allUsers.push(form)
-    // localStorage.setItem('allUsers', JSON.stringify(allUsers))
-    // alert('Registration successfully')
-    // navigate(`/login`, { replace: true })
+    // if (user.token) {
+    //   localStorage.setItem('authorized', user.token)
+    // }
   }
 
   return (

@@ -21,6 +21,8 @@ import {
   getAllPosts,
   getDeleteWallet,
 } from '../../../redux/actions/postsAction'
+import { toast, ToastContainer } from 'react-toastify'
+import { MyError } from '../../../components/MyUI/MyError'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 const SelectedWallet = () => {
@@ -58,7 +60,11 @@ const SelectedWallet = () => {
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen((open) => !open)
+  const handleClose = () =>
+    setOpen(
+      false,
+      // (open) => !open
+    )
 
   const [form, setForm] = useState({})
   // console.log('===>form', form)
@@ -73,25 +79,44 @@ const SelectedWallet = () => {
     selectedWallet.balance =
       Number(selectedWallet.balance) + Number(form.balance)
   }
-
+  const errorNote = (props) => toast.error(props)
   const handleClick = async () => {
-    await addSumWallet()
+    try {
+      await addSumWallet()
 
-    const { data } = await axiosBack.patch(
-      `/posts/${selectedWallet._id}`,
-      selectedWallet,
-    )
+      const { data } = await axiosBack.patch(
+        `/posts/${selectedWallet._id}`,
+        selectedWallet,
+      )
+      await handleOpen()
 
-    alert('fill up successfully')
-    navigate(`/wallets`)
+      // handleOpen()
+      // modal don't work with navigate
+
+      // await navigate(`/wallets`)
+      // OR
+      // clean form
+    } catch (e) {
+      toast.error(e.response?.data?.message)
+    }
   }
 
   const handleRemove = () => {
-    console.log('=>id-hand-remove', selectedWallet._id)
-    dispatch(getDeleteWallet(selectedWallet._id))
+    try {
+      console.log('=>id-hand-remove', selectedWallet._id)
+      dispatch(getDeleteWallet(selectedWallet._id))
+      // handleOpen()
+      // modal don't work with navigate
+      alert('deleted successfully')
+      navigate(`/wallets`)
+    } catch (e) {
+      toast.error(e.response?.data?.message)
+    }
 
-    alert('deleted successfully')
-    navigate(`/wallets`)
+    // toast('deleted successfully')
+
+    // alert('deleted successfully')
+    // navigate(`/wallets`)
   }
 
   return (
@@ -165,7 +190,9 @@ const SelectedWallet = () => {
               // disabled
             >
               Пополнить кошелек
+              {/*<ToastContainer limit={10} />*/}
             </MyButton>
+
             <MyModal
               // setModalOpen={setOpen} modalState={open}
 

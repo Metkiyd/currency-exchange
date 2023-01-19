@@ -18,12 +18,12 @@ function SidebarSlider() {
   const dispatch = useDispatch()
   const fetchPosts = () => dispatch(getAllPosts())
 
-  useEffect(() => {
-    fetchPosts()
-  }, [])
-
   const wallets = useSelector((state) => state.allPosts.posts)
   // console.log('=>wallets-DB', wallets)
+
+  useEffect(() => {
+    // fetchPosts()
+  }, [])
 
   const [sliderRef, setSliderRef] = useState(null)
 
