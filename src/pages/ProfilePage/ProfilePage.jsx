@@ -8,7 +8,6 @@ import { MyInput } from '../../components/MyUI/MyInput'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosBack from '../../api/axiosBack'
 import { getAuthUser } from '../../redux/actions/authAction'
-import { MyError } from '../../components/MyUI/MyError'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
@@ -63,34 +62,29 @@ const ProfilePage = () => {
               defaultValue={User.fullName}
               label='Имя'
               name='fullName'
-              sx={{ width: 388 }}
               onChange={handleChange}
             />
             <MyInput
               defaultValue={User.email}
               label='E-mail'
               name='email'
-              sx={{ width: 388 }}
               onChange={handleChange}
             />
             <MyInput
               label='Город'
               defaultValue={User.city}
-              sx={{ width: 388 }}
               name='city'
               onChange={handleChange}
             />
             <MyInput
               label='Дата рождения'
               defaultValue={User.birthday}
-              sx={{ width: 388 }}
               name='birthday'
               onChange={handleChange}
             />
             <MyInput
               label='Номер телефона'
               defaultValue={User.phone}
-              sx={{ width: 388 }}
               name='phone'
               onChange={handleChange}
             />
@@ -99,9 +93,9 @@ const ProfilePage = () => {
         <div className={styles.password_info}>
           <p className={styles.profile_title}>Пароль</p>
           <div className={styles.password_inputs}>
-            <MyInput label='Введите старый пароль' sx={{ width: 388 }} />
-            <MyInput label='Введите новый пароль' sx={{ width: 388 }} />
-            <MyInput label='Повторите новый пароль' sx={{ width: 388 }} />
+            <MyInput label='Введите старый пароль' />
+            <MyInput label='Введите новый пароль' />
+            <MyInput label='Повторите новый пароль' />
             <MyButton
               onClick={handleClickin}
               size='large'

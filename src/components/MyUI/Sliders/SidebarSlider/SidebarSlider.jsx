@@ -35,6 +35,24 @@ function SidebarSlider() {
     arrows: false,
   }
 
+  const renderWallets = wallets.map(
+    ({ currency, number, sign, balance, icon }) => {
+      return (
+        <NavLink key={number} to={`/wallets/${number}`}>
+          <div className={styles.card}>
+            <div className={styles.country}>
+              <p className={styles.rub}>{currency}</p>
+              <img src={icon} alt={currency} />
+            </div>
+            <p className={styles.count}>
+              {balance} {sign}
+            </p>
+          </div>
+        </NavLink>
+      )
+    },
+  )
+
   return (
     <div>
       <div
@@ -65,21 +83,7 @@ function SidebarSlider() {
         </div>
 
         <Slider ref={setSliderRef} {...settings}>
-          {wallets.map(({ currency, number, sign, balance, icon }) => {
-            return (
-              <NavLink key={number} to={`/wallets/${number}`}>
-                <div className={styles.card}>
-                  <div className={styles.country}>
-                    <p className={styles.rub}>{currency}</p>
-                    <img src={icon} alt={currency} />
-                  </div>
-                  <p className={styles.count}>
-                    {balance} {sign}
-                  </p>
-                </div>
-              </NavLink>
-            )
-          })}
+          {renderWallets}
         </Slider>
       </div>
     </div>

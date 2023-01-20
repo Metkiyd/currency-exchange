@@ -1,4 +1,3 @@
-import CurrencySlider from "./CurrencySlider";
-export {
-  CurrencySlider
-}
+import CurrencySlider from './CurrencySlider'
+
+export { CurrencySlider }

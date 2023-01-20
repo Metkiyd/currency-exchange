@@ -1,11 +1,8 @@
 import React from 'react'
 import { NavSidebar } from '../../components/NavSidebar'
 import { ProfileSidebar } from '../../components/ProfileSidebar'
-import styles from '../TransactionPage/styles.module.scss'
-import { AddButton, NavButton } from '../../components/MyUI/MyNavButton'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
 import { Transactions } from './Transactions'
+import styles from '../TransactionPage/styles.module.scss'
 
 const TransactionPage = () => {
   return (

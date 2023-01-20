@@ -1,4 +1,4 @@
-import { SET_ALLVALUTES } from '../actions/action'
+import { SET_ALLVALUTES } from '../actions/valuteAction'
 
 const initialState = {
   allValutes: [],

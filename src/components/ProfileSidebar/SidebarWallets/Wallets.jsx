@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import { AddButton } from '../../MyUI/MyNavButton'
+import { NavButton } from '../../MyUI/MyNavButton'
 import { SidebarSlider } from '../../MyUI/Sliders/SidebarSlider'
 
 import { getAllPosts } from '../../../redux/actions/postsAction'
 
 import styles from './styles.module.scss'
+import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const Wallets = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,9 @@ const Wallets = () => {
           <div className={styles.add_wallet}>
             <p>Добавьте кошелек</p>
             <NavLink to={'/wallets'}>
-              <AddButton />
+              <NavButton>
+                <AddRoundedIcon />
+              </NavButton>
             </NavLink>
           </div>
         </>

@@ -1,58 +1,53 @@
-import React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import React from 'react'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
 
 const MySelector = (props) => {
   // console.log('===>Currencies.props', props)
 
   return (
-    <FormControl>
-      <InputLabel id="demo-simple-selecfullWidtht-label">
+    <FormControl
+      sx={{
+        maxWidth: 388,
+      }}
+      fullWidth
+    >
+      <InputLabel id='demo-simple-selecfullWidtht-label'>
         Выберите валюту
       </InputLabel>
       <Select
         sx={{
-          width: 333,
           borderRadius: 0,
         }}
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        labelId='demo-simple-select-label'
+        id='demo-simple-select'
         value={props.changed}
-        label="Выберите валюту"
+        label='Выберите валюту'
         onChange={props.onChange}
         {...props}
       >
-        {
-          props.currencies.map(
-            ({
-               icon,
-               currency
-             }) => {
-              return (
-                <MenuItem key={currency} value={currency}>
-                  <div style={{
-                    display: 'flex',
-                    gap: '8px',
-                  }}>
-                    <img src={icon} alt={currency}/>
-                    {currency}
-                  </div>
-                </MenuItem>
-              )
-            }
-        )
-        }
+        {props.currencies.map(({ icon, currency }) => {
+          return (
+            <MenuItem key={currency} value={currency}>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '8px',
+                }}
+              >
+                <img src={icon} alt={currency} />
+                {currency}
+              </div>
+            </MenuItem>
+          )
+        })}
       </Select>
     </FormControl>
-
-  );
+  )
 }
-  ;
-
-  export default MySelector;
-
+export default MySelector
 
 // import { makeStyles } from "@material-ui/core/styles";
 
@@ -138,6 +133,3 @@ const MySelector = (props) => {
 //     </form>
 //   );
 // }
-
-
-

@@ -49,3 +49,28 @@
   margin: 0;
 
 }
+
+.slider_width {
+  max-width: 712px;
+
+}
+
+@media(max-width: 1240px) {
+  .slider_width {
+    max-width: 460px;
+  }
+
+}
+@media(max-width: 900px) {
+  .slider_width {
+    max-width: 220px;
+  }
+
+}
+.slider_buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+}

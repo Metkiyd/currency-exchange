@@ -1,8 +1,15 @@
-import React, { useEffect } from 'react'
+import React from // useEffect
+'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux'
 import { Route, Routes, Navigate } from 'react-router-dom'
-import { getAuthUser, selectIsAuth } from '../redux/actions/authAction'
+import {
+  // getAuthUser,
+  selectIsAuth,
+} from '../redux/actions/authAction'
 
 import { MainPage } from '../pages/MainPage'
 import { LoginPage } from '../pages/LoginPage'
@@ -14,8 +21,6 @@ import { WalletsPage } from '../pages/WalletsPage'
 import { TransactionPage } from '../pages/TransactionPage'
 import { SelectedWallet } from '../pages/WalletsPage/SelectedWallet'
 import Examples from '../examples'
-
-// const isAuth = localStorage.getItem('authorized')
 
 const routes = [
   {
@@ -90,7 +95,6 @@ const routes = [
 const AppRouter = () => {
   // const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth)
-  // console.log('=>isAuth-router', isAuth)
 
   // useEffect(() => {
   //   dispatch(getAuthUser())

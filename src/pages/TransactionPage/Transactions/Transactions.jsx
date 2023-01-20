@@ -8,7 +8,6 @@ import { getTransactions } from '../../../redux/actions/transactionsAction'
 import styles from '../Transactions/styles.module.scss'
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded'
 import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
-import { ToastContainer } from 'react-toastify'
 
 // const recentTransactions = [
 //   {
@@ -132,7 +131,6 @@ const Transactions = () => {
       {/*    )*/}
       {/*  },*/}
       {/*)}*/}
-      <ToastContainer limit={10} />
     </div>
   )
 }

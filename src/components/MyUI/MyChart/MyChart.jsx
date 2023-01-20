@@ -1,13 +1,40 @@
-import React, { PureComponent } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { PureComponent } from 'react'
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
 
 const xAxis = [
-  '00:00','01:00','02:00','03:00','04:00',
-  '05:00','06:00','07:00','08:00','09:00',
-  '10:00','11:00','12:00','13:00','14:00',
-  '15:00','16:00','17:00','18:00','19:00',
-  '20:00','21:00','22:00','23:00','24:00',
-
+  '00:00',
+  '01:00',
+  '02:00',
+  '03:00',
+  '04:00',
+  '05:00',
+  '06:00',
+  '07:00',
+  '08:00',
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
+  '19:00',
+  '20:00',
+  '21:00',
+  '22:00',
+  '23:00',
+  '24:00',
 ]
 const data = [
   {
@@ -46,12 +73,12 @@ const data = [
     date: '23:00',
     price: 84.5,
   },
-];
+]
 
 export default class MyChart extends PureComponent {
   render() {
     return (
-      <div style={{ width: '100%', height: 400 }}>
+      <div style={{ height: 400 }}>
         <ResponsiveContainer>
           <AreaChart
             data={data}
@@ -63,26 +90,27 @@ export default class MyChart extends PureComponent {
             }}
           >
             <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#84A500" stopOpacity={0.2}/>
-                <stop offset="95%" stopColor="#84A500" stopOpacity={0}/>
+              <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
+                <stop offset='5%' stopColor='#84A500' stopOpacity={0.2} />
+                <stop offset='95%' stopColor='#84A500' stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              axisLine={false}
-            />
-            <YAxis
-              type="number" domain={[82, 85]}
-              axisLine={false}
-            />
+            <XAxis dataKey='date' axisLine={false} />
+            <YAxis type='number' domain={[82, 85]} axisLine={false} />
             <Tooltip />
-            <Area type="monotone" dataKey="price" stroke="#84A500" strokeWidth={2} fillOpacity={1} fill="url(#colorUv)" />
+            <Area
+              type='monotone'
+              dataKey='price'
+              stroke='#84A500'
+              strokeWidth={2}
+              fillOpacity={1}
+              fill='url(#colorUv)'
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
-    );
+    )
   }
 }
 //

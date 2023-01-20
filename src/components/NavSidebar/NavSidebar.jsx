@@ -25,14 +25,14 @@ const links = [
     path: '/profile',
   },
   {
-    name: 'Обмен валют',
-    icon: <SyncAltRoundedIcon />,
-    path: '/currency-exchange',
-  },
-  {
     name: 'Кошельки',
     icon: <WorkOutlineOutlinedIcon />,
     path: '/wallets',
+  },
+  {
+    name: 'Обмен валют',
+    icon: <SyncAltRoundedIcon />,
+    path: '/currency-exchange',
   },
   {
     name: 'Транзакции',

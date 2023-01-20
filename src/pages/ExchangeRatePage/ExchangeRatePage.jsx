@@ -11,9 +11,10 @@ import { fetchCurrencies, fetchNews, fetchValutes } from '../../api/api'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllValutes } from '../../redux/actions/action'
+import { getAllValutes } from '../../redux/actions/valuteAction'
 
 import styles from '../ExchangeRatePage/styles.module.scss'
+import { WalletsSlider } from '../../components/MyUI/Sliders/WalletsSlider'
 
 const ExchangeRatePage = () => {
   const dispatch = useDispatch()
@@ -36,7 +37,11 @@ const ExchangeRatePage = () => {
             <MySearch fullWidth />
           </div>
         </div>
-        <CurrencySlider allValutes={allValutes} />
+        <div className={styles.slider}>
+          {/*<WalletsSlider />*/}
+          {/*<App />*/}
+          <CurrencySlider allValutes={allValutes} />
+        </div>
         <div className={styles.currency}>
           <div>
             <p className={styles.currency__title}>USD / RUB • CURRENCY</p>

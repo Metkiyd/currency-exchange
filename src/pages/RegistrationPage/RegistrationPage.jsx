@@ -104,6 +104,12 @@ const RegistrationPage = () => {
           </div>
 
           <MyInput
+            sx={{
+              maxWidth: 420,
+              '& .MuiInputBase-root': {
+                borderRadius: 0,
+              },
+            }}
             error={!(!form.fullName || validName)}
             helperText={
               !form.fullName || validName
@@ -115,6 +121,12 @@ const RegistrationPage = () => {
             onChange={handleChange}
           />
           <MyInput
+            sx={{
+              maxWidth: 420,
+              '& .MuiInputBase-root': {
+                borderRadius: 0,
+              },
+            }}
             error={!(!form.email || validEmail)}
             helperText={
               !form.email || validEmail

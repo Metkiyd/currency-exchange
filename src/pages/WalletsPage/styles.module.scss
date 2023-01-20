@@ -6,7 +6,10 @@
 }
 
 .main {
-  width: 816px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 816px;
 
   &__title {
     font-family: 'TT Firs Neue';

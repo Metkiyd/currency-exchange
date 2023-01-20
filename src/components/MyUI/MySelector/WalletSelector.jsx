@@ -24,23 +24,31 @@ const WalletSelector = (props) => {
   return (
     <>
       <TextField
-        sx={{ width: 164 }}
+        sx={{
+          width: 164,
+          '& .MuiInputBase-root': {
+            borderRadius: 0,
+          },
+        }}
         id='outlined-basic'
         variant='outlined'
         type='number'
-        fullWidth
         value={props.amount}
         label={props.labelname}
         onChange={(e) => props.onAmountChange(e.target.value)}
         {...props}
       />
-      <FormControl>
+      <FormControl
+        sx={{
+          maxWidth: 333,
+        }}
+        fullWidth
+      >
         <InputLabel id='demo-simple-selecfullWidtht-label'>
           Выберите кошелёк
         </InputLabel>
         <Select
           sx={{
-            width: 333,
             borderRadius: 0,
           }}
           labelId='demo-simple-select-label'

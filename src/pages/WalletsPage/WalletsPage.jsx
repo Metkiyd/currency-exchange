@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axiosBack from '../../api/axiosBack'
 import { getAllPosts } from '../../redux/actions/postsAction'
 import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const currencies = [
   {
@@ -65,7 +66,7 @@ const WalletsPage = () => {
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
-
+  const allValutes = useSelector((state) => state.allValutes.allValutes)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -111,6 +112,8 @@ const WalletsPage = () => {
         <div className={styles.main__nav}>
           <p className={styles.main__title}>Кошельки</p>
         </div>
+        {/*<CurrencySlider allValutes={allValutes} />*/}
+        {/*<WalletsSlider />*/}
 
         {wallets.length ? (
           <div className={styles.block}>
@@ -129,7 +132,6 @@ const WalletsPage = () => {
 
           <div className={styles.profile_inputs}>
             <MySelector
-              sx={{ width: 388 }}
               name='currency'
               currencies={currencies}
               changed={form.currency}
@@ -137,7 +139,6 @@ const WalletsPage = () => {
             />
             <MyInput
               label='# Номер кошелька'
-              sx={{ width: 388 }}
               name='number'
               onChange={handleChange}
             />

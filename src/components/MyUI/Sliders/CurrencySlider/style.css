@@ -1,10 +1,10 @@
-.slick-slider {
-    display: flex;
-    gap: 24px;
-}
+/*.slick-slider {*/
+/*    display: flex;*/
+/*    gap: 24px;*/
+/*}*/
 
-.slick-list {margin: 0 -16px;}
-.slick-slide>div {padding: 0 16px;}
+/*.slick-list {margin: 0 -16px;}*/
+/*.slick-slide>div {padding: 0 16px;}*/
 
 .card {
     display: flex !important;

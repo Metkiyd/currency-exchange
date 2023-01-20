@@ -78,8 +78,28 @@ const LoginPage = () => {
             <div>Or</div>
             <div className={styles.line}></div>
           </div>
-          <MyInput label='E-mail' name='email' onChange={handleChange} />
-          <MyInput label='Пароль' name='password' onChange={handleChange} />
+          <MyInput
+            sx={{
+              maxWidth: 420,
+              '& .MuiInputBase-root': {
+                borderRadius: 0,
+              },
+            }}
+            label='E-mail'
+            name='email'
+            onChange={handleChange}
+          />
+          <MyInput
+            sx={{
+              maxWidth: 420,
+              '& .MuiInputBase-root': {
+                borderRadius: 0,
+              },
+            }}
+            label='Пароль'
+            name='password'
+            onChange={handleChange}
+          />
           <MyCheckbox label='Запомнить меня' />
           <MyButton
             size='large'
@@ -89,7 +109,7 @@ const LoginPage = () => {
           >
             Войти
           </MyButton>
-          <ToastContainer limit={10} />
+
           <div className={styles.create_account}>
             <span>Нет аккаунта?</span>
             <span
@@ -111,6 +131,7 @@ const LoginPage = () => {
           <img alt='loginImage' width='500' height='500' src={loginImage} />
         </div>
       </div>
+      <ToastContainer limit={10} />
     </div>
   )
 }

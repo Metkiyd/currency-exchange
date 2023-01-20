@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import thunk from 'redux-thunk'
 
-import allValutesReducer from './reducers/reducer'
+import allValutesReducer from './reducers/valuteReducer'
 import allPostsReducer from './reducers/postsReducer'
 import userReducer from './reducers/authReducer'
 import transactionsReducer from './reducers/transactionsReducer'

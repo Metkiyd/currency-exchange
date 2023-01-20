@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import Slider from 'react-slick'
 
-import { NextButton, PrevButton } from '../../MyNavButton'
+import { NavButton } from '../../MyNavButton'
 
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../../../../redux/actions/postsAction'
 
-import './style.css'
+import myStyle from './style.css'
 import styles from '../../../ProfileSidebar/SidebarWallets/styles.module.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 
 function WalletsSlider() {
   const dispatch = useDispatch()
@@ -31,7 +34,43 @@ function WalletsSlider() {
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 1240,
+        settings: {
+          arrows: false,
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 900,
+        settings: {
+          arrows: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   }
+
+  const renderWallets = wallets.map(
+    ({ currency, number, sign, balance, icon }) => {
+      return (
+        <NavLink key={number} to={`/wallets/${number}`}>
+          <div className={styles.card}>
+            <div className={styles.country}>
+              <p className={styles.rub}>{currency}</p>
+              <img src={icon} alt={currency} />
+            </div>
+            <p className={styles.count}>
+              {balance} {sign}
+            </p>
+          </div>
+        </NavLink>
+      )
+    },
+  )
 
   return (
     <div
@@ -40,40 +79,18 @@ function WalletsSlider() {
         gap: '64px',
       }}
     >
-      <div
-        style={{
-          width: '712px',
-        }}
-      >
+      <div className={styles.slider_width}>
         <Slider ref={setSliderRef} {...settings}>
-          {wallets.map(({ currency, number, sign, balance, icon }) => {
-            return (
-              <NavLink key={number} to={`/wallets/${number}`}>
-                <div className={styles.card}>
-                  <div className={styles.country}>
-                    <p className={styles.rub}>{currency}</p>
-                    <img src={icon} alt={currency} />
-                  </div>
-                  <p className={styles.count}>
-                    {balance} {sign}
-                  </p>
-                </div>
-              </NavLink>
-            )
-          })}
+          {renderWallets}
         </Slider>
       </div>
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          gap: '16px',
-        }}
-      >
-        <NextButton onClick={sliderRef?.slickNext} />
-        <PrevButton onClick={sliderRef?.slickPrev} />
+      <div className={styles.slider_buttons}>
+        <NavButton onClick={sliderRef?.slickNext}>
+          <ChevronRightOutlinedIcon />
+        </NavButton>
+        <NavButton onClick={sliderRef?.slickPrev}>
+          <ChevronLeftOutlinedIcon />
+        </NavButton>
       </div>
     </div>
   )

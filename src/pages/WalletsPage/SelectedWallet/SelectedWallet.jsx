@@ -3,7 +3,7 @@ import { NavSidebar } from '../../../components/NavSidebar'
 import { ProfileSidebar } from '../../../components/ProfileSidebar'
 import styles from '../SelectedWallet/styles.module.scss'
 import { MyInput } from '../../../components/MyUI/MyInput'
-import { MySelector } from '../../../components/MyUI/MySelector'
+// import { MySelector } from '../../../components/MyUI/MySelector'
 import { MyButton } from '../../../components/MyUI/MyButton'
 import greenWallet from '../../../assets/images/greenWallet.png'
 import landingBg from '../../../assets/images/landingBg.png'
@@ -22,7 +22,7 @@ import {
   getDeleteWallet,
 } from '../../../redux/actions/postsAction'
 import { toast, ToastContainer } from 'react-toastify'
-import { MyError } from '../../../components/MyUI/MyError'
+import 'react-toastify/dist/ReactToastify.css'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 const SelectedWallet = () => {
@@ -207,6 +207,7 @@ const SelectedWallet = () => {
         </div>
       </section>
       <ProfileSidebar />
+      <ToastContainer limit={10} />
     </div>
   )
 }
