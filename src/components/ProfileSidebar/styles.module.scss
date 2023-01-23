@@ -11,3 +11,10 @@
     width: 224px;
   }
 }
+
+@media (max-width:768px) {
+  .right_sidebar {
+    display: none;
+  }
+
+}

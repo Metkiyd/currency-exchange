@@ -14,6 +14,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
+import { IconButton } from '@mui/material'
 
 function WalletsSlider() {
   const dispatch = useDispatch()
@@ -44,7 +45,7 @@ function WalletsSlider() {
         },
       },
       {
-        breakpoint: 900,
+        breakpoint: 1000,
         settings: {
           arrows: false,
           slidesToShow: 1,
@@ -73,12 +74,7 @@ function WalletsSlider() {
   )
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: '64px',
-      }}
-    >
+    <div className={styles.slider_flexgap}>
       <div className={styles.slider_width}>
         <Slider ref={setSliderRef} {...settings}>
           {renderWallets}
@@ -91,6 +87,14 @@ function WalletsSlider() {
         <NavButton onClick={sliderRef?.slickPrev}>
           <ChevronLeftOutlinedIcon />
         </NavButton>
+      </div>
+      <div className={styles.slider_mobile_buttons}>
+        <IconButton aria-label='prev' onClick={sliderRef?.slickPrev}>
+          <ChevronLeftOutlinedIcon />
+        </IconButton>
+        <IconButton aria-label='next' onClick={sliderRef?.slickNext}>
+          <ChevronRightOutlinedIcon />
+        </IconButton>
       </div>
     </div>
   )

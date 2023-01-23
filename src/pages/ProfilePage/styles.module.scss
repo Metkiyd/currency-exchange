@@ -23,6 +23,17 @@
 
 }
 
+@media(max-width: 550px) {
+
+  .main {
+    &__nav {
+      flex-direction: column;
+      padding-bottom: 32px;
+    }
+  }
+
+}
+
 .profile_info {
   border-bottom: 1px solid #F3F3F3;
   margin-top: 48px;

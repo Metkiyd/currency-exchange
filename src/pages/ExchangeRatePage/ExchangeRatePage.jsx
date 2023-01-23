@@ -12,6 +12,7 @@ import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllValutes } from '../../redux/actions/valuteAction'
+import { ReactComponent as NegativeArrowIcon } from '../../assets/icons/negativeArrowIcon.svg'
 
 import styles from '../ExchangeRatePage/styles.module.scss'
 import { WalletsSlider } from '../../components/MyUI/Sliders/WalletsSlider'
@@ -32,20 +33,26 @@ const ExchangeRatePage = () => {
       <NavSidebar />
       <section className={styles.main_container}>
         <div className={styles.header__nav}>
-          <p className={styles.header__title}>Курсы валют</p>
-          <div className={styles.header__search_wrapper}>
-            <MySearch fullWidth />
+          <div>
+            <p className={styles.header__title}>Курсы валют</p>
           </div>
+
+          <MySearch fullWidth allValutes={allValutes} />
         </div>
         <div className={styles.slider}>
           {/*<WalletsSlider />*/}
           {/*<App />*/}
           <CurrencySlider allValutes={allValutes} />
         </div>
+
         <div className={styles.currency}>
           <div>
-            <p className={styles.currency__title}>USD / RUB • CURRENCY</p>
-            <p className={styles.currency__subtitle}>US Dollar/Russian Ruble</p>
+            <p className={styles.currency__title}>
+              {allValutes[13].name} / RUB • CURRENCY
+            </p>
+            <p className={styles.currency__subtitle}>
+              {allValutes[13].fullName}/Российский рубль
+            </p>
           </div>
           <NavLink to={'/currency-exchange'}>
             <MyButton variant='contained'>Обменять</MyButton>
@@ -53,12 +60,46 @@ const ExchangeRatePage = () => {
         </div>
         <div className={styles.result}>
           <div className={styles.result__nums}>
-            <span className={styles.result__num_title}>83,8750</span>
-            <div className={styles.result__num_percent}>
-              <PositiveArrowIcon />
-              <span>0,45 %</span>
-            </div>
-            <span className={styles.result__num_today}>+0,3750 Today</span>
+            <span className={styles.result__num_title}>
+              {allValutes[13].rate}
+            </span>
+            {allValutes[13].increase ? (
+              <div className={styles.flex_align}>
+                <div className={styles.result__num_percent}>
+                  <PositiveArrowIcon />
+                  <div
+                    className={
+                      styles[allValutes[13].increase ? 'column2' : 'column3']
+                    }
+                  >
+                    <span>{allValutes[13].changePerc}%</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.flex_align}>
+                <div className={styles.result__num_percent2}>
+                  <NegativeArrowIcon />
+                  <div
+                    className={
+                      styles[allValutes[13].increase ? 'column2' : 'column3']
+                    }
+                  >
+                    <span>{allValutes[13].changePerc}%</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {allValutes[13].increase ? (
+              <span className={styles.result__num_today}>
+                {allValutes[13].change} Today
+              </span>
+            ) : (
+              <span className={styles.result__num_today2}>
+                {allValutes[13].change} Today
+              </span>
+            )}
           </div>
           <div>
             <p className={styles.result__date}>12 Apr., 12:28:25 UTC</p>
@@ -69,7 +110,7 @@ const ExchangeRatePage = () => {
           <span className={styles.range__bg}>1 Day</span>
         </div>
 
-        <MyChart />
+        {/*<MyChart />*/}
       </section>
       <ProfileSidebar />
     </div>

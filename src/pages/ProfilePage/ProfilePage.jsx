@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { NavSidebar } from '../../components/NavSidebar'
 import { ProfileSidebar } from '../../components/ProfileSidebar'
-import styles from '../ProfilePage/styles.module.scss'
-
 import { MyButton } from '../../components/MyUI/MyButton'
+
 import { MyInput } from '../../components/MyUI/MyInput'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosBack from '../../api/axiosBack'
 import { getAuthUser } from '../../redux/actions/authAction'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import styles from '../ProfilePage/styles.module.scss'
 
 const ProfilePage = () => {
   const dispatch = useDispatch()

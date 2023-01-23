@@ -1,5 +1,4 @@
-import React from // useEffect
-'react'
+import React from 'react' // useEffect
 
 import {
   // useDispatch,
@@ -20,6 +19,7 @@ import { CurrencyExchangePage } from '../pages/CurrencyExchangePage'
 import { WalletsPage } from '../pages/WalletsPage'
 import { TransactionPage } from '../pages/TransactionPage'
 import { SelectedWallet } from '../pages/WalletsPage/SelectedWallet'
+import { Layout } from '../components/Layout'
 import Examples from '../examples'
 
 const routes = [
@@ -48,9 +48,10 @@ const routes = [
     element: <Navigate to='/exchange-rate' replace />,
     private: true,
   },
+
   {
     path: '*',
-    element: <Navigate to='/exchange-rate' replace />,
+    element: <Navigate to='/' replace />,
     private: true,
   },
   {

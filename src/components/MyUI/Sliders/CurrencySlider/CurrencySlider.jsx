@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
+import { IconButton } from '@mui/material'
 
 function CurrencySlider(props) {
   const [sliderRef, setSliderRef] = useState(null)
@@ -23,6 +24,8 @@ function CurrencySlider(props) {
     slidesToScroll: 3,
     adaptiveHeight: true,
     arrows: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
     responsive: [
       {
         breakpoint: 1240,
@@ -33,7 +36,7 @@ function CurrencySlider(props) {
         },
       },
       {
-        breakpoint: 900,
+        breakpoint: 1000,
         settings: {
           arrows: false,
           slidesToShow: 1,
@@ -75,17 +78,31 @@ function CurrencySlider(props) {
 
   return (
     <div className={styles.slider_flex}>
-      <NavButton onClick={sliderRef?.slickPrev}>
-        <ChevronLeftOutlinedIcon />
-      </NavButton>
+      <div className={styles.slider_button}>
+        <NavButton onClick={sliderRef?.slickPrev}>
+          <ChevronLeftOutlinedIcon />
+        </NavButton>
+      </div>
+      <div className={styles.slider_mobile_button}>
+        <IconButton aria-label='prev' onClick={sliderRef?.slickPrev}>
+          <ChevronLeftOutlinedIcon />
+        </IconButton>
+      </div>
       <div className={styles.slider_width}>
         <Slider ref={setSliderRef} {...settings}>
           {renderValute}
         </Slider>
       </div>
-      <NavButton onClick={sliderRef?.slickNext}>
-        <ChevronRightOutlinedIcon />
-      </NavButton>
+      <div className={styles.slider_mobile_button}>
+        <IconButton aria-label='next' onClick={sliderRef?.slickNext}>
+          <ChevronRightOutlinedIcon />
+        </IconButton>
+      </div>
+      <div className={styles.slider_button}>
+        <NavButton onClick={sliderRef?.slickNext}>
+          <ChevronRightOutlinedIcon />
+        </NavButton>
+      </div>
     </div>
   )
 }

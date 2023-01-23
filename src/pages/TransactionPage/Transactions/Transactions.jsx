@@ -64,9 +64,11 @@ const Transactions = () => {
             return (
               <div className={styles.transaction}>
                 <div className={styles.transaction__column}>
-                  <NavButton disabled>
-                    <CachedRoundedIcon />
-                  </NavButton>
+                  <div className={styles.icon}>
+                    <NavButton disabled>
+                      <CachedRoundedIcon />
+                    </NavButton>
+                  </div>
                   <div className={styles.transaction__date}>
                     <div className={styles.s14}>
                       {from} to {to}

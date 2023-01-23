@@ -8,6 +8,7 @@
 .login {
   display: flex;
   height: 100vh;
+  justify-content: center;
 }
 
 .left_side {
@@ -40,7 +41,8 @@
 .line {
   border: 1px solid #F3F3F3;
   height: 1px;
-  width: 194px;
+  width: 100%;
+  max-width: 194px;
 
 }
 .password {
@@ -54,6 +56,14 @@
   display: flex;
   gap: 10px;
 }
+
+@media (max-width: 460px) {
+  .form__sing_up {
+    flex-direction: column;
+  }
+
+}
+
 .create_account {
   display: flex;
   justify-content: center;
@@ -70,7 +80,16 @@
   display: flex;
   background: #272727;
   width: 50vw;
+}
 
+@media (max-width: 1000px) {
+  .right_side {
+    display: none;
+  }
+
+  .left_side {
+    width: 90vw;
+  }
 
 }
 
