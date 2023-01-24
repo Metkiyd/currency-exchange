@@ -37,7 +37,7 @@ function WalletsSlider() {
     arrows: false,
     responsive: [
       {
-        breakpoint: 1240,
+        breakpoint: 1330,
         settings: {
           arrows: false,
           slidesToShow: 2,
@@ -45,7 +45,7 @@ function WalletsSlider() {
         },
       },
       {
-        breakpoint: 1000,
+        breakpoint: 1100,
         settings: {
           arrows: false,
           slidesToShow: 1,

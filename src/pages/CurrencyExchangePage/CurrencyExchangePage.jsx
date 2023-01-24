@@ -29,12 +29,12 @@ const CurrencyExchangePage = () => {
 
   // console.log('=>wallets-DB', wallets)
   const [rates, setRates] = useState([])
-
   // console.log('=>ratesState', rates)
+
   useEffect(() => {
     axios.get(`https://www.cbr-xml-daily.ru/latest.js`).then(({ data }) => {
       const ratesData = data.rates
-      // console.log('=>ratesData', ratesData)
+      console.log('=>ratesData', ratesData)
       setRates({
         ...rates,
         ...ratesData,
@@ -60,7 +60,7 @@ const CurrencyExchangePage = () => {
   }
 
   function format(number) {
-    return number.toFixed(4)
+    return number.toFixed(2)
   }
 
   function handleSendChange(send) {

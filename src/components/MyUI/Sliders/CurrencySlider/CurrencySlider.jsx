@@ -12,10 +12,12 @@ import 'slick-carousel/slick/slick-theme.css'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import { IconButton } from '@mui/material'
+import { useSelector } from 'react-redux'
 
-function CurrencySlider(props) {
+function CurrencySlider() {
+  const allValutes = useSelector((state) => state.allValutes.allValutes)
+
   const [sliderRef, setSliderRef] = useState(null)
-  // console.log('===>props', props.allValutes)
 
   const settings = {
     infinite: true,
@@ -28,7 +30,7 @@ function CurrencySlider(props) {
     autoplaySpeed: 4000,
     responsive: [
       {
-        breakpoint: 1240,
+        breakpoint: 1330,
         settings: {
           arrows: false,
           slidesToShow: 2,
@@ -36,7 +38,7 @@ function CurrencySlider(props) {
         },
       },
       {
-        breakpoint: 1000,
+        breakpoint: 1100,
         settings: {
           arrows: false,
           slidesToShow: 1,
@@ -46,7 +48,7 @@ function CurrencySlider(props) {
     ],
   }
 
-  const renderValute = props.allValutes.map(
+  const renderValute = allValutes.map(
     ({ name, rate, changePerc, change, increase }) => {
       return (
         <div key={name} className={styles.card}>

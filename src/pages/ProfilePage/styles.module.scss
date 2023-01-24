@@ -5,7 +5,9 @@
 
 }
 .main {
-  width: 816px;
+  max-width: 816px;
+  width: 100%;
+  margin: 0 48px;
 
   &__title {
     font-family: 'TT Firs Neue';
@@ -26,6 +28,7 @@
 @media(max-width: 550px) {
 
   .main {
+    margin: 0 24px;
     &__nav {
       flex-direction: column;
       padding-bottom: 32px;

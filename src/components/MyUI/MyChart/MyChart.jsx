@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
+
 import {
   AreaChart,
   Area,
@@ -8,6 +10,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import { fetchCurrencies } from '../../../api/api'
+import { setAllValutes } from '../../../redux/actions/valuteAction'
 
 const xAxis = [
   '00:00',
@@ -42,10 +46,6 @@ const data = [
     price: 82.3,
   },
   {
-    date: '01:00',
-    price: 83,
-  },
-  {
     date: '03:00',
     price: 82.7,
   },
@@ -74,117 +74,182 @@ const data = [
     price: 84.5,
   },
 ]
+// console.log('=>data', data)
+const MyChart = () => {
+  const selectedValute = useSelector(
+    (state) => state.selectedValute.selectedValute,
+  )
+  // console.log('=>selectedValute-state', selectedValute)
 
-export default class MyChart extends PureComponent {
-  render() {
-    return (
-      <div style={{ height: 400 }}>
-        <ResponsiveContainer>
-          <AreaChart
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <defs>
-              <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
-                <stop offset='5%' stopColor='#84A500' stopOpacity={0.2} />
-                <stop offset='95%' stopColor='#84A500' stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid vertical={false} />
-            <XAxis dataKey='date' axisLine={false} />
-            <YAxis type='number' domain={[82, 85]} axisLine={false} />
-            <Tooltip />
-            <Area
-              type='monotone'
-              dataKey='price'
-              stroke='#84A500'
-              strokeWidth={2}
-              fillOpacity={1}
-              fill='url(#colorUv)'
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-    )
+  let response = async () => {
+    await fetchCurrencies()
   }
+  // console.log('=>response', response)
+
+  // const valutes = Object.values(response.Valute)
+  // const tranformed = valutes.map((valute) => {
+  //   const obj = {
+  //     id: valute.ID,
+  //     name: valute.CharCode,
+  //     fullName: valute.Name,
+  //     rate: +(valute.Value / valute.Nominal).toFixed(4),
+  //     change: +(valute.Value - valute.Previous).toFixed(4),
+  //     changePerc: +(valute.Value / valute.Previous - 1).toFixed(4),
+  //     nominal: valute.Nominal,
+  //     price: valute.Value,
+  //     prev: valute.Previous,
+  //     increase: valute.Value > valute.Previous,
+  //   }
+  //   return obj
+  // })
+
+  const arr = []
+
+  if (selectedValute !== null) {
+    const d1 = {
+      price: selectedValute.price,
+    }
+
+    arr.push(d1)
+
+    const d2 = {
+      price: selectedValute.prev,
+    }
+
+    arr.push(d2)
+    console.log('=>arr', arr)
+  }
+
+  return (
+    <div style={{ height: 400 }}>
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <defs>
+            <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#84A500' stopOpacity={0.2} />
+              <stop offset='95%' stopColor='#84A500' stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey='date' axisLine={false} />
+          <YAxis
+            type='number'
+            // domain={['dataMin', 'dataMax']}
+            domain={[82, 85]}
+            axisLine={false}
+          />
+          <Tooltip />
+          <Area
+            type='monotone'
+            dataKey='price'
+            stroke='#84A500'
+            strokeWidth={2}
+            fillOpacity={1}
+            fill='url(#colorUv)'
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  )
 }
+export default MyChart
+
+// const date = [
+//   { time: new Date(2016, 5, 24).getTime(), uv: 4000, pv: 2400, amt: 2400 },
+//   { time: new Date(2016, 5, 25).getTime(), uv: 3000, pv: 1398, amt: 2210 },
+//   { time: new Date(2016, 5, 26).getTime(), uv: 2000, pv: 9800, amt: 2290 },
+//   { time: new Date(2016, 5, 27).getTime(), uv: 0, pv: 3908, amt: 2000 },
+//   { time: new Date(2016, 5, 28).getTime(), uv: 1890, pv: 4800, amt: 2181 },
+//   { time: new Date(2016, 5, 29).getTime(), uv: 2390, pv: 3800, amt: 2500 },
+//   { time: new Date(2016, 7, 9).getTime(), uv: 3590, pv: 4400, amt: 2100 },
+//   { time: new Date(2016, 11, 10).getTime(), uv: 3490, pv: 4300, amt: 2100 },
+// ]
 //
-// const {Brush, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
-// const data = [
-//   {time: new Date(2016,5,24).getTime(), uv: 4000, pv: 2400, amt: 2400},
-//   {time: new Date(2016,5,25).getTime(), uv: 3000, pv: 1398, amt: 2210},
-//   {time: new Date(2016,5,26).getTime(), uv: 2000, pv: 9800, amt: 2290},
-//   {time: new Date(2016,5,27).getTime(), uv: 0, pv: 3908, amt: 2000},
-//   {time: new Date(2016,5,28).getTime(), uv: 1890, pv: 4800, amt: 2181},
-//   {time: new Date(2016,5,29).getTime(), uv: 2390, pv: 3800, amt: 2500},
-//   {time: new Date(2016,7,9).getTime(), uv: 3590, pv: 4400, amt: 2100},
-//   {time: new Date(2016,11,10).getTime(), uv: 3490, pv: 4300, amt: 2100}
-// ];
+// const getTicks = (date) => {
+//   if (!date || !date.length) {
+//     return []
+//   }
 //
-// const getTicks = (data) => {
-//   if (!data || !data.length ) {return [];}
+//   const domain = [new Date(date[0].time), new Date(date[date.length - 1].time)]
+//   const scale = d3_scale.scaleTime().domain(domain).range([0, 1])
+//   const ticks = scale.ticks(d3_time.timeDay, 1)
 //
-//   const domain = [new Date(data[0].time), new Date(data[data.length - 1].time)];
-//   const scale = d3_scale.scaleTime().domain(domain).range([0, 1]);
-//   const ticks = scale.ticks(d3_time.timeDay, 1);
-//
-//   return ticks.map(entry => +entry);
-// };
+//   return ticks.map((entry) => +entry)
+// }
 //
 // const getTicksData = (data, ticks) => {
-//   if (!data || !data.length ) {return [];}
-//   const dataMap = new Map(data.map((i) => [i.time, i]));
+//   if (!data || !data.length) {
+//     return []
+//   }
+//   const dataMap = new Map(data.map((i) => [i.time, i]))
 //   ticks.forEach(function (item, index, array) {
-//     if(!dataMap.has(item)) {
-//       data.push({time: item});
+//     if (!dataMap.has(item)) {
+//       data.push({ time: item })
 //     }
-//   });
-//   return data;
+//   })
+//   return data
 // }
 //
 // const dateFormat = (time) => {
-//   return moment(time).format('MM/DD');
-// };
-//
-// const SimpleLineChart = React.createClass({
-//   render () {
+//   return moment(time).format('MM/DD')
+// }
+// class SimpleLineChart extends PureComponent({
+//   render() {
 //     //console.log('logging ticks');
-//     const sortedData = data.sort(function(a, b) {
-//       return a.time - b.time;
-//     });
-//     const ticksArr = getTicks(sortedData);
-//     const completeData = getTicksData(sortedData, ticksArr);
+//     const sortedData = data.sort(function (a, b) {
+//       return a.time - b.time
+//     })
+//     const ticksArr = getTicks(sortedData)
+//     const completeData = getTicksData(sortedData, ticksArr)
 //
 //     //console.log(completeData);
 //
-//     const completeSortedData = completeData.sort(function(a, b) {
-//       return a.time - b.time;
-//     });
+//     const completeSortedData = completeData.sort(function (a, b) {
+//       return a.time - b.time
+//     })
 //
-//     const formattedTicks = ticksArr.map(dateFormat);
+//     const formattedTicks = ticksArr.map(dateFormat)
 //     //console.log(formattedTicks);
 //     return (
-//       <LineChart width={600} height={300} data={completeSortedData}
-//                  margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-//         <XAxis dataKey="time" ticks={ticksArr} tickCount={ticksArr.length} tickFormatter={dateFormat}/>
-//         <YAxis/>
-//         <CartesianGrid strokeDasharray="3 3"/>
-//         <Tooltip labelFormatter={dateFormat}/>
+//       <LineChart
+//         width={600}
+//         height={300}
+//         data={completeSortedData}
+//         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+//       >
+//         <XAxis
+//           dataKey='time'
+//           ticks={ticksArr}
+//           tickCount={ticksArr.length}
+//           tickFormatter={dateFormat}
+//         />
+//         <YAxis />
+//         <CartesianGrid strokeDasharray='3 3' />
+//         <Tooltip labelFormatter={dateFormat} />
 //         <Legend />
-//         <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}}/>
-//         <Line type="monotone" dataKey="uv" stroke="#82ca9d" connectNulls={true}/>
-//         <Brush dataKey='name' height={30} stroke="#8884d8"/>
+//         <Line
+//           type='monotone'
+//           dataKey='pv'
+//           stroke='#8884d8'
+//           activeDot={{ r: 8 }}
+//         />
+//         <Line
+//           type='monotone'
+//           dataKey='uv'
+//           stroke='#82ca9d'
+//           connectNulls={true}
+//         />
+//         <Brush dataKey='name' height={30} stroke='#8884d8' />
 //       </LineChart>
-//     );
-//   }
+//     )
+//   },
 // })
 //
-// ReactDOM.render(
-//   <SimpleLineChart />,
-//   document.getElementById('container')
-// );

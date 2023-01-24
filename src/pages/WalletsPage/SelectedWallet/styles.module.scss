@@ -92,7 +92,12 @@
   position: relative;
   overflow: hidden;
 }
+@media (max-width:1200px) {
+  .landing {
+    display: none;
+  }
 
+}
 .card {
   display: flex;
   flex-direction: column;

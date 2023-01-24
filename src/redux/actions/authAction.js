@@ -41,7 +41,7 @@ export const getAuthUser = () => {
   return async (dispatch) => {
     try {
       const { data } = await axiosBack.get('/auth/refresh')
-      console.log('=>data-auth-action', data)
+      // console.log('=>data-auth-action', data)
 
       localStorage.setItem('authorized', data.accessToken)
       dispatch(setUser(data))

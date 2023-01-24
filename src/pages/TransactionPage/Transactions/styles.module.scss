@@ -33,10 +33,17 @@
   }
 
 }
-@media(max-width: 900px) {
+
+@media(max-width: 550px) {
 
   .icon {
     display: none;
+  }
+  .transaction {
+    &__column {
+
+      flex-direction: column;
+    }
   }
 
 

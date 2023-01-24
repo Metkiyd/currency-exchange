@@ -8,8 +8,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  width: 100%;
   max-width: 816px;
+  width: 100%;
+  margin: 0 48px;
 
   &__title {
     font-family: 'TT Firs Neue';
@@ -25,6 +26,13 @@
 
   }
 
+}
+
+@media(max-width: 550px) {
+
+  .main {
+    margin: 0 24px;
+  }
 }
 
 .profile_info {

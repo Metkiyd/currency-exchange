@@ -1,21 +1,66 @@
 import * as yup from 'yup'
 
-export const validationSchema = {
+export const validationSchemaRegistration = {
+  name: yup
+    .string()
+    .required('Обязательно')
+    // .typeError("Должно быть строкой")
+    .matches(/^[а-яА-ЯЁ ё]+$/, 'Введено некорректное значение')
+    // .min(6, "Символ")
+    .max(20, 'Введено некорректное значение'),
+
+  password: yup
+    .string()
+    .typeError('Должно быть паролем')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
+      'Введено некорректное значение',
+    )
+    .required('Обязательно'),
+
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref(`password`)], 'Нет совпадений')
+    .required('Обязательно'),
+  email: yup
+    .string()
+    .typeError('Введено некорректное значение')
+    .required('Обязательно')
+    .email(`Введено некорректное значение`),
+}
+
+export const validationSchemaLogin = {
+  password: yup
+    .string()
+    .typeError('Введен некорректный Пароль')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
+      'Пароль должен содержать буквы, цифры, спец знак.Минимум 4 символа',
+    )
+    .required('Обязательно'),
+  email: yup
+    .string()
+    .typeError('Ошибка email')
+    .required('Обязательно')
+    .email(`Введен некорректный email`),
+}
+
+export const validationSchemaProfile = {
   birthday: {
     pattern: {
       value:
         /^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/,
-      message: 'Введено некорректное значение',
+      message: 'Введите формат даты',
     },
   },
   name: {
     pattern: {
       value: /^[а-яА-ЯЁ ё]+$/,
-      message: 'Введено некорректное значение',
+      message: 'Только Русские буквы',
     },
     minLength: {
-      value: 5,
-      message: 'Введено некорректное значение',
+      value: 4,
+      message: 'Минимум 4 символа',
     },
   },
   email: {
@@ -27,18 +72,18 @@ export const validationSchema = {
   city: {
     pattern: {
       value: /^[а-яА-ЯЁ ё]+$/,
-      message: 'Введено некорректное значение',
+      message: 'Только Русские буквы',
     },
     minLength: {
       value: 3,
-      message: 'Введено некорректное значение',
+      message: 'Минимум 3 символа',
     },
   },
   phoneNumber: {
     pattern: {
       value:
         /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{5})(?: *x(\d+))?\s*$/,
-      message: 'Введено некорректное значение',
+      message: 'Введите формат телефона',
     },
   },
   password: {
@@ -50,7 +95,7 @@ export const validationSchema = {
   sum: {
     maxLength: {
       value: 6,
-      message: 'Лимит пополнения суммы 100000',
+      message: 'Лимит пополнения суммы 999000',
     },
     required: {
       value: true,
@@ -109,49 +154,4 @@ export const validationSchema = {
       message: 'Введено некорректное значение',
     },
   },
-}
-
-export const validationSchemaLogin = {
-  password: yup
-    .string()
-    .typeError('Должно быть паролем')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-      'Введено некорректное значение',
-    )
-    .required('Обязательно'),
-  email: yup
-    .string()
-    .typeError('Ошибка email')
-    .required('Обязательно')
-    .email(`Введено некорректное значение`),
-}
-
-export const validationSchemaRegistration = {
-  name: yup
-    .string()
-    .required('Обязательно')
-    // .typeError("Должно быть строкой")
-    .matches(/^[а-яА-ЯЁ ё]+$/, 'Введено некорректное значение')
-    // .min(6, "Символ")
-    .max(20, 'Введено некорректное значение'),
-
-  password: yup
-    .string()
-    .typeError('Должно быть паролем')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-      'Введено некорректное значение',
-    )
-    .required('Обязательно'),
-
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref(`password`)], 'Нет совпадений')
-    .required('Обязательно'),
-  email: yup
-    .string()
-    .typeError('Введено некорректное значение')
-    .required('Обязательно')
-    .email(`Введено некорректное значение`),
 }
