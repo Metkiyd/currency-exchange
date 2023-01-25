@@ -1,50 +1,50 @@
 import * as yup from 'yup'
 
-export const validationSchemaRegistration = {
-  name: yup
+const LETTERS_REGEX = /^[a-zа-яё\s]+$/iu
+const NUMBERS_REGEX = /^\d+$/
+const PWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/
+
+export const validationSchemaLogin = {
+  email: yup
     .string()
-    .required('Обязательно')
-    // .typeError("Должно быть строкой")
-    .matches(/^[а-яА-ЯЁ ё]+$/, 'Введено некорректное значение')
-    // .min(6, "Символ")
-    .max(20, 'Введено некорректное значение'),
+    .email(`Введен некорректный email`)
+    .required('Обязательно'),
 
   password: yup
     .string()
-    .typeError('Должно быть паролем')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-      'Введено некорректное значение',
+      PWD_REGEX,
+      'Пароль должен содержать англ заглавные и строчные буквы, цифры. Минимум 6 символов',
     )
+    .required('Обязательно'),
+}
+
+export const validationSchema = {
+  email: yup
+    .string()
+    .email(`Введен некорректный email`)
+    .required('Обязательно'),
+
+  password: yup
+    .string()
+    .matches(
+      PWD_REGEX,
+      'Пароль должен содержать англ заглавные и строчные буквы, цифры. Минимум 6 символов',
+    )
+    .required('Обязательно'),
+
+  name: yup
+    .string()
+    .matches(LETTERS_REGEX, 'Только буквы')
+    .min(3, 'Слишком короткое Имя')
+    .max(20, 'Слишком длинное Имя')
     .required('Обязательно'),
 
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref(`password`)], 'Нет совпадений')
+    .oneOf([yup.ref(`password`)], 'Пароли должны совпадать')
     .required('Обязательно'),
-  email: yup
-    .string()
-    .typeError('Введено некорректное значение')
-    .required('Обязательно')
-    .email(`Введено некорректное значение`),
 }
-
-export const validationSchemaLogin = {
-  password: yup
-    .string()
-    .typeError('Введен некорректный Пароль')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-      'Пароль должен содержать буквы, цифры, спец знак.Минимум 4 символа',
-    )
-    .required('Обязательно'),
-  email: yup
-    .string()
-    .typeError('Ошибка email')
-    .required('Обязательно')
-    .email(`Введен некорректный email`),
-}
-
 export const validationSchemaProfile = {
   birthday: {
     pattern: {
@@ -53,105 +53,39 @@ export const validationSchemaProfile = {
       message: 'Введите формат даты',
     },
   },
-  name: {
-    pattern: {
-      value: /^[а-яА-ЯЁ ё]+$/,
-      message: 'Только Русские буквы',
-    },
-    minLength: {
-      value: 4,
-      message: 'Минимум 4 символа',
-    },
-  },
-  email: {
-    pattern: {
-      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      message: 'Введено некорректное значение',
-    },
-  },
-  city: {
-    pattern: {
-      value: /^[а-яА-ЯЁ ё]+$/,
-      message: 'Только Русские буквы',
-    },
-    minLength: {
-      value: 3,
-      message: 'Минимум 3 символа',
-    },
-  },
-  phoneNumber: {
-    pattern: {
-      value:
-        /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{5})(?: *x(\d+))?\s*$/,
-      message: 'Введите формат телефона',
-    },
-  },
-  password: {
-    pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
-      message: 'Неправильный формат пароля',
-    },
-  },
-  sum: {
-    maxLength: {
-      value: 6,
-      message: 'Лимит пополнения суммы 999000',
-    },
-    required: {
-      value: true,
-      message: 'Обязательно',
-    },
-  },
-  cardNumber: {
-    minLength: {
-      value: 16,
-      message: 'Номер банковской карты введен неверно',
-    },
-    required: {
-      value: true,
-      message: 'Обязательно',
-    },
-    maxLength: {
-      value: 16,
-      message: 'Ошибка в вводе данных',
-    },
-  },
-  date: {
-    pattern: {
-      value: /^(0[1-9]|1[0-2])\/\d{2}$/,
-      message: 'Ошибка в вводе данных',
-    },
-    required: {
-      value: true,
-      message: 'Обязательно',
-    },
-  },
-  cvc: {
-    minLength: {
-      value: 3,
-      message: 'Минимум 3 символа',
-    },
-    maxLength: {
-      value: 3,
-      message: 'Максимум 3 символа',
-    },
-    required: {
-      value: true,
-      message: 'Обязательно',
-    },
-  },
-  cardOrder: {
-    pattern: {
-      value: /(?<! )[a-zA-Z' ]{4,26}$/g,
-      message: 'Введено некорректное значение',
-    },
-    required: {
-      value: true,
-      message: 'Обязательно',
-    },
-    maxLength: {
-      value: 25,
-      message: 'Введено некорректное значение',
-    },
-  },
+}
+export const validationAddSum = {
+  sum: yup
+    .number()
+    .positive('Только положительные числа')
+    .integer('Только целые числа')
+    .max(300000, 'Лимит пополнения суммы 300000')
+    .required('Обязательно'),
+
+  cardNumber: yup
+    .string()
+    .matches(NUMBERS_REGEX, 'Только цифры')
+    .min(16, 'Номер карты должен содержать 16 чисел')
+    .max(16, 'Номер карты должен содержать 16 чисел')
+    .required('Обязательно'),
+
+  expires: yup
+    .string()
+    .matches(/([0-9]{2})\/([0-9]{2})/, 'Неправильная дата. Формат: ММ/ГГ')
+    .max(5, 'Неправильная дата. Формат: ММ/ГГ')
+    .required('Обязательно'),
+
+  cvc: yup
+    .string()
+    .matches(NUMBERS_REGEX, 'Только цифры')
+    .min(3, 'CVC должен содержать 3 числа')
+    .max(3, 'CVC должен содержать 3 числа')
+    .required('Обязательно'),
+
+  nameOnCard: yup
+    .string()
+    .matches(LETTERS_REGEX, 'Только буквы')
+    .min(3, 'Слишком короткое Имя')
+    .max(20, 'Слишком длинное Имя')
+    .required('Обязательно'),
 }

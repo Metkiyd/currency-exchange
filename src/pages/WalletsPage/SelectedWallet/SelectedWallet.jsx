@@ -23,9 +23,18 @@ import {
 } from '../../../redux/actions/postsAction'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import * as yup from 'yup'
+import {
+  validationAddSum,
+  validationSchemaLogin,
+} from '../../../data/validation'
+import { getUser } from '../../../redux/actions/authAction'
+import { MyCheckbox } from '../../../components/MyUI/MyCheckbox'
+import { Formik } from 'formik'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 const SelectedWallet = () => {
+  const validationsSchema = yup.object().shape({ ...validationAddSum })
   const navigate = useNavigate()
 
   const { id } = useParams()
@@ -56,7 +65,7 @@ const SelectedWallet = () => {
   // }, [])
 
   let selectedWallet = wallets.find((wallet) => id == wallet.number) || null
-  console.log('===>selectedWallet', selectedWallet)
+  // console.log('===>selectedWallet', selectedWallet)
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -75,12 +84,10 @@ const SelectedWallet = () => {
     })
   }
 
-  const addSumWallet = () => {
-    selectedWallet.balance =
-      Number(selectedWallet.balance) + Number(form.balance)
+  const addSumWallet = (values) => {
+    selectedWallet.balance = Number(selectedWallet.balance) + Number(values.sum)
   }
-  const errorNote = (props) => toast.error(props)
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     try {
       await addSumWallet()
 
@@ -118,7 +125,10 @@ const SelectedWallet = () => {
     // alert('deleted successfully')
     // navigate(`/wallets`)
   }
-
+  // const handleSubmit = (values) => {
+  //   // await dispatch(getUser(values))
+  //   console.log('values', values)
+  // }
   return (
     <div className={styles.page_layout}>
       <NavSidebar />
@@ -170,32 +180,98 @@ const SelectedWallet = () => {
           <p className={styles.profile_title}>Пополнение</p>
 
           <div className={styles.password_inputs}>
-            <MyInput
-              label='Сумма'
-              sx={{ width: 388 }}
-              name='balance'
-              type='Number'
-              onChange={handleChange}
-            />
-            <MyInput label='Номер карты' sx={{ width: 388 }} />
-            <MyInput label='Даты' sx={{ width: 388 }} />
-            <MyInput label='CVC' sx={{ width: 388 }} />
-            <MyInput label='Владелец карты' sx={{ width: 388 }} />
-
-            <MyButton
-              // onClick={handleOpen}
-              onClick={handleClick}
-              size='large'
-              variant='contained'
-              // disabled
+            <Formik
+              initialValues={{
+                sum: '',
+                cardNumber: '',
+                expires: '',
+                cvc: '',
+                nameOnCard: '',
+              }}
+              validationSchema={validationsSchema}
+              onSubmit={handleSubmit}
             >
-              Пополнить кошелек
-              {/*<ToastContainer limit={10} />*/}
-            </MyButton>
+              {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid,
+                dirty,
+              }) => (
+                <>
+                  <MyInput
+                    value={values.sum}
+                    label='Сумма'
+                    name='sum'
+                    error={errors.sum && touched.sum}
+                    helperText={errors.sum && touched.sum ? errors.sum : ''}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    value={values.cardNumber}
+                    label='Номер карты'
+                    name='cardNumber'
+                    error={errors.cardNumber && touched.cardNumber}
+                    helperText={
+                      errors.cardNumber && touched.cardNumber
+                        ? errors.cardNumber
+                        : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    value={values.expires}
+                    label='Даты'
+                    name='expires'
+                    error={errors.expires && touched.expires}
+                    helperText={
+                      errors.expires && touched.expires ? errors.expires : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    label='CVC'
+                    value={values.cvc}
+                    name='cvc'
+                    error={errors.cvc && touched.cvc}
+                    helperText={errors.cvc && touched.cvc ? errors.cvc : ''}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    label='Владелец карты'
+                    value={values.nameOnCard}
+                    name='nameOnCard'
+                    error={errors.nameOnCard && touched.nameOnCard}
+                    helperText={
+                      errors.nameOnCard && touched.nameOnCard
+                        ? errors.nameOnCard
+                        : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  <MyButton
+                    size='large'
+                    variant='contained'
+                    onClick={handleSubmit}
+                    disabled={!isValid || !dirty}
+                  >
+                    Пополнить кошелек
+                  </MyButton>
+                </>
+              )}
+            </Formik>
 
             <MyModal
               // setModalOpen={setOpen} modalState={open}
-
               open={open}
               setOpen={setOpen}
               icon={<GreenWalletIcon2 />}

@@ -1,19 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { validationSchemaLogin } from '../../data/validation'
 
-import { Navigate, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { MyButton } from '../../components/MyUI/MyButton'
 import { MyInput } from '../../components/MyUI/MyInput'
 
 import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
-import {
-  getAuthUser,
-  getUser,
-  selectIsAuth,
-} from '../../redux/actions/authAction'
+import { getUser } from '../../redux/actions/authAction'
 
 import styles from '../LoginPage/styles.module.scss'
 
@@ -27,34 +23,9 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [form, setForm] = useState({})
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    })
+  const handleSubmit = async (values) => {
+    await dispatch(getUser(values))
   }
-
-  const handleLogin = async () => {
-    const user = await dispatch(getUser(form))
-    // console.log('=>disp-handleLogin', user)
-
-    // if (user.accessToken) {
-    //   localStorage.setItem('authorized', user.accessToken)
-    // }
-    // await dispatch(getAuthUser())
-  }
-
-  // const User = useSelector((state) => state.user.user)
-  // console.log('=>User-State', User)
-
-  // const isAuth = useSelector(selectIsAuth)
-  // console.log('=>isAuth', isAuth)
-  //
-  // if (isAuth) {
-  //   return <Navigate to='/exchange-rate' />
-  // }
 
   return (
     <div className={styles.login}>
@@ -82,101 +53,70 @@ const LoginPage = () => {
             <div>Or</div>
             <div className={styles.line}></div>
           </div>
-
-          {/*<Formik*/}
-          {/*  initialValues={{*/}
-          {/*    email: '',*/}
-          {/*    password: '',*/}
-          {/*  }}*/}
-          {/*  onSubmit={() => {}}*/}
-          {/*  validationSchema={validationsSchema}*/}
-          {/*>*/}
-          {/*  {({*/}
-          {/*    values,*/}
-          {/*    errors,*/}
-          {/*    touched,*/}
-          {/*    handleChange,*/}
-          {/*    handleBlur,*/}
-          {/*    isValid,*/}
-          {/*    dirty,*/}
-          {/*  }) => (*/}
-          {/*    <>*/}
-          {/*      <MyInput*/}
-          {/*        sx={{*/}
-          {/*          maxWidth: 420,*/}
-          {/*          '& .MuiInputBase-root': {*/}
-          {/*            borderRadius: 0,*/}
-          {/*          },*/}
-          {/*        }}*/}
-          {/*        label='E-mail'*/}
-          {/*        name='email'*/}
-          {/*        error={touched.email && errors.email && <p>{errors.email}</p>}*/}
-          {/*        onChange={handleChange}*/}
-          {/*        value={values.email}*/}
-          {/*        onBlur={handleBlur}*/}
-          {/*      />*/}
-          {/*      <MyInput*/}
-          {/*        sx={{*/}
-          {/*          maxWidth: 420,*/}
-          {/*          '& .MuiInputBase-root': {*/}
-          {/*            borderRadius: 0,*/}
-          {/*          },*/}
-          {/*        }}*/}
-          {/*        label='Пароль'*/}
-          {/*        name='password'*/}
-          {/*        error={touched.password && errors.password}*/}
-          {/*        onChange={handleChange}*/}
-          {/*        onBlur={handleBlur}*/}
-          {/*        value={values.password}*/}
-          {/*      />*/}
-          {/*      <MyCheckbox label='Запомнить меня' />*/}
-          {/*      <MyButton*/}
-          {/*        size='large'*/}
-          {/*        variant='contained'*/}
-          {/*        onClick={handleLogin}*/}
-          {/*        // disabled={!isValid || !dirty}*/}
-          {/*        // disabled*/}
-          {/*      >*/}
-          {/*        Войти*/}
-          {/*      </MyButton>*/}
-          {/*    </>*/}
-          {/*  )}*/}
-          {/*</Formik>*/}
-
-          <MyInput
-            sx={{
-              maxWidth: 420,
-              '& .MuiInputBase-root': {
-                borderRadius: 0,
-              },
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
             }}
-            label='E-mail'
-            name='email'
-            // error={touched.email && errors.email}
-            onChange={handleChange}
-          />
-          <MyInput
-            sx={{
-              maxWidth: 420,
-              '& .MuiInputBase-root': {
-                borderRadius: 0,
-              },
-            }}
-            label='Пароль'
-            name='password'
-            // error={touched.password && errors.password}
-            onChange={handleChange}
-          />
-          <MyCheckbox label='Запомнить меня' />
-          <MyButton
-            size='large'
-            variant='contained'
-            onClick={handleLogin}
-            // disabled={!isValid || !dirty}
-            // disabled
+            validationSchema={validationsSchema}
+            onSubmit={handleSubmit}
           >
-            Войти
-          </MyButton>
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isValid,
+              dirty,
+            }) => (
+              <>
+                <MyInput
+                  value={values.email}
+                  label='E-mail'
+                  name='email'
+                  error={errors.email && touched.email}
+                  helperText={errors.email && touched.email ? errors.email : ''}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  sx={{
+                    maxWidth: 420,
+                    '& .MuiInputBase-root': {
+                      borderRadius: 0,
+                    },
+                  }}
+                />
+
+                <MyInput
+                  value={values.password}
+                  label='Пароль'
+                  name='password'
+                  error={errors.password && touched.password}
+                  helperText={
+                    errors.password && touched.password ? errors.password : ''
+                  }
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  sx={{
+                    maxWidth: 420,
+                    '& .MuiInputBase-root': {
+                      borderRadius: 0,
+                    },
+                  }}
+                />
+                <MyCheckbox label='Запомнить меня' />
+                <MyButton
+                  size='large'
+                  variant='contained'
+                  onClick={handleSubmit}
+                  disabled={!isValid || !dirty}
+                >
+                  Войти
+                </MyButton>
+              </>
+            )}
+          </Formik>
 
           <div className={styles.create_account}>
             <span>Нет аккаунта?</span>

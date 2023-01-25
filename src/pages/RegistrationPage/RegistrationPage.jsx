@@ -14,8 +14,8 @@ import { ReactComponent as GitHubIcon } from '../../assets/icons/githubIcon.svg'
 import { useDispatch } from 'react-redux'
 import { getNewUser } from '../../redux/actions/authAction'
 
-const USER_REGEX = /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']{2}$/
-const PWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+const USER_REGEX = /^[a-zа-яё\s]{3,}$/iu
+const PWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
@@ -27,6 +27,7 @@ const RegistrationPage = () => {
   const [validEmail, setValidEmail] = useState(false)
   const [validPwd, setValidPwd] = useState(false)
   const [validMatch, setValidMatch] = useState(false)
+  const [checked, setChecked] = useState(false)
 
   const [form, setForm] = useState({
     fullName: '',
@@ -35,11 +36,6 @@ const RegistrationPage = () => {
     MatchPassword: '',
     wallets: [],
   })
-
-  const [checked, setChecked] = useState(false)
-  const handleCheck = (event) => {
-    setChecked(event.target.checked)
-  }
 
   useEffect(() => {
     const result = USER_REGEX.test(form.fullName)
@@ -64,16 +60,16 @@ const RegistrationPage = () => {
       [e.target.name]: e.target.value,
     })
   }
-  console.log('=>form-registerPage', form)
+
+  // console.log('=>form-registerPage', form)
+  const handleCheck = (event) => {
+    setChecked(event.target.checked)
+  }
 
   const handleClick = async () => {
     // console.log('=>form-handleRegister', form)
     const user = await dispatch(getNewUser(form))
     // console.log('=>dispatch-handleRegister', user)
-
-    // if (user.token) {
-    //   localStorage.setItem('authorized', user.token)
-    // }
   }
 
   return (
@@ -114,7 +110,7 @@ const RegistrationPage = () => {
             helperText={
               !form.fullName || validName
                 ? ''
-                : 'Min 4 symbols. Must include only english letters'
+                : 'Минимум 3 символа. Только буквы'
             }
             label='Имя'
             name='fullName'
@@ -129,9 +125,7 @@ const RegistrationPage = () => {
             }}
             error={!(!form.email || validEmail)}
             helperText={
-              !form.email || validEmail
-                ? ''
-                : 'May include letters, numbers. Must include characters . and @'
+              !form.email || validEmail ? '' : 'Введен некорректный email'
             }
             label='E-mail'
             name='email'
@@ -143,7 +137,7 @@ const RegistrationPage = () => {
               helperText={
                 !form.password || validPwd
                   ? ''
-                  : 'Min 8 symbols. Must include uppercase, lowercase letters and numbers'
+                  : 'Пароль должен содержать англ заглавные и строчные буквы, цифры. Минимум 6 символов'
               }
               label='Пароль'
               name='password'
@@ -152,7 +146,9 @@ const RegistrationPage = () => {
             <MyInput
               error={!(!form.MatchPassword || validMatch)}
               helperText={
-                !form.MatchPassword || validMatch ? '' : ' Passwords must match'
+                !form.MatchPassword || validMatch
+                  ? ''
+                  : ' Пароли должны совпадать'
               }
               label='Подтвердите пароль'
               name='MatchPassword'
