@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { MyButton } from '../../components/MyUI/MyButton'
-import { MyInput } from '../../components/MyUI/MyInput'
+import { MyInput, PasswordInput } from '../../components/MyUI/MyInput'
 import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
 
 import { useNavigate } from 'react-router-dom'
@@ -132,7 +132,7 @@ const RegistrationPage = () => {
             onChange={handleChange}
           />
           <div className={styles.password}>
-            <MyInput
+            <PasswordInput
               error={!(!form.password || validPwd)}
               helperText={
                 !form.password || validPwd
@@ -143,7 +143,7 @@ const RegistrationPage = () => {
               name='password'
               onChange={handleChange}
             />
-            <MyInput
+            <PasswordInput
               error={!(!form.MatchPassword || validMatch)}
               helperText={
                 !form.MatchPassword || validMatch

@@ -2,7 +2,19 @@
 
 * {
   box-sizing: border-box;
+  /*scrollbar-width: thin;*/
 }
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgb(224, 224, 224);
+  border-radius: 15px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

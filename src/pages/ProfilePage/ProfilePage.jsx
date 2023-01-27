@@ -1,46 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { NavSidebar } from '../../components/NavSidebar'
-import { ProfileSidebar } from '../../components/ProfileSidebar'
-import { MyButton } from '../../components/MyUI/MyButton'
-
-import { MyInput } from '../../components/MyUI/MyInput'
-import { useDispatch, useSelector } from 'react-redux'
-import axiosBack from '../../api/axiosBack'
-import { getAuthUser } from '../../redux/actions/authAction'
-import { toast, ToastContainer } from 'react-toastify'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from '../ProfilePage/styles.module.scss'
-import * as yup from 'yup'
-import { validationSchema, validationSchemaLogin } from '../../data/validation'
-import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
+import * as yup from 'yup'
+import { toast, ToastContainer } from 'react-toastify'
+
+import { ProfileSidebar } from '../../components/ProfileSidebar'
+import { NavSidebar } from '../../components/NavSidebar'
+import { MyButton } from '../../components/MyUI/MyButton'
+import { MyInput } from '../../components/MyUI/MyInput'
+import PasswordInput from '../../components/MyUI/MyInput/PasswordInput'
+// import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
+
+import { getAuthUser } from '../../redux/actions/authAction'
+import {
+  validationChangePwd,
+  validationSchemaProfile,
+} from '../../data/validation'
+import styles from '../ProfilePage/styles.module.scss'
 
 const ProfilePage = () => {
-  const validationsSchema = yup.object().shape({ ...validationSchema })
+  const validationsSchema = yup.object().shape({ ...validationSchemaProfile })
+  const validationsSchemaPwd = yup.object().shape({ ...validationChangePwd })
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const User = useSelector((state) => state.user.user)
-  // console.log('=>User-profile', User)
 
-  // const [form, setForm] = useState(User)
-  // console.log('=>form-profile', form)
-
-  // const handleChange = (e) => {
-  //   setForm({
-  //     ...form,
-  //     [e.target.name]: e.target.value,
-  //   })
-  // }
-
-  const handleClick = async () => {
-    // await console.log('=>form-profile-bef-click', form)
-    // await axiosBack.patch('/auth/update', form)
-    // await console.log('=>form-profile-aft-click', form)
-    // await dispatch(getAuthUser())
-  }
-  const handleSubmit = (values) => {
-    console.log('=>values', values)
-    // toast.error('error')
+  const handleSubmit = async (values) => {
+    try {
+      await console.log('=>values', values)
+      // await axiosBack.patch('/auth/update', values)
+      // await dispatch(getAuthUser())
+    } catch (e) {
+      toast.error(e.response?.data?.message)
+    }
   }
 
   return (
@@ -66,13 +59,16 @@ const ProfilePage = () => {
 
           <div className={styles.profile_inputs}>
             <Formik
+              enableReinitialize
               initialValues={{
-                email: '',
-                // password: '',
+                fullName: User.fullName,
+                email: User.email,
+                city: User.city,
+                birthday: User.birthday,
+                phone: User.phone,
               }}
               validationSchema={validationsSchema}
               onSubmit={handleSubmit}
-              // enableReinitialize
             >
               {({
                 values,
@@ -86,6 +82,17 @@ const ProfilePage = () => {
               }) => (
                 <>
                   <MyInput
+                    value={values.fullName}
+                    label='Имя'
+                    name='fullName'
+                    error={errors.fullName && touched.fullName}
+                    helperText={
+                      errors.fullName && touched.fullName ? errors.fullName : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
                     value={values.email}
                     label='E-mail'
                     name='email'
@@ -96,87 +103,125 @@ const ProfilePage = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  <MyInput
+                    value={values.city}
+                    label='Город'
+                    name='city'
+                    error={errors.city && touched.city}
+                    helperText={errors.city && touched.city ? errors.city : ''}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    value={values.birthday}
+                    label='Дата рождения'
+                    name='birthday'
+                    error={errors.birthday && touched.birthday}
+                    helperText={
+                      errors.birthday && touched.birthday ? errors.birthday : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyInput
+                    value={values.phone}
+                    label='Номер телефона'
+                    name='phone'
+                    error={errors.phone && touched.phone}
+                    helperText={
+                      errors.phone && touched.phone ? errors.phone : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                   <MyButton
+                    size='large'
                     variant='contained'
                     onClick={handleSubmit}
-                    disabled={
-                      // !isValid
-                      // ||
-                      !dirty
-                    }
+                    disabled={!isValid || !dirty}
                   >
                     Сохранить изменения
                   </MyButton>
-
-                  {/*<MyInput*/}
-                  {/*  value={values.password}*/}
-                  {/*  label='Пароль'*/}
-                  {/*  name='password'*/}
-                  {/*  error={errors.password && touched.password}*/}
-                  {/*  helperText={*/}
-                  {/*    errors.password && touched.password ? errors.password : ''*/}
-                  {/*  }*/}
-                  {/*  onChange={handleChange}*/}
-                  {/*  onBlur={handleBlur}*/}
-                  {/*  sx={{*/}
-                  {/*    maxWidth: 420,*/}
-                  {/*    '& .MuiInputBase-root': {*/}
-                  {/*      borderRadius: 0,*/}
-                  {/*    },*/}
-                  {/*  }}*/}
-                  {/*/>*/}
                 </>
               )}
             </Formik>
-
-            {/*<MyInput*/}
-            {/*  defaultValue={User.fullName}*/}
-            {/*  label='Имя'*/}
-            {/*  name='fullName'*/}
-            {/*  onChange={handleChange}*/}
-            {/*/>*/}
-            {/*<MyInput*/}
-            {/*  defaultValue={User.email}*/}
-            {/*  label='E-mail'*/}
-            {/*  name='email'*/}
-            {/*  onChange={handleChange}*/}
-            {/*/>*/}
-            {/*<MyInput*/}
-            {/*  label='Город'*/}
-            {/*  defaultValue={User.city}*/}
-            {/*  name='city'*/}
-            {/*  onChange={handleChange}*/}
-            {/*/>*/}
-            {/*<MyInput*/}
-            {/*  label='Дата рождения'*/}
-            {/*  defaultValue={User.birthday}*/}
-            {/*  name='birthday'*/}
-            {/*  onChange={handleChange}*/}
-            {/*/>*/}
-            {/*<MyInput*/}
-            {/*  label='Номер телефона'*/}
-            {/*  defaultValue={User.phone}*/}
-            {/*  name='phone'*/}
-            {/*  onChange={handleChange}*/}
-            {/*/>*/}
           </div>
         </div>
         <div className={styles.password_info}>
           <p className={styles.profile_title}>Пароль</p>
           <div className={styles.password_inputs}>
-            <MyInput label='Введите старый пароль' />
-            <MyInput label='Введите новый пароль' />
-            <MyInput label='Повторите новый пароль' />
-            {/*<MyButton*/}
-            {/*  onClick={handleSubmit}*/}
-            {/*  size='large'*/}
-            {/*  variant='contained'*/}
-            {/*  // disabled*/}
-            {/*>*/}
-            {/*  Изменить пароль*/}
-            {/*</MyButton>*/}
+            <Formik
+              enableReinitialize
+              initialValues={{
+                oldPassword: '',
+                password: '',
+                confirmPassword: '',
+              }}
+              validationSchema={validationsSchemaPwd}
+              onSubmit={handleSubmit}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid,
+                dirty,
+              }) => (
+                <>
+                  <PasswordInput
+                    value={values.oldPassword}
+                    label='Введите старый пароль'
+                    name='oldPassword'
+                    error={errors.oldPassword && touched.oldPassword}
+                    helperText={
+                      errors.oldPassword && touched.oldPassword
+                        ? errors.oldPassword
+                        : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  <PasswordInput
+                    value={values.password}
+                    label='Введите новый пароль'
+                    name='password'
+                    error={errors.password && touched.password}
+                    helperText={
+                      errors.password && touched.password ? errors.password : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+
+                  <PasswordInput
+                    value={values.confirmPassword}
+                    label='Повторите новый пароль'
+                    name='confirmPassword'
+                    error={errors.confirmPassword && touched.confirmPassword}
+                    helperText={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? errors.confirmPassword
+                        : ''
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <MyButton
+                    size='large'
+                    variant='contained'
+                    onClick={handleSubmit}
+                    disabled={!isValid || !dirty}
+                  >
+                    Изменить пароль
+                  </MyButton>
+                </>
+              )}
+            </Formik>
             <ToastContainer limit={10} />
-            {/*<MyError />*/}
           </div>
         </div>
       </section>

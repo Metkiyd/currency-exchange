@@ -1,29 +1,49 @@
-//MobileSidebar
-.sidebar {
+//DesktopSidebar
+.mobile {
   display: none;
 }
 
-.mobile {
+.sidebar {
   display: flex;
   justify-content: center;
+  height: 100vh;
+  max-width: 240px;
+  width: 100%;
   border-right: 1px solid #E0E0E0;
 
   &__container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    max-width: 192px;
+    min-width: 165px;
+    width: 100%;
   }
   &__logo {
     padding-top: 16px;
+    padding-left: 10px;
     padding-bottom: 100px;
+
+    &__text_bold {
+      font-family: 'TT Firs Neue';
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    &__text {
+      font-family: 'TT Firs Neue';
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
   }
 
   &__links {
     flex-direction: column;
     display: flex;
     gap: 8px;
-
   }
 
   &__line {
@@ -31,66 +51,47 @@
     height: 1px;
     width: 100%;
     margin-bottom: 24px;
-
   }
 
   &__leave_button {
     margin-bottom: 32px;
   }
 
-
 }
+
 .active {
   background-color: #0000000a;
-  //padding: 12px 0;
 }
 
-//DesktopSidebar
-@media(min-width: 550px) {
 
-  .mobile {
+
+@media(max-width: 550px) {
+  //MobileSidebar
+  .sidebar {
     display: none;
   }
 
-  .sidebar {
+  .mobile {
+    position: fixed;
     display: flex;
     justify-content: center;
-    width: 240px;
     border-right: 1px solid #E0E0E0;
+    height: 100vh;
 
     &__container {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 192px;
-
     }
     &__logo {
       padding-top: 16px;
-      padding-left: 10px;
       padding-bottom: 100px;
-
-      &__text_bold {
-        font-family: 'TT Firs Neue';
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-
-      &__text {
-        font-family: 'TT Firs Neue';
-        font-weight: 400;
-        text-transform: uppercase;
-        margin-top: 6px;
-      }
-
     }
 
     &__links {
       flex-direction: column;
       display: flex;
       gap: 8px;
-
     }
 
     &__line {
@@ -98,7 +99,6 @@
       height: 1px;
       width: 100%;
       margin-bottom: 24px;
-
     }
 
     &__leave_button {
@@ -109,10 +109,7 @@
 
   .active {
     background-color: #0000000a;
-    //padding: 12px 0;
   }
-
-
 
 }
 

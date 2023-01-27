@@ -3,6 +3,7 @@ import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
+import { FormHelperText } from '@mui/material'
 
 const MySelector = (props) => {
   // console.log('===>Currencies.props', props)
@@ -14,7 +15,7 @@ const MySelector = (props) => {
       }}
       fullWidth
     >
-      <InputLabel id='demo-simple-selecfullWidtht-label'>
+      <InputLabel id='demo-simple-selecfullWidtht-label' {...props}>
         Выберите валюту
       </InputLabel>
       <Select
@@ -44,6 +45,9 @@ const MySelector = (props) => {
           )
         })}
       </Select>
+      <FormHelperText id='outlined-weight-helper-text' {...props}>
+        {props.helperText}
+      </FormHelperText>
     </FormControl>
   )
 }

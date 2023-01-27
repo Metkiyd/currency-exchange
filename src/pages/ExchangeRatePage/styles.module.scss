@@ -2,16 +2,15 @@
   display: flex;
   justify-content: space-between;
   height: 100vh;
-
-
 }
 
-.main_container {
+.main {
   display: flex;
   flex-direction: column;
-  width: 100%;
   max-width: 816px;
+  width: 100%;
   margin: 0 48px;
+  overflow-y: auto;
 }
 
 .slider{
@@ -241,8 +240,8 @@
       padding-bottom: 32px;
     }
   }
-  .main_container {
-    margin: 0 24px;
+  .main {
+    margin: 0 24px 0 72px;
   }
   .result {
     flex-direction: column;

@@ -2,13 +2,15 @@
   display: flex;
   justify-content: space-between;
   height: 100vh;
-
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
   max-width: 816px;
   width: 100%;
   margin: 0 48px;
+  //overflow-y: auto;
 
   &__title {
     font-family: 'TT Firs Neue';
@@ -24,18 +26,16 @@
     border-bottom: 1px solid #F3F3F3;
     color: #848484;
     font-size: 12px;
-
   }
   &__margin {
     margin-bottom: 16px;
   }
 
-
 }
-@media(max-width: 550px) {
 
+@media(max-width: 550px) {
   .main {
-    margin: 0 24px;
+    margin: 0 24px 0 72px;
   }
 }
 

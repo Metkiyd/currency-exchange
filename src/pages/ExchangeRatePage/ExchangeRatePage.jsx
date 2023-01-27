@@ -21,7 +21,7 @@ const ExchangeRatePage = () => {
   return (
     <div className={styles.page_layout}>
       <NavSidebar />
-      <section className={styles.main_container}>
+      <section className={styles.main}>
         <div className={styles.header__nav}>
           <div>
             <p className={styles.header__title}>Курсы валют</p>
@@ -39,7 +39,7 @@ const ExchangeRatePage = () => {
           <span className={styles.range__bg}>1 Day</span>
         </div>
 
-        {/*<MyChart />*/}
+        <MyChart />
       </section>
       <ProfileSidebar />
     </div>

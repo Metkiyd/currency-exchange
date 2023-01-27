@@ -24,13 +24,11 @@ import {
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import * as yup from 'yup'
-import {
-  validationAddSum,
-  validationSchemaLogin,
-} from '../../../data/validation'
+import { validationAddSum } from '../../../data/validation'
 import { getUser } from '../../../redux/actions/authAction'
 import { MyCheckbox } from '../../../components/MyUI/MyCheckbox'
 import { Formik } from 'formik'
+import { WalletCard } from '../../../components/WalletCard'
 // import {wallets} from "../../../components/MyUI/Sliders/WalletsSlider/WalletsSlider";
 
 const SelectedWallet = () => {
@@ -38,104 +36,53 @@ const SelectedWallet = () => {
   const navigate = useNavigate()
 
   const { id } = useParams()
-  // console.log('===>id', id)
 
   const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts())
-
   useEffect(() => {
-    fetchPosts()
+    dispatch(getAllPosts())
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
-  // console.log('=>wallets-DB', wallets)
-
-  // const [data, setData] = useState()
-  // console.log('===>data', data)
-
-  // useEffect(() => {
-  //   axiosBack.get(`/posts/${id}`)
-  //     .then((response) => {
-  //       setData(response.data)
-  //     }).catch((err) => {
-  //       console.warn(err);
-  //       alert('cant get post')
-  //   })
-  //
-  // }, [])
 
   let selectedWallet = wallets.find((wallet) => id == wallet.number) || null
   // console.log('===>selectedWallet', selectedWallet)
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
-  const handleClose = () =>
-    setOpen(
-      false,
-      // (open) => !open
-    )
+  const handleClose = () => setOpen(false)
 
-  const [form, setForm] = useState({})
-  // console.log('===>form', form)
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const addSumWallet = (values) => {
-    selectedWallet.balance = Number(selectedWallet.balance) + Number(values.sum)
-  }
-  const handleSubmit = async () => {
+  const handleRemove = () => {
     try {
-      await addSumWallet()
+      console.log('=>id-hand-remove', selectedWallet._id)
+      dispatch(getDeleteWallet(selectedWallet._id))
+      alert('deleted successfully')
+      navigate(`/wallets`)
+    } catch (e) {
+      toast.error(e.response?.data?.message)
+    }
+  }
+  const handleSubmit = async (values, actions) => {
+    try {
+      await (selectedWallet.balance =
+        Number(selectedWallet.balance) + Number(values.sum))
 
       const { data } = await axiosBack.patch(
         `/posts/${selectedWallet._id}`,
         selectedWallet,
       )
       await handleOpen()
-
-      // handleOpen()
-      // modal don't work with navigate
-
-      // await navigate(`/wallets`)
-      // OR
-      // clean form
+      await actions.resetForm()
     } catch (e) {
       toast.error(e.response?.data?.message)
     }
   }
-
-  const handleRemove = () => {
-    try {
-      console.log('=>id-hand-remove', selectedWallet._id)
-      dispatch(getDeleteWallet(selectedWallet._id))
-      // handleOpen()
-      // modal don't work with navigate
-      alert('deleted successfully')
-      navigate(`/wallets`)
-    } catch (e) {
-      toast.error(e.response?.data?.message)
-    }
-
-    // toast('deleted successfully')
-
-    // alert('deleted successfully')
-    // navigate(`/wallets`)
-  }
-  // const handleSubmit = (values) => {
-  //   // await dispatch(getUser(values))
-  //   console.log('values', values)
-  // }
   return (
     <div className={styles.page_layout}>
       <NavSidebar />
       <section className={styles.main}>
         <div className={styles.main__nav}>
           <div className={styles.main__title}>
-            <IconButton aria-label='back' onClick={() => navigate(-1)}>
+            <IconButton aria-label='back' onClick={() => navigate(`/wallets`)}>
               <KeyboardBackspaceRoundedIcon />
             </IconButton>
 
@@ -149,15 +96,21 @@ const SelectedWallet = () => {
         </div>
 
         <div className={styles.block}>
-          <div className={styles.card}>
-            <div className={styles.country}>
-              <p className={styles.rub}>{selectedWallet.currency}</p>
-              <img src={selectedWallet.icon} alt={selectedWallet.currency} />
-            </div>
-            <p className={styles.count}>
-              {selectedWallet.balance} {selectedWallet.sign}
-            </p>
-          </div>
+          {/*<div className={styles.card}>*/}
+          {/*  <div className={styles.country}>*/}
+          {/*    <p className={styles.rub}>{selectedWallet.currency}</p>*/}
+          {/*    <img src={selectedWallet.icon} alt={selectedWallet.currency} />*/}
+          {/*  </div>*/}
+          {/*  <p className={styles.count}>*/}
+          {/*    {selectedWallet.balance} {selectedWallet.sign}*/}
+          {/*  </p>*/}
+          {/*</div>*/}
+          <WalletCard
+            currency={selectedWallet.currency}
+            icon={selectedWallet.icon}
+            balance={selectedWallet.balance}
+            sign={selectedWallet.sign}
+          />
 
           <div className={styles.landing}>
             <div>
@@ -289,179 +242,3 @@ const SelectedWallet = () => {
 }
 
 export default SelectedWallet
-
-// const [openModal, setOpenModal] = useState(false);
-
-//
-// const currentWallet: WalletsType | undefined = wallets.find(
-//   (wallet) => `#${wallet.currency}` === location.hash
-// );
-//
-// const deleteWallet = () => {
-//   const newWallets =
-//     currentWallet &&
-//     wallets.filter((wallet) => wallet.currency !== currentWallet.currency);
-
-//
-//   navigate("/purse-page", {replace: true});
-// };
-//
-// const sumWallet = Number(watch(`sum`))
-//
-// const addSumWallet = () => {
-//   const newWalletStorage = wallets?.map((wallet) => {
-//     if (wallet.currency === currentWallet?.currency)
-//       wallet.sum = +Number(currentWallet?.sum) + +sumWallet;
-//     setOpenModal(true);
-//     reset({sum: '', cvc: '', cardNumber: '', cardOrder: '', date: ""})
-//     return wallet;
-//   });
-//   updateWalletUser([...newWalletStorage])
-// }
-//
-// const isValue = Boolean(errors.sum || errors.cvc || errors.date || errors.cardNumber || errors.cardOrder
-//   ||
-//   !watch(`sum`) || !watch(`cvc`) || !watch(`date`) || !watch(`cardNumber`) || !watch(`cardOrder`))
-//
-// return (
-//   <main className={classes.main}>
-//     <NavBar/>
-//     <section className={classes.main_wrapper}>
-//       <div className={classes.main_wrapper__title}>
-//         <div className={classes.main_wrapper__title_purse_id}>
-//           <NavLink to="/purse-page">
-//             <img src={arrowBack} alt="Назад"/>
-//           </NavLink>
-//           <h1 className={classes.main_wrapper__title_text}>
-//             {`${currentWallet?.currency}`}
-//           </h1>
-//           <span className={classes.main_wrapper__title_text_number}>
-//               {`#${currentWallet?.purseNumber}`}
-//             </span>
-//         </div>
-//         <ButtonMui
-//           text="Удалить кошелёк"
-//           padding="12px"
-//           border="1px solid #363636"
-//           bc="#FFFFFF"
-//           hb="#FFFFFF"
-//           coloring="#363636"
-//           fontSize="12px"
-//           fontWeight="600"
-//           onClick={deleteWallet}
-//         />
-//       </div>
-//       <div className={classes.main_wrapper__purse}>
-//         {currentWallet?.currency && (
-//           <Wallet
-//             countryName={currentWallet.currency}
-//             country={currentWallet?.currency}
-//             count={currentWallet.sum?.toFixed(2)}
-//             countryCounter={currentWallet?.currency}
-//           />
-//         )}
-//         <div className={classes.image}>
-//           <img src={banner} alt="баннер"/>
-//         </div>
-//       </div>
-//       <div className={classes.main_wrapper__replenishment}>
-//         <p className={classes.main_wrapper__replenishment_text}>Пополнение</p>
-//         <form className={classes.main_wrapper__replenishment_wrapper} onSubmit={handleSubmit(onSubmit)}>
-//           <div className={classes.input_error_wrapper}>
-//             <div className={classes.error_wrapper}>
-//               {errors.sum && (
-//                 <p className={classes.error}>{errors.sum.message}</p>
-//               )}
-//             </div>
-//
-//             <input
-//               placeholder="Сумма"
-//               type="number"
-//               {...register(`sum`, {...patterns.sum})}
-//               className={classes[`${!errors.sum ? (`main_wrapper__replenishment_wrapper_input`) : (`main_wrapper__replenishment_wrapper_input_error`)}`]}
-//             />
-//           </div>
-//
-//           <div className={classes.input_error_wrapper}>
-//             <div className={classes.error_wrapper}>
-//               {errors.cardNumber && (
-//                 <p className={classes.error}>{errors.cardNumber.message}</p>
-//               )}
-//             </div>
-//             <input
-//               {...register(`cardNumber`, {...patterns.cardNumber})}
-//               placeholder="Номер карты"
-//               type="number"
-//               className={classes[`${!errors.cardNumber ? (`main_wrapper__replenishment_wrapper_input`) : (`main_wrapper__replenishment_wrapper_input_error`)}`]}
-//             />
-//           </div>
-//           <div className={classes.input_error_wrapper}>
-//             <div className={classes.error_wrapper}>
-//               {errors.date && (
-//                 <p className={classes.error}>{errors.date.message}</p>
-//               )}
-//             </div>
-//
-//             <input
-//               {...register(`date`, {...patterns.date})}
-//               placeholder="Даты"
-//               className={classes[`${!errors.date ? (`main_wrapper__replenishment_wrapper_input`) : (`main_wrapper__replenishment_wrapper_input_error`)}`]}
-//             />
-//           </div>
-//
-//           <div className={classes.input_error_wrapper}>
-//             <div className={classes.error_wrapper}>
-//               {errors.cvc && (
-//                 <p className={classes.error}>{errors.cvc.message}</p>
-//               )}
-//             </div>
-//
-//             <input
-//               {...register('cvc', {...patterns.cvc})}
-//               placeholder="CVC"
-//               type="number"
-//               className={classes[`${!errors.cvc ? (`main_wrapper__replenishment_wrapper_input`) : (`main_wrapper__replenishment_wrapper_input_error`)}`]}
-//             />
-//           </div>
-//
-//           <div className={classes.input_error_wrapper}>
-//             <div className={classes.error_wrapper}>
-//               {errors.cardOrder && (
-//                 <p className={classes.error}>{errors.cardOrder.message}</p>
-//               )}
-//             </div>
-//
-//             <input
-//               {...register(`cardOrder`, {...patterns.cardOrder})}
-//               placeholder="Владелец карты"
-//               type="text"
-//               className={classes[`${!errors.cardOrder ? (`main_wrapper__replenishment_wrapper_input`) : (`main_wrapper__replenishment_wrapper_input_error`)}`]}
-//             />
-//           </div>
-//           <ButtonMui
-//             text="Пополнить кошелек"
-//             padding="15px 24px"
-//             bc="#363636"
-//             disabled={isValue}
-//             hb="#363636"
-//             type='submit'
-//             coloring="#FFFFFF"
-//             fontSize="16px"
-//             fontWeight="600"
-//             onClick={addSumWallet}
-//           />
-//         </form>
-//       </div>
-//     </section>
-//     <ProfileBar/>
-//     {openModal && openModal && (
-//       <Modal
-//         setOpenModal={setOpenModal}
-//         image={walletIconSum}
-//         textMain="Пополнение прошло успешно"
-//         textBottom="Вы успешно пополнили свой кошелек."
-//       />
-//     )}
-//   </main>
-// );
-// };

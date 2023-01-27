@@ -12,18 +12,17 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import { IconButton } from '@mui/material'
 import { getAllPosts } from '../../../../redux/actions/postsAction'
+import { WalletCard } from '../../../WalletCard'
 // import {wallets} from "../WalletsSlider/WalletsSlider";
 
 function SidebarSlider() {
-  const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts())
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   // dispatch(getAllPosts())
+  // }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
   // console.log('=>wallets-DB', wallets)
-
-  useEffect(() => {
-    // fetchPosts()
-  }, [])
 
   const [sliderRef, setSliderRef] = useState(null)
 
@@ -39,15 +38,12 @@ function SidebarSlider() {
     ({ currency, number, sign, balance, icon }) => {
       return (
         <NavLink key={number} to={`/wallets/${number}`}>
-          <div className={styles.card}>
-            <div className={styles.country}>
-              <p className={styles.rub}>{currency}</p>
-              <img src={icon} alt={currency} />
-            </div>
-            <p className={styles.count}>
-              {balance} {sign}
-            </p>
-          </div>
+          <WalletCard
+            currency={currency}
+            icon={icon}
+            balance={balance}
+            sign={sign}
+          />
         </NavLink>
       )
     },

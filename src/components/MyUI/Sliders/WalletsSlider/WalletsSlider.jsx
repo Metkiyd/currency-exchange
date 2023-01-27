@@ -15,14 +15,13 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import { IconButton } from '@mui/material'
+import { WalletCard } from '../../../WalletCard'
 
 function WalletsSlider() {
-  const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts())
-
-  useEffect(() => {
-    fetchPosts()
-  }, [])
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(getAllPosts())
+  // }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
   // console.log('=>wallets-DB', wallets)
@@ -59,15 +58,12 @@ function WalletsSlider() {
     ({ currency, number, sign, balance, icon }) => {
       return (
         <NavLink key={number} to={`/wallets/${number}`}>
-          <div className={styles.card}>
-            <div className={styles.country}>
-              <p className={styles.rub}>{currency}</p>
-              <img src={icon} alt={currency} />
-            </div>
-            <p className={styles.count}>
-              {balance} {sign}
-            </p>
-          </div>
+          <WalletCard
+            currency={currency}
+            icon={icon}
+            balance={balance}
+            sign={sign}
+          />
         </NavLink>
       )
     },

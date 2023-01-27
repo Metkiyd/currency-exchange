@@ -1,0 +1,112 @@
+.text_500 {
+  font-weight: 500;
+}
+
+.add_wallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 148px;
+  border: 1px dashed #ECECEC;
+  color: #848484;
+}
+
+
+
+.card {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 224px;
+  height: 148px;
+  border: 1px solid #ECECEC;
+  padding: 24px;
+
+}
+
+.svg_flag {
+  height: 24px;
+  width: 32px;
+}
+
+.country {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+
+}
+
+.rub {
+  margin: 0;
+  font-weight: 500;
+
+}
+
+.count {
+  font-size: 20px;
+  margin: 0;
+
+}
+
+.slider_width {
+  max-width: 712px;
+
+}
+.slider_flexgap {
+  display: flex;
+  //gap: 64px;
+
+}
+
+@media(max-width: 1330px) {
+  .slider_width {
+    max-width: 460px;
+  }
+
+}
+
+
+
+
+.slider_mobile_buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+}
+
+.slider_buttons {
+display: none;
+
+}
+@media(max-width: 1100px) {
+  .slider_width {
+    max-width: 220px;
+  }
+
+
+}
+@media(min-width: 550px) {
+  .slider_flexgap {
+    gap: 64px;
+
+  }
+  .slider_mobile_buttons {
+    display: none;
+
+
+  }
+  .slider_buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+
+  }
+
+
+
+}

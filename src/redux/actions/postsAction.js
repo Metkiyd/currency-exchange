@@ -19,13 +19,10 @@ export const getAllPosts = () => {
 }
 
 export const getDeleteWallet = (id) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const { data } = await axiosBack.delete(`/posts/${id}`)
-      //zdes post rabotaet iz za arg value
       // console.log('>deleteWallet-action', data)
-      dispatch(setAllPosts(data))
-      return data
     } catch (e) {
       toast.error(e.response?.data?.message)
     }

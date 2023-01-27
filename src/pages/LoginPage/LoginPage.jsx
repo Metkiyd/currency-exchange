@@ -6,7 +6,7 @@ import { validationSchemaLogin } from '../../data/validation'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { MyButton } from '../../components/MyUI/MyButton'
-import { MyInput } from '../../components/MyUI/MyInput'
+import { MyInput, PasswordInput } from '../../components/MyUI/MyInput'
 
 import { MyCheckbox } from '../../components/MyUI/MyCheckbox'
 import { getUser } from '../../redux/actions/authAction'
@@ -88,7 +88,7 @@ const LoginPage = () => {
                   }}
                 />
 
-                <MyInput
+                <PasswordInput
                   value={values.password}
                   label='Пароль'
                   name='password'

@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   height: 100vh;
-
 }
 
 .main {
@@ -11,6 +10,7 @@
   max-width: 816px;
   width: 100%;
   margin: 0 48px;
+  overflow-y: auto;
 
   &__title {
     font-family: 'TT Firs Neue';
@@ -23,21 +23,18 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #F3F3F3;
-
   }
 
 }
 
 @media(max-width: 550px) {
-
   .main {
-    margin: 0 24px;
+    margin: 0 24px 0 72px;
   }
 }
 
 .profile_info {
   margin-top: 48px;
-
 }
 
 .profile_title {
@@ -49,10 +46,7 @@
 .profile_inputs {
   display: flex;
   flex-direction: column;
-
   gap: 40px;
-
-
 }
 
 .svgIcon {
@@ -65,6 +59,7 @@
   font-size: 14px;
   color: #848484;
 }
+
 .block {
   display: flex;
   flex-direction: column;
@@ -72,4 +67,16 @@
   align-items: center;
   height: 250px;
   border-bottom: 1px solid #F3F3F3;
+}
+
+.wallets_block {
+  display: flex;
+  justify-content: center;
+  //justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+  height: 250px;
+  border-bottom: 1px solid #F3F3F3;
+  //max-width: 300px;
+  //overflow-x: auto;
 }

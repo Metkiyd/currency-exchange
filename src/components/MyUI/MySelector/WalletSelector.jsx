@@ -7,15 +7,14 @@ import TextField from '@mui/material/TextField'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../../../redux/actions/postsAction'
 import { getTransactions } from '../../../redux/actions/transactionsAction'
+import { FormHelperText } from '@mui/material'
 
 const WalletSelector = (props) => {
   // console.log('=>WalletSelector.props', props)
-
   const dispatch = useDispatch()
-  const fetchPosts = () => dispatch(getAllPosts())
 
   useEffect(() => {
-    // fetchPosts()
+    // dispatch(getAllPosts())
   }, [])
 
   const wallets = useSelector((state) => state.allPosts.posts)
@@ -33,6 +32,8 @@ const WalletSelector = (props) => {
         id='outlined-basic'
         variant='outlined'
         type='number'
+        error={props.errorbalance}
+        helperText={props.helpertextbalance}
         value={props.amount}
         label={props.labelname}
         onChange={(e) => props.onAmountChange(e.target.value)}
@@ -43,8 +44,9 @@ const WalletSelector = (props) => {
           maxWidth: 333,
         }}
         fullWidth
+        error={props.errorwallet}
       >
-        <InputLabel id='demo-simple-selecfullWidtht-label'>
+        <InputLabel id='demo-simple-selecfullWidtht-label' {...props}>
           Выберите кошелёк
         </InputLabel>
         <Select
@@ -79,6 +81,9 @@ const WalletSelector = (props) => {
             )
           })}
         </Select>
+        <FormHelperText id='outlined-weight-helper-text' {...props}>
+          {props.helpertextwallet}
+        </FormHelperText>
       </FormControl>
     </>
   )

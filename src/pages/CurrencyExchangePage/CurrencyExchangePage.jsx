@@ -21,6 +21,7 @@ const CurrencyExchangePage = () => {
 
   const fetchPosts = () => dispatch(getAllPosts())
   const fetchTransactions = () => dispatch(getTransactions())
+
   useEffect(() => {
     // fetchPosts()
   }, [])
@@ -34,7 +35,7 @@ const CurrencyExchangePage = () => {
   useEffect(() => {
     axios.get(`https://www.cbr-xml-daily.ru/latest.js`).then(({ data }) => {
       const ratesData = data.rates
-      console.log('=>ratesData', ratesData)
+      // console.log('=>ratesData', ratesData)
       setRates({
         ...rates,
         ...ratesData,
@@ -44,7 +45,6 @@ const CurrencyExchangePage = () => {
   }, [])
 
   const [send, setSend] = useState('') //give
-
   // console.log('=>send', send)
   const [received, setReceived] = useState('') //get
   // console.log('=>received', received)
@@ -52,6 +52,7 @@ const CurrencyExchangePage = () => {
   // console.log('=>from', from)
   const [to, setCurrencyTo] = useState('') // getWallet
   // console.log('=>to', to)
+
   const newTransaction = {
     send,
     received,
@@ -83,11 +84,9 @@ const CurrencyExchangePage = () => {
     setCurrencyTo(to)
   }
 
-  // console.log('=>getWallet', wallets.getWallet)
-  // console.log('=>giveWallet', wallets.giveWallet)
   let sendFromWallet = wallets.find((wallet) => from == wallet.currency) || null
-
   // console.log('=>sendFromWallet', sendFromWallet)
+
   let sendToWallet = wallets.find((wallet) => to == wallet.currency) || null
   // console.log('=>sendToWallet', sendToWallet)
   const makeCalc = () => {
@@ -103,19 +102,38 @@ const CurrencyExchangePage = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const [inValidBalance, setInValidBalance] = useState(false)
+  // console.log('=>inValidBalance', inValidBalance)
+  const [inValidWallet, setInValidWallet] = useState(false)
+  // console.log('=>inValidWallet', inValidWallet)
+
+  useEffect(() => {
+    const compareWallet =
+      sendFromWallet && sendToWallet
+        ? sendFromWallet?._id === sendToWallet?._id
+        : null
+    setInValidWallet(compareWallet)
+  }, [sendFromWallet, sendToWallet])
+
+  useEffect(() => {
+    const compareBalance =
+      // sendFromWallet && sendToWallet ?
+      send > sendFromWallet?.balance
+    // console.log('=>compareBalance', compareBalance)
+    setInValidBalance(compareBalance)
+  }, [send, received])
+
   const handleClick = async () => {
     await makeCalc()
-
     await axiosBack.patch(`/posts/${sendFromWallet._id}`, sendFromWallet)
     await axiosBack.patch(`/posts/${sendToWallet._id}`, sendToWallet)
-
     await axiosBack.post('/transactions', newTransaction)
     // console.log('=>dispatch-handleCreate', data)
-    //clear form
-    // alert('exchanged successfully')
     await fetchTransactions()
     await fetchPosts()
     await handleOpen()
+    // clear form OR
+    // alert('exchanged successfully')
   }
 
   return (
@@ -137,6 +155,12 @@ const CurrencyExchangePage = () => {
               currency={from}
               onAmountChange={handleSendChange}
               onCurrencyChange={handleFromChange}
+              errorbalance={inValidBalance}
+              helpertextbalance={inValidBalance ? 'Недостаточно средств' : ''}
+              errorwallet={inValidWallet}
+              helpertextwallet={
+                inValidWallet ? 'Нельзя выбирать одинаковые кошельки' : ''
+              }
             />
           </div>
           <div className={styles.profile_inputs}>
@@ -147,6 +171,12 @@ const CurrencyExchangePage = () => {
               currency={to}
               onAmountChange={handleReceivedChange}
               onCurrencyChange={handleToChange}
+              // errorbalance={inValidBalance}
+              // helpertextbalance={inValidBalance ? 'Недостаточно средств' : ''}
+              errorwallet={inValidWallet}
+              helpertextwallet={
+                inValidWallet ? 'Нельзя выбирать одинаковые кошельки' : ''
+              }
             />
           </div>
           <MyButton
@@ -154,12 +184,11 @@ const CurrencyExchangePage = () => {
             variant='contained'
             endIcon={<CachedRoundedIcon />}
             onClick={handleClick}
+            disabled={inValidBalance || inValidWallet}
           >
             Обменять
           </MyButton>
           <MyModal
-            // setModalOpen={setOpen} modalState={open}
-
             open={open}
             setOpen={setOpen}
             icon={<GreenWalletIcon2 />}
