@@ -12,6 +12,8 @@ import { getAllValutes } from '../../redux/actions/valuteAction'
 import styles from '../ExchangeRatePage/styles.module.scss'
 
 const ExchangeRatePage = () => {
+  // const isLoading = useSelector((state) => state.user.isLoading)
+  // console.log('=>User', isLoading)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const ExchangeRatePage = () => {
     <div className={styles.page_layout}>
       <NavSidebar />
       <section className={styles.main}>
+        {/*{isLoading && <h1>Load</h1>}*/}
         <div className={styles.header__nav}>
           <div>
             <p className={styles.header__title}>Курсы валют</p>

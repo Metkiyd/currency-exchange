@@ -198,9 +198,9 @@ const WalletsPage = () => {
             </div>
           </div>
         </div>
+        <ToastContainer limit={10} />
       </section>
       <ProfileSidebar />
-      <ToastContainer limit={10} />
     </div>
   )
 }

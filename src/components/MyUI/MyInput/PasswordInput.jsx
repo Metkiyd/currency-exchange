@@ -25,6 +25,7 @@ const PasswordInput = (props) => {
         },
       }}
       fullWidth
+      {...props}
     >
       <InputLabel htmlFor='outlined-adornment-password' {...props}>
         {props.label}

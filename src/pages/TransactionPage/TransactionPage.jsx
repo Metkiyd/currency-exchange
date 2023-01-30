@@ -13,7 +13,7 @@ const TransactionPage = () => {
           <p className={styles.main__title}>Транзакции</p>
         </div>
         <div className={styles.main__nav}>
-          <p className={styles.main__margin}>Дата</p>
+          <p className={styles.main__date}>Дата</p>
           <p className={styles.main__margin}>Обменяно</p>
           <p className={styles.main__margin}>Получено</p>
           <p className={styles.main__margin}>Статус</p>

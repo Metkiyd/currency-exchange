@@ -46,23 +46,20 @@ import SyncAltRoundedIcon from '@mui/icons-material/SyncAltRounded'
 
 const Transactions = () => {
   const dispatch = useDispatch()
-  const fetchTransactions = () => dispatch(getTransactions())
 
   useEffect(() => {
-    // fetchTransactions()
+    // dispatch(getTransactions())
   }, [])
 
   const transactions = useSelector((state) => state.transactions.transactions)
-  console.log('=>transactions', transactions)
 
   return (
     <div>
       {transactions.length ? (
         transactions
-          .reverse()
           .map(({ send, from, received, to, createdAt }) => {
             return (
-              <div className={styles.transaction}>
+              <div className={styles.transaction} key={createdAt}>
                 <div className={styles.transaction__column}>
                   <div className={styles.icon}>
                     <NavButton disabled>
@@ -73,7 +70,12 @@ const Transactions = () => {
                     <div className={styles.s14}>
                       {from} to {to}
                     </div>
-                    <div className={styles.s12}>{createdAt}</div>
+                    <div className={styles.s12}>
+                      {new Date(createdAt).toLocaleDateString()}
+                    </div>
+                    <div className={styles.s12}>
+                      {new Date(createdAt).toLocaleTimeString()}
+                    </div>
                   </div>
                 </div>
                 <div className={styles.transaction__column}>
@@ -85,13 +87,15 @@ const Transactions = () => {
                   <div className={styles.s12}>{to}</div>
                 </div>
                 <div
-                // className={styles[status]}
+                  // className={styles[status]}
+                  className={styles.success}
                 >
-                  <p className={styles.status_margin}>Success</p>
+                  <p className={styles.status_margin}>Успешно</p>
                 </div>
               </div>
             )
           })
+          .reverse()
       ) : (
         <div className={styles.transaction__wrapper}>
           <div className={styles.transaction__container}>

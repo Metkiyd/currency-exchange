@@ -62,6 +62,7 @@ const LastTransactions = () => {
         {transactions.length ? (
           transactions
             .slice(-3)
+            .reverse()
             .map(({ _id, send, from, received, to, createdAt }) => {
               return (
                 <div key={_id} className={styles.l_transactions__item}>
@@ -73,6 +74,7 @@ const LastTransactions = () => {
                     <span>{to}</span>
                   </p>
                   {/*<div className={styles[`l_transactions__${status}`]}></div>*/}
+                  <div className={styles.l_transactions__success}></div>
                 </div>
               )
             })

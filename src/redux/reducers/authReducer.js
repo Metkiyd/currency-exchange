@@ -1,8 +1,8 @@
-import { SET_USER } from '../actions/authAction'
+import { SET_USER, WAIT_USER } from '../actions/authAction'
 
 const initialState = {
   user: null,
-  isFetching: false,
+  isLoading: false,
 }
 
 export default function userReducer(state = initialState, action) {
@@ -11,6 +11,13 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         user: action.user,
+        isLoading: false,
+      }
+    }
+    case WAIT_USER: {
+      return {
+        ...state,
+        isLoading: true,
       }
     }
 

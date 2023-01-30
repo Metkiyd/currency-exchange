@@ -7,10 +7,10 @@
 .main {
   display: flex;
   flex-direction: column;
-  max-width: 816px;
+  max-width: 821px;
   width: 100%;
-  margin: 0 48px;
-  //overflow-y: auto;
+  //margin: 0 48px;
+  overflow-y: auto;
 
   &__title {
     font-family: 'TT Firs Neue';
@@ -26,9 +26,14 @@
     border-bottom: 1px solid #F3F3F3;
     color: #848484;
     font-size: 12px;
+
   }
   &__margin {
     margin-bottom: 16px;
+  }
+  &__date {
+    margin-bottom: 16px;
+    padding-right: 80px;
   }
 
 }

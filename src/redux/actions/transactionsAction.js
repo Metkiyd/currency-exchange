@@ -11,8 +11,8 @@ export const setTransactions = (transactions) => ({
 export const getTransactions = () => {
   return async (dispatch) => {
     try {
-      let posts = await fetchTransactions()
-      dispatch(setTransactions(posts))
+      const transactions = await fetchTransactions()
+      dispatch(setTransactions(transactions))
     } catch (e) {
       toast.error(e.response?.data?.message)
     }

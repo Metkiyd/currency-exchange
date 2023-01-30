@@ -13,6 +13,7 @@ const ChartHeader = () => {
     (state) => state.selectedValute.selectedValute,
   )
   console.log('=>selectedValute-state', selectedValute)
+  const today = new Date(Date.now()).toLocaleString()
 
   return (
     <div>
@@ -75,7 +76,7 @@ const ChartHeader = () => {
               )}
             </div>
             <div>
-              <p className={styles.result__date}>12 Apr., 12:28:25 UTC</p>
+              <p className={styles.result__date}>{today}</p>
             </div>
           </div>
         </>

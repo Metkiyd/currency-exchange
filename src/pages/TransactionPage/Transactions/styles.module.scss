@@ -41,8 +41,10 @@
   }
   .transaction {
     &__column {
-
       flex-direction: column;
+    }
+    &__date {
+      padding: 0;
     }
   }
 

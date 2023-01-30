@@ -18,8 +18,9 @@ const Avatar = () => {
   const inputFileRef = useRef(null)
 
   const User = useSelector((state) => state.user.user)
+  console.log('=>User', User)
   const [form, setForm] = useState(User)
-  // console.log('=>form-sidebar', form)
+  console.log('=>form-sidebar', form)
   //
   // useEffect(() => {
   //   dispatch(setUser(form))
@@ -32,14 +33,14 @@ const Avatar = () => {
       await formData.append('image', file)
       const { data } = await axiosBack.post('/upload', formData)
 
-      // await console.log('=>form-profile-bef-click', form)
+      await console.log('=>form-profile-bef-click', form)
       await setForm({
         ...form,
         avatarUrl: data.url,
       })
 
       // await axiosBack.patch('/auth/update', form)
-      // await console.log('=>form-profile-aft-click', form)
+      await console.log('=>form-profile-aft-click', form)
     } catch (err) {
       alert('upload file error')
     }
@@ -133,10 +134,7 @@ const Avatar = () => {
         )}
       </div>
 
-      <p className={styles.text_500}>
-        {/*Алексей Иванов*/}
-        {User.fullName}
-      </p>
+      <p className={styles.text_500}>{User.fullName}</p>
     </div>
   )
 }

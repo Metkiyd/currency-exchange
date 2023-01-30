@@ -94,7 +94,9 @@ const routes = [
 ]
 
 const AppRouter = () => {
+  const isLoading = useSelector((state) => state.user.isLoading)
   // const dispatch = useDispatch()
+  // const isLoading = true
   const isAuth = useSelector(selectIsAuth)
 
   // useEffect(() => {
@@ -102,13 +104,26 @@ const AppRouter = () => {
   // }, [])
 
   return (
-    <Routes>
-      {routes
-        .filter((route) => (isAuth ? route.private : !route.private))
-        .map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
-    </Routes>
+    <>
+      {isLoading ? (
+        <Layout />
+      ) : (
+        <Routes>
+          {routes
+            .filter((route) => (isAuth ? route.private : !route.private))
+            .map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+        </Routes>
+      )}
+      {/*<Routes>*/}
+      {/*  {routes*/}
+      {/*    .filter((route) => (isAuth ? route.private : !route.private))*/}
+      {/*    .map(({ path, element }) => (*/}
+      {/*      <Route key={path} path={path} element={element} />*/}
+      {/*    ))}*/}
+      {/*</Routes>*/}
+    </>
   )
 }
 

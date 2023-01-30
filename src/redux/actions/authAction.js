@@ -2,8 +2,10 @@ import axiosBack from '../../api/axiosBack'
 import { toast } from 'react-toastify'
 
 export const SET_USER = 'SET_USER'
+export const WAIT_USER = 'WAIT_USER'
 
 export const setUser = (user) => ({ type: SET_USER, user })
+export const waitUser = () => ({ type: WAIT_USER })
 
 export const getNewUser = (value) => {
   return async (dispatch) => {
@@ -23,6 +25,7 @@ export const getNewUser = (value) => {
 
 export const getUser = (value) => {
   return async (dispatch) => {
+    // dispatch(waitUser())
     try {
       const { data } = await axiosBack.post('/auth/login', value)
       // console.log('=>data-login-action', data)
@@ -39,6 +42,7 @@ export const getUser = (value) => {
 
 export const getAuthUser = () => {
   return async (dispatch) => {
+    dispatch(waitUser())
     try {
       const { data } = await axiosBack.get('/auth/refresh')
       // console.log('=>data-auth-action', data)

@@ -7,9 +7,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  max-width: 816px;
+  max-width: 821px;
   width: 100%;
-  margin: 0 48px;
+  //margin: 0 48px;
   overflow-y: auto;
 
   &__title {
@@ -71,12 +71,12 @@
 
 .wallets_block {
   display: flex;
-  justify-content: center;
+  //justify-content: center;
   //justify-content: flex-start;
   align-items: center;
   gap: 24px;
   height: 250px;
   border-bottom: 1px solid #F3F3F3;
   //max-width: 300px;
-  //overflow-x: auto;
+  overflow-x: auto;
 }
