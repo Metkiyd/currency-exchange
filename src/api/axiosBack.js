@@ -1,11 +1,13 @@
 import axios from 'axios'
 import mem from 'mem'
 export const maxAge = 15000
-export const API_URL = `http://localhost:4444/auth`
+
+const BACKEND_URL = 'https://cur-ex-backend.onrender.com'
+const API_URL = `${BACKEND_URL}/auth`
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: 'http://localhost:4444',
+  baseURL: BACKEND_URL,
 })
 
 instance.interceptors.request.use((config) => {
